@@ -224,27 +224,27 @@ const generateFilmCard = (count, container) => {
   }
 };
 
-const siteHeaderElement = document.querySelector('.header');
-const siteMainElement = document.querySelector('.main');
-const footerElement = document.querySelector('.footer');
-const siteStatisticsElement = footerElement.querySelector('.footer__statistics');
+const siteHeaderElement = document.querySelector(`.header`);
+const siteMainElement = document.querySelector(`.main`);
+const footerElement = document.querySelector(`.footer`);
+const siteStatisticsElement = footerElement.querySelector(`.footer__statistics`);
 
 
-render(siteHeaderElement, createProfileTemplate(), 'beforeend');
-render(siteMainElement, createMenuTemplate(), 'beforeend');
-render(siteMainElement, createSortTemplate(), 'beforeend');
-render(siteMainElement, createContentTemplate(), 'beforeend');
-render(siteMainElement, createTopRatedTemplate(), 'beforeend');
-render(siteMainElement, createMostCommentedTemplate(), 'beforeend');
-render(siteStatisticsElement, createStatisticsTemplate(), 'beforeend');
+render(siteHeaderElement, createProfileTemplate(), `beforeend`);
+render(siteMainElement, createMenuTemplate(), `beforeend`);
+render(siteMainElement, createSortTemplate(), `beforeend`);
+render(siteMainElement, createContentTemplate(), `beforeend`);
+render(siteMainElement, createTopRatedTemplate(), `beforeend`);
+render(siteMainElement, createMostCommentedTemplate(), `beforeend`);
+render(siteStatisticsElement, createStatisticsTemplate(), `beforeend`);
 
-//render(footerElement, createDetailsTemplate(), 'afterend');
+//render(footerElement, createDetailsTemplate(), `afterend`);
 
-const filmListElement = document.querySelector('.films-list__container');
-const filmExtraSection = document.querySelectorAll('.films-list--extra');
+const filmListElement = document.querySelector(`.films-list__container`);
+const filmExtraSection = document.querySelectorAll(`.films-list--extra`);
 
 for (let i = 0; i < filmExtraSection.length; i++) {
-  const filmExtraListElement = filmExtraSection[i].querySelector('.films-list__container');
+  const filmExtraListElement = filmExtraSection[i].querySelector(`.films-list__container`);
 
   generateFilmCard(EXTRA_CARD_COUNT, filmExtraListElement);
 }
