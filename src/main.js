@@ -211,7 +211,7 @@ const createDetailsTemplate = () => {
     </section>
   </div>
 </form>
-</section>`
+</section>`;
 };
 
 const render = (container, template, place) => {
