@@ -27,7 +27,39 @@ export const createDetailsTemplate = () => {
           </div>
         </div>
 
-        <table class="film-details__table"></table>
+        <table class="film-details__table">
+        <tr class="film-details__row">
+          <td class="film-details__term">Director</td>
+          <td class="film-details__cell">Anthony Mann</td>
+        </tr>
+        <tr class="film-details__row">
+          <td class="film-details__term">Writers</td>
+          <td class="film-details__cell">Anne Wigton, Heinz Herald, Richard Weil</td>
+        </tr>
+        <tr class="film-details__row">
+          <td class="film-details__term">Actors</td>
+          <td class="film-details__cell">Erich von Stroheim, Mary Beth Hughes, Dan Duryea</td>
+        </tr>
+        <tr class="film-details__row">
+          <td class="film-details__term">Release Date</td>
+          <td class="film-details__cell">30 March 1945</td>
+        </tr>
+        <tr class="film-details__row">
+          <td class="film-details__term">Runtime</td>
+          <td class="film-details__cell">1h 18m</td>
+        </tr>
+        <tr class="film-details__row">
+          <td class="film-details__term">Country</td>
+          <td class="film-details__cell">USA</td>
+        </tr>
+        <tr class="film-details__row">
+          <td class="film-details__term">Genres</td>
+          <td class="film-details__cell">
+            <span class="film-details__genre">Drama</span>
+            <span class="film-details__genre">Film-Noir</span>
+            <span class="film-details__genre">Mystery</span></td>
+        </tr>
+      </table>
 
         <p class="film-details__film-description">
           The film opens following a murder at a cabaret in Mexico City in 1936, and then presents the events leading up to it in flashback. The Great Flamarion (Erich von Stroheim) is an arrogant, friendless, and misogynous marksman who displays his trick gunshot act in the vaudeville circuit. His show features a beautiful assistant, Connie (Mary Beth Hughes) and her drunken husband Al (Dan Duryea), Flamarion's other assistant. Flamarion falls in love with Connie, the movie's femme fatale, and is soon manipulated by her into killing her no good husband during one of their acts.
@@ -60,7 +92,27 @@ export const createDetailsTemplate = () => {
         <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
       </label>
 
-      <div class="film-details__emoji-list"></div>
+      <div class="film-details__emoji-list">
+      <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="smile">
+      <label class="film-details__emoji-label" for="emoji-smile">
+        <img src="./images/emoji/smile.png" width="30" height="30" alt="emoji">
+      </label>
+
+      <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-sleeping" value="sleeping">
+      <label class="film-details__emoji-label" for="emoji-sleeping">
+        <img src="./images/emoji/sleeping.png" width="30" height="30" alt="emoji">
+      </label>
+
+      <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-puke" value="puke">
+      <label class="film-details__emoji-label" for="emoji-puke">
+        <img src="./images/emoji/puke.png" width="30" height="30" alt="emoji">
+      </label>
+
+      <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-angry" value="angry">
+      <label class="film-details__emoji-label" for="emoji-angry">
+        <img src="./images/emoji/angry.png" width="30" height="30" alt="emoji">
+      </label>
+    </div>
     </div>
     </section>
   </div>
