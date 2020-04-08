@@ -1,5 +1,6 @@
 'use strict';
 import {createProfileTemplate} from "./components/user-profile.js";
+import {generateMenu} from "./mock/menu.js";
 import {createMenuTemplate} from "./components/site-menu.js";
 import {createSortTemplate} from "./components/sorting.js";
 import {createContentTemplate} from "./components/main-content.js";
@@ -27,6 +28,8 @@ const generateFilmCard = (count, container) => {
   }
 };
 
+const menuItems = generateMenu();
+
 // generate main content
 const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
@@ -34,11 +37,11 @@ const footerElement = document.querySelector(`.footer`);
 const siteStatisticsElement = footerElement.querySelector(`.footer__statistics`);
 
 render(siteHeaderElement, createProfileTemplate(), `beforeend`);
-render(siteMainElement, createMenuTemplate(), `beforeend`);
+render(siteMainElement, createMenuTemplate(menuItems), `beforeend`);
 render(siteMainElement, createSortTemplate(), `beforeend`);
 render(siteMainElement, createContentTemplate(), `beforeend`);
 render(siteStatisticsElement, createStatisticsTemplate(), `beforeend`);
-render(footerElement, createDetailsTemplate(), `afterend`);
+//render(footerElement, createDetailsTemplate(), `afterend`);
 
 // create movies section: main - top - commented
 const siteFilmElement = document.querySelector(`.films`);
@@ -58,8 +61,8 @@ for (let i = 0; i < filmExtraSection.length; i++) {
 generateFilmCard(MAIN_CARD_COUNT, filmListElement);
 
 // generate comments
-const commentListElement = document.querySelector(`.film-details__comments-list`);
+// const commentListElement = document.querySelector(`.film-details__comments-list`);
 
-for (let i = 0; i < COMMENTS_COUNT; i++) {
-  render(commentListElement, createCommentTemplate(), `beforeend`);
-}
+// for (let i = 0; i < COMMENTS_COUNT; i++) {
+//   render(commentListElement, createCommentTemplate(), `beforeend`);
+// }
