@@ -9,6 +9,8 @@ import {createTopRatedTemplate} from "./components/top-rated.js";
 import {createMostCommentedTemplate} from "./components/most-commented.js";
 import {createFilmCardTemplate} from "./components/movie-card.js";
 import {createStatisticsTemplate} from "./components/statistics.js";
+//import {generateMovieCards} from "./mock/movie.js";
+import {generateProfile} from "./mock/profile.js";
 import {createDetailsTemplate} from "./components/movie-detailes.js";
 import {createCommentTemplate} from "./components/comment.js";
 
@@ -24,11 +26,13 @@ const render = (container, template, place) => {
 // generate card function
 const generateFilmCard = (count, container) => {
   for (let i = 0; i < count; i++) {
-    render(container, createFilmCardTemplate(), `beforeend`);
+    render(container, createFilmCardTemplate('Ashes to Ashes', 8.1, 2008, 1, 'Crime', 'ashes.jpg', 'description', 5), `beforeend`);
   }
 };
 
 const menuItems = generateMenu();
+const profiles = generateProfile();
+
 
 // generate main content
 const siteHeaderElement = document.querySelector(`.header`);
@@ -36,7 +40,7 @@ const siteMainElement = document.querySelector(`.main`);
 const footerElement = document.querySelector(`.footer`);
 const siteStatisticsElement = footerElement.querySelector(`.footer__statistics`);
 
-render(siteHeaderElement, createProfileTemplate(), `beforeend`);
+render(siteHeaderElement, createProfileTemplate(profiles), `beforeend`);
 render(siteMainElement, createMenuTemplate(menuItems), `beforeend`);
 render(siteMainElement, createSortTemplate(), `beforeend`);
 render(siteMainElement, createContentTemplate(), `beforeend`);
