@@ -1,13 +1,14 @@
+
 const generateProfile = () => {
   return [{
-      rating: `Movie Buff`,
+      rating: `movie buff`,
       avatar: `bitmap`
     }, {
-      rating: `Movie Donald`,
+      rating: `fan`,
       avatar: `donald`
     },
     {
-      rating: `Movie Goofy`,
+      rating: `novice`,
       avatar: `goofy`
     }
   ];

@@ -2,7 +2,7 @@ const createMenuMarkup = (menuItem) => {
   const {name, count} = menuItem;
 
   const countMark = createMenuCount(count);
-  if (name === 'all') {
+  if (name === 'All') {
     return `<a href="#${name}" class="main-navigation__item">${name} movies</a>`;
   } else {
     return `<a href="#${name}" class="main-navigation__item">${name} ${countMark}</a>`;

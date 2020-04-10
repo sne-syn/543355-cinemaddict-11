@@ -1,52 +1,67 @@
-// const generateMovieCard = () => {
-//   return {};
-// };
+import {
+  getRandomIntegerNumber,
+  getRandomArrayItem,
+  getRandomNumber,
+  capitalizeChar,
+  getSeveralRandomItems
+} from './../util.js';
 
-// const generateMovieCards = (count) => {
-//   return new Array(count).fill(``).map(generateMovieCard);
-// };
+const Posters = [`made-for-each-other.png`, `popeye-meets-sinbad.png`, `sagebrush-trail.jpg`, `santa-claus-conquers-the-martians.jpg`, `the-dance-of-life.jpg`, `the-great-flamarion.jpg`, `the-man-with-the-golden-arm.jpg`];
 
-// export {generateMovieCard, generateMovieCards};
+const Titles = [`The Dance of Life`, `Sagebrush Trail`, `The Man with the Golden Arm`, `Santa Claus Conquers the Martians`, `Popeye the Sailor Meets Sindbad the Sailor`, `The Great Flamarion`];
 
-// const Titles = [`The Dance of Life`, `Sagebrush Trail`, `The Man with the Golden Arm`, `Santa Claus Conquers the Martians`, `Popeye the Sailor Meets Sindbad the Sailor`, `The Great Flamarion`];
+const OriginalTitles = [`The Dance of Life`, `Sagebrush Trail`, `The Man with the Golden Arm`, `Santa Claus Conquers the Martians`, `Popeye the Sailor Meets Sindbad the Sailor`, `The Great Flamarion`];
 
-// const OriginalTitles = [`The Dance of Life`, `Sagebrush Trail`, `The Man with the Golden Arm`, `Santa Claus Conquers the Martians`, `Popeye the Sailor Meets Sindbad the Sailor`, `The Great Flamarion`];
+const Genres = [`crime`, `drama`, `comedy`, `melodrama`, `western`, `thriller`, `cartoon`, `mystery`, `musical`];
 
-// const Years = [1955, 1945, 1964, 1939, 1929, 1933];
+const Names = [`Anthony Mann`, `Matthew Graham`, `Ashley Pharoah`, `John Strickland`, `Susan Tully`, `Anne Wigton`, `Heinz Herald`, `Erich von Stroheim`, `Mary Beth Hughes`, `Dan Duryea`, `Richard Weil`, `Jed Mercurio`];
 
-// const Genres = [`crime`, `drama`, `comedy`, `melodrama`, `western`, `thriller`, `cartoon`, `mystery`, `musical`];
+const Countries = [`USA`, `UK`, `France`, `Spain`, `Canada`];
 
-// const Actors = [];
-// const Directors = [];
-// const Writers = [];
-// const Countries = [];
-// const ReleaseDates = [];
-// const Desriptions = [`Lorem ipsum dolor sit amet, consectetur adipiscing elit.`, `Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua`, `Tortor condimentum lacinia quis vel.`, `Pellentesque habitant morbi tristique senectus et netus.`];
-
-// const Runtimes = [5400, 6000, 5478, 6743, 3980];
-
-// const getRandomArrayItem = (array) => {
-//   const randomIndex = getRandomIntegerNumber(0, array.length);
-
-//   return array[randomIndex];
-// };
-
-// const getRandomNumber = (min, max) => {
-//   return min + (Math.random() * (max - min));
-// };
-
-// const getRating = () => {
-
-// };
-
-// const getDuration = () => {
-
-// };
+const Descriptions = [`Lorem ipsum dolor sit amet, consectetur adipiscing elit.`, `Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua`, `Tortor condimentum lacinia quis vel.`, `Pellentesque habitant morbi tristique senectus et netus.`];
 
 const generateMovieCard = () => {
-  return {
+  // let movie = new Map();
+  // movie.set('poster', getRandomArrayItem(Posters));
 
+  return {
+    poster: getRandomArrayItem(Posters),
+    title: getRandomArrayItem(Titles),
+    rating: (getRandomNumber(1, 10)).toFixed(1),
+    year: getRandomIntegerNumber(1940, 2020),
+    runtime: getRandomIntegerNumber(1000, 4000),
+    genre: capitalizeChar(getRandomArrayItem(Genres)),
+    description: getRandomArrayItem(Descriptions),
+    comments: getRandomIntegerNumber(1, 10),
   };
 };
 
+const generateMovieCards = (count) => {
+  return new Array(count)
+    .fill(``)
+    .map(generateMovieCard);
+};
 
+const generateMovieDetailes = () => {
+
+  return {
+    poster: getRandomArrayItem(Posters),
+    title: getRandomArrayItem(Titles),
+    rating: (getRandomNumber(1, 10)).toFixed(1),
+    original: getRandomArrayItem(OriginalTitles),
+    director: getRandomArrayItem(Names),
+    writers: getSeveralRandomItems(Names, getRandomIntegerNumber(1, 8)),
+    actors: getSeveralRandomItems(Names, getRandomIntegerNumber(1, 8)),
+    year: getRandomIntegerNumber(1940, 2020),
+    runtime: getRandomIntegerNumber(1000, 4000),
+    country: getSeveralRandomItems(Countries, getRandomIntegerNumber(1, 3)),
+    genre: getSeveralRandomItems(Genres, getRandomIntegerNumber(2, 5)),
+    description: getRandomArrayItem(Descriptions),
+    age: getRandomIntegerNumber(0, 18),
+  };
+};
+
+export {
+  generateMovieCards,
+  generateMovieDetailes
+};
