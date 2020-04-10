@@ -16,7 +16,7 @@ const randomDate = (start, end) => {
 };
 
 const capitalizeChar = (str) => {
-  if (typeof str !== 'string') return ''
+  if (typeof str !== 'string') return '';
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
@@ -25,7 +25,11 @@ const getSeveralRandomItems = (array, count) => {
   for (let i = 0; i < count; i++) {
     set.add(getRandomArrayItem(array));
   }
-  return Array.from(set).join(', ');
+  return [...set];
 };
 
-export {getRandomIntegerNumber, getRandomArrayItem, getRandomNumber, randomDate, capitalizeChar, getSeveralRandomItems};
+const convertArrayToString = (data) => {
+  return [...data].join(', ');
+};
+
+export {getRandomIntegerNumber, getRandomArrayItem, getRandomNumber, randomDate, capitalizeChar, getSeveralRandomItems, convertArrayToString};

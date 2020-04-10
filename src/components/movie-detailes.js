@@ -2,16 +2,15 @@ import {
   COMMENTS_COUNT
 } from "./../main.js";
 import {
-  capitalizeChar
+  capitalizeChar, convertArrayToString
 } from './../util.js';
 
 
 const createMovieGenres = (movie) => {
   const {genre} = movie;
-  let genreList = genre.split(', ');
   let genreString = '';
-  genreList.forEach((genre) => {
-    genreString +=`<span class="film-details__genre">${capitalizeChar(genre)}</span>`;
+  genre.forEach((item) => {
+    genreString +=`<span class="film-details__genre">${capitalizeChar(item)}</span>`;
   });
 
   return genreString;
@@ -32,6 +31,9 @@ export const createDetailsTemplate = (movie) => {
     country,
     age
   } = movie;
+
+  let isMultiple = ([...movie.genre].length > 1) ? `Genres` :`Genre`;
+
   const genre = createMovieGenres(movie);
   return `
   <section class="film-details">
@@ -85,7 +87,7 @@ export const createDetailsTemplate = (movie) => {
           <td class="film-details__cell">${country}</td>
         </tr>
         <tr class="film-details__row">
-          <td class="film-details__term">Genres</td>
+          <td class="film-details__term">${isMultiple}</td>
           <td class="film-details__cell">
           ${genre}</td>
         </tr>

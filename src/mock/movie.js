@@ -3,7 +3,7 @@ import {
   getRandomArrayItem,
   getRandomNumber,
   capitalizeChar,
-  getSeveralRandomItems
+  getSeveralRandomItems, convertArrayToString
 } from './../util.js';
 
 const Posters = [`made-for-each-other.png`, `popeye-meets-sinbad.png`, `sagebrush-trail.jpg`, `santa-claus-conquers-the-martians.jpg`, `the-dance-of-life.jpg`, `the-great-flamarion.jpg`, `the-man-with-the-golden-arm.jpg`];
@@ -50,12 +50,12 @@ const generateMovieDetailes = () => {
     rating: (getRandomNumber(1, 10)).toFixed(1),
     original: getRandomArrayItem(OriginalTitles),
     director: getRandomArrayItem(Names),
-    writers: getSeveralRandomItems(Names, getRandomIntegerNumber(1, 8)),
-    actors: getSeveralRandomItems(Names, getRandomIntegerNumber(1, 8)),
+    writers: convertArrayToString(getSeveralRandomItems(Names, getRandomIntegerNumber(1, 8))),
+    actors: convertArrayToString(getSeveralRandomItems(Names, getRandomIntegerNumber(1, 8))),
     year: getRandomIntegerNumber(1940, 2020),
     runtime: getRandomIntegerNumber(1000, 4000),
-    country: getSeveralRandomItems(Countries, getRandomIntegerNumber(1, 3)),
-    genre: getSeveralRandomItems(Genres, getRandomIntegerNumber(2, 5)),
+    country: convertArrayToString(getSeveralRandomItems(Countries, getRandomIntegerNumber(1, 3))),
+    genre: getSeveralRandomItems(Genres, getRandomIntegerNumber(1, 3)),
     description: getRandomArrayItem(Descriptions),
     age: getRandomIntegerNumber(0, 18),
   };
