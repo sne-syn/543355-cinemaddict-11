@@ -34,7 +34,7 @@ const generateMoviesInfo = () => {
     genre: getSeveralRandomItems(Genres, getRandomIntegerNumber(2, 3)),
     description: getRandomArrayItem(Descriptions),
     age: getRandomIntegerNumber(0, 18),
-    comments: getRandomIntegerNumber(1, 8),
+    comments: getRandomIntegerNumber(1, 5),
     isInWatchlist:  Math.random() > 0.5,
     isAlreadyWatched:  Math.random() > 0.5,
     isInFavorites:  Math.random() > 0.5,
