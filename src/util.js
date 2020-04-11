@@ -20,6 +20,14 @@ const capitalizeChar = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
+const capitalizeEveryFirstChar = (str) => {
+  return str
+    .toLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
+
 const getSeveralRandomItems = (array, count) => {
   let set = new Set();
   for (let i = 0; i < count; i++) {
@@ -32,4 +40,4 @@ const convertArrayToString = (data) => {
   return [...data].join(', ');
 };
 
-export {getRandomIntegerNumber, getRandomArrayItem, getRandomNumber, randomDate, capitalizeChar, getSeveralRandomItems, convertArrayToString};
+export {getRandomIntegerNumber, getRandomArrayItem, getRandomNumber, randomDate, capitalizeChar, capitalizeEveryFirstChar, getSeveralRandomItems, convertArrayToString};

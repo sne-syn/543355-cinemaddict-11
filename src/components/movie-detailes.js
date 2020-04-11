@@ -16,7 +16,32 @@ const createMovieGenres = (movie) => {
   return genreString;
 };
 
+const createEmojiList = () => {
+  return `
+  <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="smile">
+      <label class="film-details__emoji-label" for="emoji-smile">
+        <img src="./images/emoji/smile.png" width="30" height="30" alt="emoji">
+      </label>
+
+      <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-sleeping" value="sleeping">
+      <label class="film-details__emoji-label" for="emoji-sleeping">
+        <img src="./images/emoji/sleeping.png" width="30" height="30" alt="emoji">
+      </label>
+
+      <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-puke" value="puke">
+      <label class="film-details__emoji-label" for="emoji-puke">
+        <img src="./images/emoji/puke.png" width="30" height="30" alt="emoji">
+      </label>
+
+      <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-angry" value="angry">
+      <label class="film-details__emoji-label" for="emoji-angry">
+        <img src="./images/emoji/angry.png" width="30" height="30" alt="emoji">
+      </label>
+  `;
+};
+
 export const createDetailsTemplate = (movie) => {
+  
   const {
     poster,
     title,
@@ -29,12 +54,16 @@ export const createDetailsTemplate = (movie) => {
     runtime,
     description,
     country,
-    age
+    age,
+    isInWatchlist,
+    isAlreadyWatched,
+    isInFavorites
   } = movie;
 
   let isMultiple = ([...movie.genre].length > 1) ? `Genres` :`Genre`;
 
   const genre = createMovieGenres(movie);
+  const emojiList = createEmojiList();
   return `
   <section class="film-details">
   <form class="film-details__inner" action="" method="get">
@@ -100,14 +129,14 @@ export const createDetailsTemplate = (movie) => {
     </div>
 
     <section class="film-details__controls">
-      <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist">
-      <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist">Add to watchlist</label>
+      <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" ${isInWatchlist ? `checked` : ``}>
+      <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist ">Add to watchlist</label>
 
-      <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched">
-      <label for="watched" class="film-details__control-label film-details__control-label--watched">Already watched</label>
+      <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${isAlreadyWatched ? `checked` : ``}>
+      <label for="watched" class="film-details__control-label film-details__control-label--watched  film-details__control-input:">Already watched</label>
 
-      <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite">
-      <label for="favorite" class="film-details__control-label film-details__control-label--favorite">Add to favorites</label>
+      <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${isInFavorites ? `checked` : ``}>
+      <label for="favorite" class="film-details__control-label film-details__control-label--favorite  film-details__control-input:">Add to favorites</label>
     </section>
   </div>
 
@@ -124,27 +153,7 @@ export const createDetailsTemplate = (movie) => {
         <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
       </label>
 
-      <div class="film-details__emoji-list">
-      <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="smile">
-      <label class="film-details__emoji-label" for="emoji-smile">
-        <img src="./images/emoji/smile.png" width="30" height="30" alt="emoji">
-      </label>
-
-      <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-sleeping" value="sleeping">
-      <label class="film-details__emoji-label" for="emoji-sleeping">
-        <img src="./images/emoji/sleeping.png" width="30" height="30" alt="emoji">
-      </label>
-
-      <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-puke" value="puke">
-      <label class="film-details__emoji-label" for="emoji-puke">
-        <img src="./images/emoji/puke.png" width="30" height="30" alt="emoji">
-      </label>
-
-      <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-angry" value="angry">
-      <label class="film-details__emoji-label" for="emoji-angry">
-        <img src="./images/emoji/angry.png" width="30" height="30" alt="emoji">
-      </label>
-    </div>
+      <div class="film-details__emoji-list">${emojiList}</div>
     </div>
     </section>
   </div>

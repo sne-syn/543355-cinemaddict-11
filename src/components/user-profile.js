@@ -1,11 +1,9 @@
-import {
-  getRandomIntegerNumber,
-  capitalizeChar
-} from './../util.js';
+import {capitalizeEveryFirstChar} from './../util.js';
 
-export const createProfileTemplate = (profiles) => {
-  const {rating, avatar} = profiles[getRandomIntegerNumber(0, 3)];
-  const ratingName = capitalizeChar(rating);
+export const createProfileTemplate = (profile) => {
+  console.log(profile);
+  const {rating, avatar} = profile;
+  const ratingName = capitalizeEveryFirstChar(rating);
 
   return `
   <section class="header__profile profile">
