@@ -2,7 +2,7 @@ import {capitalizeChar} from './../util.js';
 
 const createMovieGenres = (movie) => {
   const {genre} = movie;
-  let genreString = '';
+  let genreString = ``;
   genre.forEach((item) => {
     genreString += `<span class="film-details__genre">${capitalizeChar(item)}</span>`;
   });

@@ -35,9 +35,9 @@ const generateMoviesInfo = () => {
     description: getRandomArrayItem(Descriptions),
     age: getRandomIntegerNumber(0, 18),
     comments: getRandomIntegerNumber(1, 5),
-    isInWatchlist:  Math.random() > 0.5,
-    isAlreadyWatched:  Math.random() > 0.5,
-    isInFavorites:  Math.random() > 0.5,
+    isInWatchlist: Math.random() > 0.5,
+    isAlreadyWatched: Math.random() > 0.5,
+    isInFavorites: Math.random() > 0.5,
   };
 };
 
@@ -46,6 +46,5 @@ const generateMovie = (count) => {
     .fill(``)
     .map(generateMoviesInfo);
 };
-
 
 export {generateMoviesInfo, generateMovie};

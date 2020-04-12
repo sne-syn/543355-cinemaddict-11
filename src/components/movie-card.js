@@ -1,4 +1,4 @@
-const isActive = (control) =>  control ? `active` : ``;
+const isActive = (control) => control ? `active` : ``;
 
 const createControls = (movie) => {
   const {isInWatchlist, isAlreadyWatched, isInFavorites} = movie;
