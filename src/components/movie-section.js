@@ -1,4 +1,4 @@
-export const createMainMovieList = () => {
+const createMainMovieList = () => {
   return `
   <section class="films-list">
     <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
@@ -6,3 +6,5 @@ export const createMainMovieList = () => {
     <button class="films-list__show-more">Show more</button>
   </section>`;
 };
+
+export {createMainMovieList};

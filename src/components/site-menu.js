@@ -13,7 +13,7 @@ const createMenuCount = (count) => {
   return `<span class="main-navigation__item-count">${count}</span>`;
 };
 
-export const createMenuTemplate = (menuItems) => {
+const createMenuTemplate = (menuItems) => {
   const menuMarkup = menuItems.map((it) => createMenuMarkup(it)).join(`\n`);
   return `
   <nav class="main-navigation">
@@ -24,3 +24,5 @@ export const createMenuTemplate = (menuItems) => {
   </nav>
   `;
 };
+
+export {createMenuTemplate};

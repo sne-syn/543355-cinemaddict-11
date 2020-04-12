@@ -1,18 +1,18 @@
-export const createFilmCardTemplate = (movie) => {
+const isActive = (control) =>  control ? `active` : ``;
 
-  const {
-    poster,
-    title,
-    rating,
-    year,
-    runtime,
-    genre,
-    description,
-    comments,
-    isInWatchlist,
-    isAlreadyWatched,
-    isInFavorites
-  } = movie;
+const createControls = (movie) => {
+  const {isInWatchlist, isAlreadyWatched, isInFavorites} = movie;
+
+  return `
+  <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist film-card__controls-item--${isActive(isInWatchlist)}">Add to watchlist</button>
+  <button class="film-card__controls-item button film-card__controls-item--mark-as-watched  film-card__controls-item--${isActive(isAlreadyWatched)}">Mark as watched</button>
+  <button class="film-card__controls-item button film-card__controls-item--favorite film-card__controls-item--${isActive(isInFavorites)}">Mark as favorite</button>
+  `;
+};
+
+const createFilmCardTemplate = (movie) => {
+  const {poster, title, rating, year, runtime, genre, description, comments} = movie;
+  const controls = createControls(movie);
 
   return `
   <article class="film-card">
@@ -26,11 +26,9 @@ export const createFilmCardTemplate = (movie) => {
     <img src="./images/posters/${poster}" alt="" class="film-card__poster">
     <p class="film-card__description">${description}</p>
     <a class="film-card__comments">${comments}  comments</a>
-    <form class="film-card__controls">
-      <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist film-card__controls-item--${isInWatchlist ? `active` : ``}">Add to watchlist</button>
-      <button class="film-card__controls-item button film-card__controls-item--mark-as-watched  film-card__controls-item--${isAlreadyWatched ? `active` : ``}">Mark as watched</button>
-      <button class="film-card__controls-item button film-card__controls-item--favorite film-card__controls-item--${isInFavorites ? `active` : ``}">Mark as favorite</button>
-    </form>
+    <form class="film-card__controls">${controls}</form>
   </article>
   `;
 };
+
+export {createFilmCardTemplate};

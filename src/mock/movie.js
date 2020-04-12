@@ -48,7 +48,4 @@ const generateMovie = (count) => {
 };
 
 
-export {
-  generateMoviesInfo,
-  generateMovie
-};
+export {generateMoviesInfo, generateMovie};
