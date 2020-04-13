@@ -22,7 +22,7 @@ const Descriptions = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. C
 
 
 const getRandomStringLength = (str) => {
-  let description = str.split('. ').slice(0, getRandomIntegerNumber(1, 5)).join('. ');
+  let description = str.split('. ').slice(getRandomIntegerNumber(0, 5), getRandomIntegerNumber(5, 5)).join('. ');
   return description;
 };
 
@@ -58,3 +58,30 @@ export {
   generateMoviesInfo,
   generateMovie
 };
+
+// const sliceString = (str) => {
+//   let sliced = str.slice(0, getRandomIntegerNumber(140, 160));
+//   if(sliced.length < str.length) {
+//     sliced += '...';
+//   }
+//   return sliced;
+// };
+
+// const generateMovieCard = (movie) => {
+//   return {
+//     poster: movie.poster,
+//     title: movie.title,
+//     rating: movie.rating,
+//     director: movie.director,
+//     year: movie.year,
+//     runtime: movie.runtime,
+//     genre: movie.genre[0],
+//     description: sliceString(movie.description),
+//     comments: movie.comments,
+//     isInWatchlist: movie.isInWatchlist,
+//     isAlreadyWatched: movie.isInWatchlist,
+//     isInFavorites: movie.isInWatchlist,
+//   };
+// };
+
+// generateMovieCard(movie);
