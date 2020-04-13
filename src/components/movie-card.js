@@ -1,7 +1,7 @@
 import {getRandomIntegerNumber} from './../util.js';
 
 const addEllipsisToString = (str) => {
-  let sliced = str.slice(0, getRandomIntegerNumber(140, 160));
+  let sliced = str.slice(0, 140);
   if(sliced.length < str.length) {
     sliced += '...';
   }
