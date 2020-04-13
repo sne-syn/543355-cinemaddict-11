@@ -96,7 +96,7 @@ const firstCard = document.querySelector(`.film-card`);
 var removeDetails = () => {
   var filmDetailesElem = document.querySelector(`.film-details`);
   if (filmDetailesElem) {
-    filmDetailesElem.style.display = `none`;
+    filmDetailesElem.remove();
   }
 };
 
