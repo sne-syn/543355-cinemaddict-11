@@ -114,3 +114,4 @@ firstCard.addEventListener('click', () => {
   let button = document.querySelector(`.film-details__close-btn`);
   button.addEventListener(`click`, removeDetails);
 });
+

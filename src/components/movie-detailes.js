@@ -11,8 +11,8 @@ const createMovieGenres = (movie) => {
   return genreString;
 };
 
-const formatReleaseDate = (data) => {
-const formatedDate = `${data.getDate()} ${MONTH_NAMES[data.getMonth()]} ${data.getFullYear()}`;
+const formatReleaseDate = (date) => {
+const formatedDate = `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
 
 return formatedDate;
 };
@@ -149,10 +149,8 @@ const createDetailsTemplate = (movie) => {
           </div>
         </div>
 
-        <table class="film-details__table">${detailesTable}</table
-        <p class="film-details__film-description">
-          ${description}
-        </p>
+        <table class="film-details__table">${detailesTable}</table>
+        <p class="film-details__film-description">${description}.</p>
       </div>
     </div>
 

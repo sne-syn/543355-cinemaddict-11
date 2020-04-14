@@ -1,3 +1,5 @@
+
+
 const addEllipsisToString = (str) => {
   let sliced = str.slice(0, 140);
   sliced += (sliced.length < str.length) ? `...` : `.`;
@@ -5,7 +7,11 @@ const addEllipsisToString = (str) => {
 };
 
 const createControls = (movie) => {
-  const {isInWatchlist, isAlreadyWatched, isInFavorites} = movie;
+  const {
+    isInWatchlist,
+    isAlreadyWatched,
+    isInFavorites
+  } = movie;
   const isActive = (control) => control ? `active` : ``;
   return `
   <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist film-card__controls-item--${isActive(isInWatchlist)}">Add to watchlist</button>
@@ -15,7 +21,16 @@ const createControls = (movie) => {
 };
 
 const createFilmCardTemplate = (movie) => {
-  const {poster, title, rating, date, runtime, genre, description, comments} = movie;
+  const {
+    poster,
+    title,
+    rating,
+    date,
+    runtime,
+    genre,
+    description,
+    comments
+  } = movie;
   const controls = createControls(movie);
   const ellipsisDescription = addEllipsisToString(description);
   const releaseYear = date.getFullYear();
@@ -36,4 +51,6 @@ const createFilmCardTemplate = (movie) => {
   `;
 };
 
-export {createFilmCardTemplate};
+export {
+  createFilmCardTemplate
+};
