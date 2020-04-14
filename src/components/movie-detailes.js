@@ -1,4 +1,5 @@
 import {capitalizeChar} from './../util.js';
+import {MONTH_NAMES} from './../const.js';
 
 const createMovieGenres = (movie) => {
   const {genre} = movie;
@@ -10,8 +11,15 @@ const createMovieGenres = (movie) => {
   return genreString;
 };
 
+const formatReleaseDate = (data) => {
+const formatedDate = `${data.getDate()} ${MONTH_NAMES[data.getMonth()]} ${data.getFullYear()}`;
+
+return formatedDate;
+};
+
 const createMovieDetailesTable = (movie) => {
-  const {director, writers, actors, year, runtime, country} = movie;
+  const {director, writers, actors, date, runtime, country} = movie;
+  const releaseDate = formatReleaseDate(date);
   const genre = createMovieGenres(movie);
   let isMultiple = ([...movie.genre].length > 1) ? `Genres` : `Genre`;
 
@@ -30,7 +38,7 @@ const createMovieDetailesTable = (movie) => {
         </tr>
         <tr class="film-details__row">
           <td class="film-details__term">Release Date</td>
-          <td class="film-details__cell">${year}</td>
+          <td class="film-details__cell">${releaseDate}</td>
         </tr>
         <tr class="film-details__row">
           <td class="film-details__term">Runtime</td>

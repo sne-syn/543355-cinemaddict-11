@@ -1,10 +1,6 @@
-import {getRandomIntegerNumber} from './../util.js';
-
 const addEllipsisToString = (str) => {
   let sliced = str.slice(0, 140);
-  if(sliced.length < str.length) {
-    sliced += '...';
-  }
+  sliced += (sliced.length < str.length) ? `...` : `.`;
   return sliced;
 };
 
@@ -19,16 +15,16 @@ const createControls = (movie) => {
 };
 
 const createFilmCardTemplate = (movie) => {
-
-  const {poster, title, rating, year, runtime, genre, description, comments} = movie;
+  const {poster, title, rating, date, runtime, genre, description, comments} = movie;
   const controls = createControls(movie);
   const ellipsisDescription = addEllipsisToString(description);
+  const releaseYear = date.getFullYear();
   return `
   <article class="film-card">
     <h3 class="film-card__title">${title}</h3>
     <p class="film-card__rating">${rating}</p>
     <p class="film-card__info">
-      <span class="film-card__year">${year}</span>
+      <span class="film-card__year">${releaseYear}</span>
       <span class="film-card__duration">${runtime}</span>
       <span class="film-card__genre">${genre[0]}</span>
     </p>
@@ -39,6 +35,5 @@ const createFilmCardTemplate = (movie) => {
   </article>
   `;
 };
-
 
 export {createFilmCardTemplate};

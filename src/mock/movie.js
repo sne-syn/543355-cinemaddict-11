@@ -26,6 +26,14 @@ const getRandomStringLength = (str) => {
   return description;
 };
 
+const getRandomReleaseDate = () => {
+  const releaseDate = new Date();
+  releaseDate.setDate(getRandomIntegerNumber(1, 31));
+  releaseDate.setMonth(getRandomIntegerNumber(1, 12));
+  releaseDate.setFullYear(getRandomIntegerNumber(1940, 2000));
+  return releaseDate;
+};
+
 const generateMoviesInfo = () => {
   return {
     poster: getRandomArrayItem(Posters),
@@ -35,7 +43,7 @@ const generateMoviesInfo = () => {
     director: getRandomArrayItem(Names),
     writers: convertArrayToString(getSeveralRandomItems(Names, getRandomIntegerNumber(1, 8))),
     actors: convertArrayToString(getSeveralRandomItems(Names, getRandomIntegerNumber(1, 8))),
-    year: getRandomIntegerNumber(1940, 2020),
+    date: getRandomReleaseDate(),
     runtime: getRandomIntegerNumber(1000, 4000),
     country: convertArrayToString(getSeveralRandomItems(Countries, getRandomIntegerNumber(1, 3))),
     genre: getSeveralRandomItems(Genres, getRandomIntegerNumber(2, 3)),
@@ -58,30 +66,3 @@ export {
   generateMoviesInfo,
   generateMovie
 };
-
-// const sliceString = (str) => {
-//   let sliced = str.slice(0, getRandomIntegerNumber(140, 160));
-//   if(sliced.length < str.length) {
-//     sliced += '...';
-//   }
-//   return sliced;
-// };
-
-// const generateMovieCard = (movie) => {
-//   return {
-//     poster: movie.poster,
-//     title: movie.title,
-//     rating: movie.rating,
-//     director: movie.director,
-//     year: movie.year,
-//     runtime: movie.runtime,
-//     genre: movie.genre[0],
-//     description: sliceString(movie.description),
-//     comments: movie.comments,
-//     isInWatchlist: movie.isInWatchlist,
-//     isAlreadyWatched: movie.isInWatchlist,
-//     isInFavorites: movie.isInWatchlist,
-//   };
-// };
-
-// generateMovieCard(movie);
