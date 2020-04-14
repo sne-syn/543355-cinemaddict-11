@@ -11,7 +11,7 @@ const addLeadingZeroToDate = (date) => {
 const formatCommentDate = () => {
   let date = new Date();
   date.setDate(getRandomIntegerNumber(1, 31));
-  date.setMonth(getRandomIntegerNumber(0, 11));
+  date.setMonth(getRandomIntegerNumber(1, 12));
   date.setFullYear(getRandomIntegerNumber(1940, 2000));
   date.setHours(getRandomIntegerNumber(0, 23));
   date.setMinutes(getRandomIntegerNumber(0, 59));
