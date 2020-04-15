@@ -1,11 +1,12 @@
-import {getRandomIntegerNumber} from './../util.js';
+import {getRandomIntegerNumber} from '../utils.js';
 
 const authors = [`Movie Buff`, `Movie Donald`, `Movie Goofy`, `John Doe`];
 const texts = [`Interesting setting and a good cast`, `Booooooooooring`, `There's gritty realism in some scenes.`, `Very very old. Meh`, `Almost two hours? Seriously?`, `I just finished watching the first episode and I have to say I was very impressed.`, `Even if you haven't seen it though, I'd still give this a go.`, `People will always compare a sequel to its predecessor, sometimes rightly so, but this time they would be wrong.`, `I recommend people ignore the hype and hysteria of the media and judge for yourself.`, `This is a similar idea with a twist.`, `Let you know that you should be having fun with this show.`];
 const emojis = [`angry`, `puke`, `sleeping`, `smile`];
 
-const addLeadingZeroToDate = (date) => {
-  return (date < 10) ? `0${date}` : date;
+// add leading zero to num < 10
+const addLeadingZero = (value) => {
+  return (value < 10) ? `0${value}` : value;
 };
 
 const formatCommentDate = () => {
@@ -16,13 +17,15 @@ const formatCommentDate = () => {
   date.setHours(getRandomIntegerNumber(0, 23));
   date.setMinutes(getRandomIntegerNumber(0, 59));
 
-  let formatedDate = `${date.getFullYear()}/${addLeadingZeroToDate(date.getMonth())}/${addLeadingZeroToDate(date.getDate())} ${addLeadingZeroToDate(date.getHours())}:${addLeadingZeroToDate(date.getMinutes())}`;
+  // date format YYYY/MM/DD HH:MM
+  let formatedDate = `${date.getFullYear()}/${addLeadingZero(date.getMonth())}/${addLeadingZero(date.getDate())} ${addLeadingZero(date.getHours())}:${addLeadingZero(date.getMinutes())}`;
 
   return formatedDate;
 };
 
 const generateComment = () => {
   return {
+    // get first elem from list
     emoji: emojis[getRandomIntegerNumber(0, emojis.length - 1)],
     text: texts[getRandomIntegerNumber(0, texts.length - 1)],
     author: authors[getRandomIntegerNumber(0, authors.length - 1)],

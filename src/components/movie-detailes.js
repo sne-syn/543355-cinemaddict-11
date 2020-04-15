@@ -1,6 +1,7 @@
-import {capitalizeChar} from './../util.js';
+import {capitalizeChar, createElement} from '../utils.js';
 import {MONTH_NAMES} from './../const.js';
 
+// create genres template
 const createMovieGenres = (movie) => {
   const {genre} = movie;
   let genreString = ``;
@@ -11,16 +12,18 @@ const createMovieGenres = (movie) => {
   return genreString;
 };
 
+// format date dd month yyyy
 const formatReleaseDate = (date) => {
-const formatedDate = `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
+  const formatedDate = `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
 
-return formatedDate;
+  return formatedDate;
 };
 
 const createMovieDetailesTable = (movie) => {
   const {director, writers, actors, date, runtime, country} = movie;
   const releaseDate = formatReleaseDate(date);
   const genre = createMovieGenres(movie);
+  // change lable for multiple genres
   let isMultiple = ([...movie.genre].length > 1) ? `Genres` : `Genre`;
 
   return `
@@ -53,11 +56,12 @@ const createMovieDetailesTable = (movie) => {
           <td class="film-details__cell">
           ${genre}</td>
         </tr>
-`;
+  `;
 };
 
 const createControls = (movie) => {
   const {isInWatchlist, isAlreadyWatched, isInFavorites} = movie;
+  // mark input as checked
   const isChecked = (control) => control ? `checked` : ``;
 
   return `
@@ -124,8 +128,7 @@ const createDetailsTemplate = (movie) => {
   const comments = createCommentSection(movie);
   const detailesTable = createMovieDetailesTable(movie);
 
-  return `
-  <section class="film-details">
+  return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
   <div class="form-details__top-container">
     <div class="film-details__close">
@@ -153,14 +156,32 @@ const createDetailsTemplate = (movie) => {
         <p class="film-details__film-description">${description}.</p>
       </div>
     </div>
-
     <section class="film-details__controls">${controls}</section>
-  </div>
-
-  <div class="form-details__bottom-container">${comments}</div>
-</form>
-</section>
-`;
+    </div>
+    <div class="form-details__bottom-container">${comments}</div>
+  </form>
+  </section>`;
 };
 
-export {createDetailsTemplate};
+export default class MovieDetailes {
+  constructor (movie) {
+    this._movie = movie;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createDetailsTemplate(this._movie);
+  }
+
+  getElement() {
+    if(!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

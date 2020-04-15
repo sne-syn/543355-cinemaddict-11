@@ -1,8 +1,9 @@
+import {createElement} from '../utils.js';
+
 export const createCommentTemplate = (comment) => {
   const {emoji, text, author, date} = comment;
 
-  return `
-  <li class="film-details__comment">
+  return `<li class="film-details__comment">
   <span class="film-details__comment-emoji">
     <img src="./images/emoji/${emoji}.png" width="55" height="55" alt="emoji-${emoji}">
   </span>
@@ -14,6 +15,28 @@ export const createCommentTemplate = (comment) => {
       <button class="film-details__comment-delete">Delete</button>
     </p>
   </div>
-  </li>
-  `;
+  </li>`;
 };
+
+export default class Comment {
+  constructor (comment) {
+    this._comment = comment;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createCommentTemplate(this._comment);
+  }
+
+  getElement() {
+    if(!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

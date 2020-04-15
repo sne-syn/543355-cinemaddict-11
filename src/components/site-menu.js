@@ -1,3 +1,5 @@
+import {createElement} from '../utils.js';
+
 const createMenuMarkup = (menuItem) => {
   const {name, count} = menuItem;
 
@@ -15,14 +17,33 @@ const createMenuCount = (count) => {
 
 const createMenuTemplate = (menuItems) => {
   const menuMarkup = menuItems.map((it) => createMenuMarkup(it)).join(`\n`);
-  return `
-  <nav class="main-navigation">
+  return `<nav class="main-navigation">
     <div class="main-navigation__items">
       ${menuMarkup}
     </div>
     <a href="#stats" class="main-navigation__additional">Stats</a>
-  </nav>
-  `;
+  </nav>`;
 };
 
-export {createMenuTemplate};
+export default class Menu {
+  constructor (menuItems) {
+    this._menuItems = menuItems;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createMenuTemplate(this._menuItems);
+  }
+
+  getElement() {
+    if(!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

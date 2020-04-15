@@ -1,4 +1,4 @@
-import {getRandomIntegerNumber} from './../util.js';
+import {getRandomIntegerNumber} from '../utils.js';
 
 const countWatchedMovies = getRandomIntegerNumber(0, 30);
 
