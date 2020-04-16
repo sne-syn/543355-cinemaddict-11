@@ -4,7 +4,7 @@ const createContentTemplate = () => {
   return `<section class="films"></section>`;
 };
 
-export default class MainSection {
+export default class MovieSection {
   constructor () {
     this._element = null;
   }
