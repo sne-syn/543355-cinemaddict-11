@@ -8,7 +8,7 @@ import topRatedComponent from "./components/top-rated.js";
 import MostCommentedComponent from "./components/most-commented.js";
 import MovieCardComponent from "./components/movie-card.js";
 import StatsComponent from "./components/statistics.js";
-import MovieDetailesComponent from "./components/movie-detailes.js";
+import MovieDetailsComponent from "./components/movie-details.js";
 import CommentComponent from "./components/comment-component.js";
 
 //import {generateComments} from "./mock/comment.js";
@@ -38,27 +38,21 @@ const movieSection = new MovieSectionComponent();
 
 const renderMovie = (filmListElement, movie) => {
   const onCardClick = () => {
-    movieSection.getElement().appendChild(movieDetailesComponent.getElement());
+    movieSection.getElement().appendChild(movieDetailsComponent.getElement());
   };
 
   const onCloseButtonClick = () => {
-    movieSection.getElement().removeChild(movieDetailesComponent.getElement());
+    movieSection.getElement().removeChild(movieDetailsComponent.getElement());
   };
 
   const movieCardComponent = new MovieCardComponent(movie);
+  movieCardComponent.getElement().addEventListener(`click`, onCardClick);
 
-
-  const movieCard = movieCardComponent.getElement();
-  movieCard.addEventListener(`click`, onCardClick);
-
-  const movieDetailesComponent = new MovieDetailesComponent(movie);
-  const closeButton = movieDetailesComponent.getElement().querySelector(`.film-details__close-btn`);
+  const movieDetailsComponent = new MovieDetailsComponent(movie);
+  const closeButton = movieDetailsComponent.getElement().querySelector(`.film-details__close-btn`);
   closeButton.addEventListener(`click`, onCloseButtonClick);
   render(filmListElement, movieCardComponent.getElement(), RenderPosition.BEFOREEND);
-  //render(movieSection.getElement(), movieDetailesComponent.getElement(), RenderPosition.BEFOREEND);
-  //movieSection.getElement().appendChild(movieDetailesComponent.getElement());
 };
-
 
 const mostCommentedMovies = [...movies].sort((a, b) => (a.comments < b.comments) ? 1 : -1);
 const topRatedMovies = [...movies].sort((a, b) => (a.rating < b.rating) ? 1 : -1);

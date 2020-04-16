@@ -19,7 +19,7 @@ const formatReleaseDate = (date) => {
   return formatedDate;
 };
 
-const createMovieDetailesTable = (movie) => {
+const createMovieDetailsTable = (movie) => {
   const {director, writers, actors, date, runtime, country} = movie;
   const releaseDate = formatReleaseDate(date);
   const genre = createMovieGenres(movie);
@@ -126,7 +126,7 @@ const createDetailsTemplate = (movie) => {
   const {poster, title, rating, original, description, age} = movie;
   const controls = createControls(movie);
   const comments = createCommentSection(movie);
-  const detailesTable = createMovieDetailesTable(movie);
+  const detailsTable = createMovieDetailsTable(movie);
 
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
@@ -152,7 +152,7 @@ const createDetailsTemplate = (movie) => {
           </div>
         </div>
 
-        <table class="film-details__table">${detailesTable}</table>
+        <table class="film-details__table">${detailsTable}</table>
         <p class="film-details__film-description">${description}.</p>
       </div>
     </div>
