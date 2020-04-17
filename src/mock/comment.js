@@ -39,4 +39,4 @@ const generateComments = (count) => {
     .map(generateComment);
 };
 
-export {generateComment, generateComments};
+export {generateComments};

@@ -1,6 +1,6 @@
 import {createElement} from '../utils.js';
 
-export const createCommentTemplate = (comment) => {
+const createCommentTemplate = (comment) => {
   const {emoji, text, author, date} = comment;
 
   return `<li class="film-details__comment">
