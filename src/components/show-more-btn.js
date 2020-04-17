@@ -5,7 +5,7 @@ const createShowMoreTemplate = () => {
 };
 
 export default class ShowMoreBtn {
-  constructor () {
+  constructor() {
     this._element = null;
   }
 
@@ -14,7 +14,7 @@ export default class ShowMoreBtn {
   }
 
   getElement() {
-    if(!this._element) {
+    if (!this._element) {
       this._element = createElement(this.getTemplate());
     }
 

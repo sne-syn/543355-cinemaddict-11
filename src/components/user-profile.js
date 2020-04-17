@@ -11,7 +11,7 @@ const createProfileTemplate = (profile) => {
 };
 
 export default class Profile {
-  constructor (profile) {
+  constructor(profile) {
     this._profile = profile;
     this._element = null;
   }
@@ -21,7 +21,7 @@ export default class Profile {
   }
 
   getElement() {
-    if(!this._element) {
+    if (!this._element) {
       this._element = createElement(this.getTemplate());
     }
 

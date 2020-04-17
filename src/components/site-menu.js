@@ -26,7 +26,7 @@ const createMenuTemplate = (menuItems) => {
 };
 
 export default class Menu {
-  constructor (menuItems) {
+  constructor(menuItems) {
     this._menuItems = menuItems;
     this._element = null;
   }
@@ -36,7 +36,7 @@ export default class Menu {
   }
 
   getElement() {
-    if(!this._element) {
+    if (!this._element) {
       this._element = createElement(this.getTemplate());
     }
 

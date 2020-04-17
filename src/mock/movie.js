@@ -22,7 +22,7 @@ const Descriptions = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. C
 
 
 const getRandomStringLength = (str) => {
-  let description = str.split('. ').slice(getRandomIntegerNumber(0, 5), getRandomIntegerNumber(5, 5)).join('. ');
+  let description = str.split(`. `).slice(getRandomIntegerNumber(0, 5), getRandomIntegerNumber(5, 5)).join(`. `);
   return description;
 };
 
@@ -44,7 +44,7 @@ const createRuntimeRepresentation = (elem, elemLetter) => {
 const convertSecondsToHoursMinutes = (sec) => {
   let hours = sec / 3600 ^ 0;
   let minutes = (sec - hours * 3600) / 60 ^ 0;
-  let output = `${createRuntimeRepresentation(hours, 'h')} ${createRuntimeRepresentation(minutes, 'm')}`;
+  let output = `${createRuntimeRepresentation(hours, `h`)} ${createRuntimeRepresentation(minutes, `m`)}`;
 
   return output;
 };

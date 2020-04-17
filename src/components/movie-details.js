@@ -164,7 +164,7 @@ const createDetailsTemplate = (movie) => {
 };
 
 export default class MovieDetailes {
-  constructor (movie) {
+  constructor(movie) {
     this._movie = movie;
     this._element = null;
   }
@@ -174,7 +174,7 @@ export default class MovieDetailes {
   }
 
   getElement() {
-    if(!this._element) {
+    if (!this._element) {
       this._element = createElement(this.getTemplate());
     }
 

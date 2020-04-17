@@ -8,7 +8,7 @@ const createTopRatedTemplate = () => {
 };
 
 export default class TopRated {
-  constructor () {
+  constructor() {
     this._element = null;
   }
 
@@ -17,7 +17,7 @@ export default class TopRated {
   }
 
   getElement() {
-    if(!this._element) {
+    if (!this._element) {
       this._element = createElement(this.getTemplate());
     }
 

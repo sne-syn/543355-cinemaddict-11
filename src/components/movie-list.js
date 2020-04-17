@@ -8,7 +8,7 @@ const createMovieListTemplate = () => {
 };
 
 export default class MovieList {
-  constructor () {
+  constructor() {
     this._element = null;
   }
 
@@ -17,7 +17,7 @@ export default class MovieList {
   }
 
   getElement() {
-    if(!this._element) {
+    if (!this._element) {
       this._element = createElement(this.getTemplate());
     }
 

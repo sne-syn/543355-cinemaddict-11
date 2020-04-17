@@ -8,7 +8,7 @@ const createMostCommentedTemplate = () => {
 };
 
 export default class MostCommented {
-  constructor () {
+  constructor() {
     this._element = null;
   }
 
@@ -17,7 +17,7 @@ export default class MostCommented {
   }
 
   getElement() {
-    if(!this._element) {
+    if (!this._element) {
       this._element = createElement(this.getTemplate());
     }
 

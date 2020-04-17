@@ -19,7 +19,7 @@ const createCommentTemplate = (comment) => {
 };
 
 export default class Comment {
-  constructor (comment) {
+  constructor(comment) {
     this._comment = comment;
     this._element = null;
   }
@@ -29,7 +29,7 @@ export default class Comment {
   }
 
   getElement() {
-    if(!this._element) {
+    if (!this._element) {
       this._element = createElement(this.getTemplate());
     }
 
