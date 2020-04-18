@@ -1,4 +1,4 @@
-import {capitalizeChar} from "./../util.js";
+import {capitalizeChar} from "../utils.js";
 
 const menuNames = [`all`, `watchlist`, `history`, `favorites`];
 
