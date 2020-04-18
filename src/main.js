@@ -53,23 +53,37 @@ const renderCommentList = (movie) => {
 };
 
 const renderMovie = (filmListElement, movie) => {
-  const onCardClick = () => {
+  const showMovieDetails = () => {
     movieSectionComponent.getElement().appendChild(movieDetailsComponent.getElement());
-
     // render comments
     renderCommentList(movie);
   };
 
-  const onCloseButtonClick = () => {
+  const closeMovieDetails = () => {
     movieSectionComponent.getElement().removeChild(movieDetailsComponent.getElement());
   };
 
+  const onEscKeyDown = (evt) => {
+    const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
+
+    if (isEscKey) {
+      closeMovieDetails();
+      document.removeEventListener(`keydown`, onEscKeyDown);
+    }
+  };
+
   const movieCardComponent = new MovieCardComponent(movie);
-  movieCardComponent.getElement().addEventListener(`click`, onCardClick);
+  movieCardComponent.getElement().addEventListener(`click`, () => {
+    showMovieDetails();
+    document.addEventListener(`keydown`, onEscKeyDown);
+  });
 
   const movieDetailsComponent = new MovieDetailsComponent(movie);
   const closeButton = movieDetailsComponent.getElement().querySelector(`.film-details__close-btn`);
-  closeButton.addEventListener(`click`, onCloseButtonClick);
+  closeButton.addEventListener(`click`, () => {
+    closeMovieDetails();
+    document.removeEventListener(`keydown`, onEscKeyDown);
+  });
   render(filmListElement, movieCardComponent.getElement(), RenderPosition.BEFOREEND);
 };
 
