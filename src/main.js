@@ -10,6 +10,7 @@ import MovieCardComponent from "./components/movie-card.js";
 import StatsComponent from "./components/statistics.js";
 import MovieDetailsComponent from "./components/movie-details.js";
 import CommentComponent from "./components/comment-component.js";
+import NoMoviesComponent from "./components/no-movies.js";
 
 import {
   generateComments
@@ -36,6 +37,8 @@ const menuItems = generateMenu();
 const profiles = generateProfile();
 const movies = generateMovie(20);
 const movieSectionComponent = new MovieSectionComponent();
+
+
 
 // create comment
 const renderComment = (commentListElement, comment) => {
@@ -88,6 +91,7 @@ const renderMovie = (filmListElement, movie) => {
 };
 
 const renderMovieList = (movieList, movies, count) => {
+
   const filmListElement = movieList.getElement().querySelector(`.films-list__container`);
   movies.slice(0, count).forEach((movie) => {
     renderMovie(filmListElement, movie);
@@ -128,19 +132,32 @@ render(siteMainElement, new SortComponent().getElement(), RenderPosition.BEFOREE
 render(siteMainElement, movieSectionComponent.getElement(), RenderPosition.BEFOREEND);
 render(footerStatisticsElement, new StatsComponent().getElement(), RenderPosition.BEFOREEND);
 
-// main list movies
-const movieList = new MovieListComponent();
-render(movieSectionComponent.getElement(), movieList.getElement(), RenderPosition.BEFOREEND);
-renderMainMovieList(movieList, movies);
+const renderMoviesSectionsContent = () => {
+    // main list movies
+    const movieList = new MovieListComponent();
+    render(movieSectionComponent.getElement(), movieList.getElement(), RenderPosition.BEFOREEND);
+    renderMainMovieList(movieList, movies);
 
-// top rated list movies
-const topRatedList = new TopRatedComponent();
-const topRatedMovies = [...movies].sort((a, b) => (a.rating < b.rating) ? 1 : -1);
-render(movieSectionComponent.getElement(), topRatedList.getElement(), RenderPosition.BEFOREEND);
-renderMovieList(topRatedList, topRatedMovies, EXTRA_CARD_COUNT);
+    // top rated list movies
+    const topRatedList = new TopRatedComponent();
+    const topRatedMovies = [...movies].sort((a, b) => (a.rating < b.rating) ? 1 : -1);
+    render(movieSectionComponent.getElement(), topRatedList.getElement(), RenderPosition.BEFOREEND);
+    renderMovieList(topRatedList, topRatedMovies, EXTRA_CARD_COUNT);
 
-// most commented list movies
-const mostCommentedList = new MostCommentedComponent();
-const mostCommentedMovies = [...movies].sort((a, b) => (a.comments < b.comments) ? 1 : -1);
-render(movieSectionComponent.getElement(), mostCommentedList.getElement(), RenderPosition.BEFOREEND);
-renderMovieList(mostCommentedList, mostCommentedMovies, EXTRA_CARD_COUNT);
+    // most commented list movies
+    const mostCommentedList = new MostCommentedComponent();
+    const mostCommentedMovies = [...movies].sort((a, b) => (a.comments < b.comments) ? 1 : -1);
+    render(movieSectionComponent.getElement(), mostCommentedList.getElement(), RenderPosition.BEFOREEND);
+    renderMovieList(mostCommentedList, mostCommentedMovies, EXTRA_CARD_COUNT);
+
+};
+
+const noMovies = () => {
+  render(movieSectionComponent.getElement(), new NoMoviesComponent().getElement(), RenderPosition.BEFOREEND);
+};
+
+const isMoviesInDatabase = () => {
+   (movies.length === 0) ? noMovies(): renderMoviesSectionsContent();
+};
+
+isMoviesInDatabase();
