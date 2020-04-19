@@ -1,15 +1,16 @@
-import ProfileComponent from "./components/user-profile.js";
-import MenuComponent from "./components/site-menu.js";
+import ProfileComponent from "./components/profile.js";
+import MenuComponent from "./components/menu.js";
 import SortComponent from "./components/sort.js";
+import StatsComponent from "./components/stats.js";
 import MovieSectionComponent from "./components/movies-section.js";
-import MovieListComponent from "./components/movie-list.js";
+import MovieListComponent from "./components/main-movie-list";
 import ShowMoreBtnComponent from "./components/show-more-btn.js";
 import TopRatedComponent from "./components/top-rated.js";
 import MostCommentedComponent from "./components/most-commented.js";
 import MovieCardComponent from "./components/movie-card.js";
-import StatsComponent from "./components/statistics.js";
+import MovieCountComponent from "./components/movie-count";
 import MovieDetailsComponent from "./components/movie-details.js";
-import CommentComponent from "./components/comment-component.js";
+import CommentComponent from "./components/comment";
 import NoMoviesComponent from "./components/no-movies.js";
 
 import {
@@ -37,8 +38,6 @@ const menuItems = generateMenu();
 const profiles = generateProfile();
 const movies = generateMovie(20);
 const movieSectionComponent = new MovieSectionComponent();
-
-
 
 // create comment
 const renderComment = (commentListElement, comment) => {
@@ -68,7 +67,6 @@ const renderMovie = (filmListElement, movie) => {
 
   const onEscKeyDown = (evt) => {
     const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
-
     if (isEscKey) {
       closeMovieDetails();
       document.removeEventListener(`keydown`, onEscKeyDown);
@@ -91,7 +89,6 @@ const renderMovie = (filmListElement, movie) => {
 };
 
 const renderMovieList = (movieList, movies, count) => {
-
   const filmListElement = movieList.getElement().querySelector(`.films-list__container`);
   movies.slice(0, count).forEach((movie) => {
     renderMovie(filmListElement, movie);
@@ -127,29 +124,40 @@ const footerElement = document.querySelector(`.footer`);
 const footerStatisticsElement = footerElement.querySelector(`.footer__statistics`);
 
 render(siteHeaderElement, new ProfileComponent(profiles).getElement(), RenderPosition.BEFOREEND);
-render(siteMainElement, new MenuComponent(menuItems).getElement(), RenderPosition.BEFOREEND);
+render(footerStatisticsElement, new MovieCountComponent().getElement(), RenderPosition.BEFOREEND);
+
+
+const renderContent = (siteMainElement) => {
+  const menuComponent =  new MenuComponent(menuItems);
+  render(siteMainElement, menuComponent.getElement(), RenderPosition.BEFOREEND);
+};
+
+renderContent(siteMainElement);
+
+// onload and onMenuClick
 render(siteMainElement, new SortComponent().getElement(), RenderPosition.BEFOREEND);
 render(siteMainElement, movieSectionComponent.getElement(), RenderPosition.BEFOREEND);
-render(footerStatisticsElement, new StatsComponent().getElement(), RenderPosition.BEFOREEND);
+
+// onStats click
+//render(siteMainElement, new StatsComponent().getElement(), RenderPosition.BEFOREEND);
 
 const renderMoviesSectionsContent = () => {
-    // main list movies
-    const movieList = new MovieListComponent();
-    render(movieSectionComponent.getElement(), movieList.getElement(), RenderPosition.BEFOREEND);
-    renderMainMovieList(movieList, movies);
+  // main list movies
+  const movieList = new MovieListComponent();
+  render(movieSectionComponent.getElement(), movieList.getElement(), RenderPosition.BEFOREEND);
+  renderMainMovieList(movieList, movies);
 
-    // top rated list movies
-    const topRatedList = new TopRatedComponent();
-    const topRatedMovies = [...movies].sort((a, b) => (a.rating < b.rating) ? 1 : -1);
-    render(movieSectionComponent.getElement(), topRatedList.getElement(), RenderPosition.BEFOREEND);
-    renderMovieList(topRatedList, topRatedMovies, EXTRA_CARD_COUNT);
+  // top rated list movies
+  const topRatedList = new TopRatedComponent();
+  const topRatedMovies = [...movies].sort((a, b) => (a.rating < b.rating) ? 1 : -1);
+  render(movieSectionComponent.getElement(), topRatedList.getElement(), RenderPosition.BEFOREEND);
+  renderMovieList(topRatedList, topRatedMovies, EXTRA_CARD_COUNT);
 
-    // most commented list movies
-    const mostCommentedList = new MostCommentedComponent();
-    const mostCommentedMovies = [...movies].sort((a, b) => (a.comments < b.comments) ? 1 : -1);
-    render(movieSectionComponent.getElement(), mostCommentedList.getElement(), RenderPosition.BEFOREEND);
-    renderMovieList(mostCommentedList, mostCommentedMovies, EXTRA_CARD_COUNT);
-
+  // most commented list movies
+  const mostCommentedList = new MostCommentedComponent();
+  const mostCommentedMovies = [...movies].sort((a, b) => (a.comments < b.comments) ? 1 : -1);
+  render(movieSectionComponent.getElement(), mostCommentedList.getElement(), RenderPosition.BEFOREEND);
+  renderMovieList(mostCommentedList, mostCommentedMovies, EXTRA_CARD_COUNT);
 };
 
 const noMovies = () => {
@@ -157,7 +165,7 @@ const noMovies = () => {
 };
 
 const isMoviesInDatabase = () => {
-   (movies.length === 0) ? noMovies(): renderMoviesSectionsContent();
+  (movies.length === 0) ? noMovies(): renderMoviesSectionsContent();
 };
 
 isMoviesInDatabase();

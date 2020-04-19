@@ -1,13 +1,15 @@
 import {createElement} from '../utils.js';
-import {createMoviesSectionTemplate} from './../templates/movies-section-template';
+import {createCommentTemplate} from './../templates/comment-template.js';
 
-export default class MovieSection {
-  constructor() {
+
+export default class Comment {
+  constructor(comment) {
+    this._comment = comment;
     this._element = null;
   }
 
   getTemplate() {
-    return createMoviesSectionTemplate();
+    return createCommentTemplate(this._comment);
   }
 
   getElement() {
@@ -22,4 +24,3 @@ export default class MovieSection {
     this._element = null;
   }
 }
-

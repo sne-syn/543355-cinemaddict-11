@@ -1,13 +1,13 @@
 import {createElement} from '../utils.js';
-import {createMoviesSectionTemplate} from './../templates/movies-section-template';
+import {createMovieCountTemplate} from '../templates/movie-count-template';
 
-export default class MovieSection {
+export default class Stats {
   constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return createMoviesSectionTemplate();
+    return createMovieCountTemplate();
   }
 
   getElement() {

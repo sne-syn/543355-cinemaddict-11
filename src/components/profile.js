@@ -1,13 +1,14 @@
 import {createElement} from '../utils.js';
-import {createMoviesSectionTemplate} from './../templates/movies-section-template';
+import {createProfileTemplate} from './../templates/profile-template.js';
 
-export default class MovieSection {
-  constructor() {
+export default class Profile {
+  constructor(profile) {
+    this._profile = profile;
     this._element = null;
   }
 
   getTemplate() {
-    return createMoviesSectionTemplate();
+    return createProfileTemplate(this._profile);
   }
 
   getElement() {
@@ -22,4 +23,3 @@ export default class MovieSection {
     this._element = null;
   }
 }
-

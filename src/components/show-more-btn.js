@@ -1,8 +1,5 @@
 import {createElement} from '../utils.js';
-
-const createShowMoreTemplate = () => {
-  return `<button class="films-list__show-more">Show more</button>`;
-};
+import {createShowMoreTemplate} from './../templates/show-more-btn-template.js';
 
 export default class ShowMoreBtn {
   constructor() {

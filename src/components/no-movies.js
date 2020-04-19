@@ -1,4 +1,5 @@
 import {createElement} from "../utils";
+import {createNoMoviesTemplate} from './../templates/no-movies-template.js';
 
 export default class NoMovies {
   constructor() {
@@ -6,9 +7,7 @@ export default class NoMovies {
   }
 
   getTemplate() {
-    return `<section class="films-list">
-    <h2 class="films-list__title">There are no movies in our database</h2>
-  </section>`;
+    return createNoMoviesTemplate();
   }
 
   getElement() {
