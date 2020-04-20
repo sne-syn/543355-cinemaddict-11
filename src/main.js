@@ -35,9 +35,8 @@ let showingMovieCardsCount = MAIN_CARD_COUNT;
 
 const menuItems = generateMenu();
 const profile = generateProfile();
-const movies = generateMovie(20);
+export const movies = generateMovie(20);
 const movieSectionComponent = new MovieSectionComponent();
-console.log(profile);
 
 // create comment
 const renderComment = (commentListElement, comment) => {

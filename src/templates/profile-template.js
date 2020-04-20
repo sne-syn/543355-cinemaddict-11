@@ -1,5 +1,6 @@
 import {capitalizeEveryFirstChar} from '../utils.js';
 
+
 export const createProfileTemplate = (profile) => {
   const {rating, avatar} = profile;
   const ratingName = capitalizeEveryFirstChar(rating);

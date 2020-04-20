@@ -1,6 +1,6 @@
 import {capitalizeChar, capitalizeEveryFirstChar, convertSecondsToHoursMinutes} from './../utils';
 
-const countWatchedMovies = (data) => {
+export const countWatchedMovies = (data) => {
   let count = 0;
   for (let movie of data) {
     (movie.isAlreadyWatched === true) ? count++ : count;
@@ -11,9 +11,8 @@ const countWatchedMovies = (data) => {
 const countTotalDuration = (data) => {
   let total = 0;
   for (let movie of data) {
-    if (movie.isAlreadyWatched === true) {
-      total = total + movie.runtime;
-    }
+    total = (movie.isAlreadyWatched === true) ? total + movie.runtime : total;
+    (movie.isAlreadyWatched === true) ? console.log(movie.runtime) : ``;
   }
   return total;
 };
@@ -23,6 +22,7 @@ const frequencyCounter = (arr) => {
   for (let val of arr) {
     frequencyCounter[val] = (frequencyCounter[val] || 0) + 1;
   }
+  console.log(frequencyCounter);
   return frequencyCounter;
 };
 
