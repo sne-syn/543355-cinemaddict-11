@@ -1,3 +1,5 @@
+import {getHoursMinutesRuntimeString} from './../utils';
+
 const addEllipsisToString = (str) => {
   let sliced = str.slice(0, 140);
   sliced += (sliced.length < str.length) ? `...` : `.`;
@@ -33,13 +35,14 @@ export const createMovieCardTemplate = (movie) => {
   const ellipsisDescription = addEllipsisToString(description);
   const releaseYear = date.getFullYear();
   const firstGenre = genre[0];
+  const convertedRuntime = getHoursMinutesRuntimeString(runtime);
 
   return `<article class="film-card">
     <h3 class="film-card__title">${title}</h3>
     <p class="film-card__rating">${rating}</p>
     <p class="film-card__info">
       <span class="film-card__year">${releaseYear}</span>
-      <span class="film-card__duration">${runtime}</span>
+      <span class="film-card__duration">${convertedRuntime}</span>
       <span class="film-card__genre">${firstGenre}</span>
     </p>
     <img src="./images/posters/${poster}" alt="" class="film-card__poster">

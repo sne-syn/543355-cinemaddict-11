@@ -35,19 +35,7 @@ const getRandomReleaseDate = () => {
   return releaseDate;
 };
 
-const createRuntimeRepresentation = (elem, elemLetter) => {
-  let elemStyled = elem < 1 ? `` : `${elem}${elemLetter}`;
 
-  return elemStyled;
-};
-
-const convertSecondsToHoursMinutes = (sec) => {
-  let hours = sec / 3600 ^ 0;
-  let minutes = (sec - hours * 3600) / 60 ^ 0;
-  let output = `${createRuntimeRepresentation(hours, `h`)} ${createRuntimeRepresentation(minutes, `m`)}`;
-
-  return output;
-};
 
 const generateMoviesInfo = () => {
   return {
@@ -59,7 +47,7 @@ const generateMoviesInfo = () => {
     writers: convertArrayToString(getSeveralRandomItems(Names, getRandomIntegerNumber(1, 8))),
     actors: convertArrayToString(getSeveralRandomItems(Names, getRandomIntegerNumber(1, 8))),
     date: getRandomReleaseDate(),
-    runtime: convertSecondsToHoursMinutes(getRandomIntegerNumber(500, 10000)),
+    runtime: getRandomIntegerNumber(500, 10000),
     country: convertArrayToString(getSeveralRandomItems(Countries, getRandomIntegerNumber(1, 3))),
     genre: getSeveralRandomItems(Genres, getRandomIntegerNumber(2, 3)),
     description: getRandomStringLength(Descriptions),

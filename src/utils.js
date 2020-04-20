@@ -1,8 +1,3 @@
-export const RenderPosition = {
-  AFTEREND: `afterend`,
-  BEFOREEND: `beforeend`
-};
-
 // generate randome integer
 const getRandomIntegerNumber = (min, max) => {
   return min + Math.floor(Math.random() * (max - min));
@@ -48,6 +43,28 @@ const convertArrayToString = (arr) => {
   return [...arr].join(', ');
 };
 
+const createRuntimeRepresentation = (elem, elemLetter) => {
+  let elemStyled = elem < 1 ? `` : `${elem}${elemLetter}`;
+  return elemStyled;
+};
+
+const convertSecondsToHoursMinutes = (sec) => {
+  let timeObj = {};
+  let hour = sec / 3600 ^ 0;
+  let min = (sec - hour * 3600) / 60 ^ 0;
+  timeObj.hours = hour;
+  timeObj.minutes = min;
+
+  return timeObj;
+};
+
+const getHoursMinutesRuntimeString = (sec) => {
+  let element = convertSecondsToHoursMinutes(sec);
+  let output = `${createRuntimeRepresentation(element.hours, `h`)} ${createRuntimeRepresentation(element.minutes, `m`)}`;
+
+  return output;
+};
+
 export const createElement = (template) => {
   const newElement = document.createElement(`div`);
   newElement.innerHTML = template;
@@ -56,15 +73,8 @@ export const createElement = (template) => {
 };
 
 // render function
-export const render = (container, element, place) => {
-  switch (place) {
-    case RenderPosition.AFTEREND:
-      container.prepend(element);
-      break;
-    case RenderPosition.BEFOREEND:
-      container.append(element);
-      break;
-  }
+export const render = (container, element) => {
+  container.append(element);
 };
 
-export {getRandomIntegerNumber, getRandomArrayItem, getRandomNumber, capitalizeChar, capitalizeEveryFirstChar, getSeveralRandomItems, convertArrayToString};
+export {getRandomIntegerNumber, getRandomArrayItem, getRandomNumber, capitalizeChar, capitalizeEveryFirstChar, getSeveralRandomItems, convertArrayToString, convertSecondsToHoursMinutes, getHoursMinutesRuntimeString};

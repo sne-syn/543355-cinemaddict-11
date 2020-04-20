@@ -1,4 +1,4 @@
-import {capitalizeChar} from '../utils.js';
+import {capitalizeChar, getHoursMinutesRuntimeString} from '../utils.js';
 import {MONTH_NAMES} from './../const.js';
 
 // create genres template
@@ -23,6 +23,7 @@ const createMovieDetailsTable = (movie) => {
   const {director, writers, actors, date, runtime, country} = movie;
   const releaseDate = formatReleaseDate(date);
   const genre = createMovieGenres(movie);
+  const convertedRuntime = getHoursMinutesRuntimeString(runtime);
   // change lable for multiple genres
   let isMultiple = ([...movie.genre].length > 1) ? `Genres` : `Genre`;
 
@@ -45,7 +46,7 @@ const createMovieDetailsTable = (movie) => {
         </tr>
         <tr class="film-details__row">
           <td class="film-details__term">Runtime</td>
-          <td class="film-details__cell">${runtime}</td>
+          <td class="film-details__cell">${convertedRuntime}</td>
         </tr>
         <tr class="film-details__row">
           <td class="film-details__term">Country</td>

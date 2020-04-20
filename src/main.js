@@ -26,7 +26,6 @@ import {
   generateProfile
 } from "./mock/profile.js";
 import {
-  RenderPosition,
   render
 } from "./utils.js";
 
@@ -35,14 +34,15 @@ const EXTRA_CARD_COUNT = 2;
 let showingMovieCardsCount = MAIN_CARD_COUNT;
 
 const menuItems = generateMenu();
-const profiles = generateProfile();
+const profile = generateProfile();
 const movies = generateMovie(20);
 const movieSectionComponent = new MovieSectionComponent();
+console.log(profile);
 
 // create comment
 const renderComment = (commentListElement, comment) => {
   const commentComponent = new CommentComponent(comment);
-  render(commentListElement, commentComponent.getElement(), RenderPosition.BEFOREEND);
+  render(commentListElement, commentComponent.getElement());
 };
 
 // create comments list
@@ -85,7 +85,7 @@ const renderMovie = (filmListElement, movie) => {
     closeMovieDetails();
     document.removeEventListener(`keydown`, onEscKeyDown);
   });
-  render(filmListElement, movieCardComponent.getElement(), RenderPosition.BEFOREEND);
+  render(filmListElement, movieCardComponent.getElement());
 };
 
 const renderMovieList = (movieList, movies, count) => {
@@ -100,7 +100,7 @@ const renderMainMovieList = (movieList, movies) => {
   renderMovieList(movieList, movies, showingMovieCardsCount);
 
   const showMoreButtonComponent = new ShowMoreBtnComponent();
-  render(movieSectionComponent.getElement(), showMoreButtonComponent.getElement(), RenderPosition.BEFOREEND);
+  render(movieSectionComponent.getElement(), showMoreButtonComponent.getElement());
 
   // add event on showMoreButton
   showMoreButtonComponent.getElement().addEventListener(`click`, () => {
@@ -123,45 +123,44 @@ const siteMainElement = document.querySelector(`.main`);
 const footerElement = document.querySelector(`.footer`);
 const footerStatisticsElement = footerElement.querySelector(`.footer__statistics`);
 
-render(siteHeaderElement, new ProfileComponent(profiles).getElement(), RenderPosition.BEFOREEND);
-render(footerStatisticsElement, new MovieCountComponent().getElement(), RenderPosition.BEFOREEND);
+render(siteHeaderElement, new ProfileComponent(profile).getElement());
+render(footerStatisticsElement, new MovieCountComponent().getElement());
 
 
 const renderContent = (siteMainElement) => {
   const menuComponent =  new MenuComponent(menuItems);
-  render(siteMainElement, menuComponent.getElement(), RenderPosition.BEFOREEND);
+  render(siteMainElement, menuComponent.getElement());
 };
 
 renderContent(siteMainElement);
 
 // onload and onMenuClick
-render(siteMainElement, new SortComponent().getElement(), RenderPosition.BEFOREEND);
-render(siteMainElement, movieSectionComponent.getElement(), RenderPosition.BEFOREEND);
+render(siteMainElement, new SortComponent().getElement());
+render(siteMainElement, movieSectionComponent.getElement());
 
 // onStats click
-//render(siteMainElement, new StatsComponent().getElement(), RenderPosition.BEFOREEND);
-
+render(siteMainElement, new StatsComponent(movies, profile).getElement());
 const renderMoviesSectionsContent = () => {
   // main list movies
   const movieList = new MovieListComponent();
-  render(movieSectionComponent.getElement(), movieList.getElement(), RenderPosition.BEFOREEND);
+  render(movieSectionComponent.getElement(), movieList.getElement());
   renderMainMovieList(movieList, movies);
 
   // top rated list movies
   const topRatedList = new TopRatedComponent();
   const topRatedMovies = [...movies].sort((a, b) => (a.rating < b.rating) ? 1 : -1);
-  render(movieSectionComponent.getElement(), topRatedList.getElement(), RenderPosition.BEFOREEND);
+  render(movieSectionComponent.getElement(), topRatedList.getElement());
   renderMovieList(topRatedList, topRatedMovies, EXTRA_CARD_COUNT);
 
   // most commented list movies
   const mostCommentedList = new MostCommentedComponent();
   const mostCommentedMovies = [...movies].sort((a, b) => (a.comments < b.comments) ? 1 : -1);
-  render(movieSectionComponent.getElement(), mostCommentedList.getElement(), RenderPosition.BEFOREEND);
+  render(movieSectionComponent.getElement(), mostCommentedList.getElement());
   renderMovieList(mostCommentedList, mostCommentedMovies, EXTRA_CARD_COUNT);
 };
 
 const noMovies = () => {
-  render(movieSectionComponent.getElement(), new NoMoviesComponent().getElement(), RenderPosition.BEFOREEND);
+  render(movieSectionComponent.getElement(), new NoMoviesComponent().getElement());
 };
 
 const isMoviesInDatabase = () => {
@@ -169,3 +168,4 @@ const isMoviesInDatabase = () => {
 };
 
 isMoviesInDatabase();
+
