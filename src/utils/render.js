@@ -23,7 +23,6 @@ export const replace = (newComponent, oldComponent) => {
 };
 
 export const appendChild = (parent, component) => {
-  console.log('append');
   parent.appendChild(component.getElement());
 };
 

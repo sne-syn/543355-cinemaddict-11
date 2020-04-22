@@ -87,7 +87,7 @@ const renderMainMovieList = (movieList, movies, container) => {
     showingMovieCardsCount = showingMovieCardsCount + MAIN_CARD_COUNT;
 
     movies.slice(prevMovieCards, showingMovieCardsCount)
-      .forEach((movie) => renderMovie(filmListElement, movie));
+      .forEach((movie) => renderMovie(filmListElement, movie, container));
 
     if (showingMovieCardsCount >= movies.length) {
       remove(showMoreButtonComponent);
