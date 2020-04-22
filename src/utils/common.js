@@ -65,16 +65,4 @@ const getHoursMinutesRuntimeString = (sec) => {
   return output;
 };
 
-export const createElement = (template) => {
-  const newElement = document.createElement(`div`);
-  newElement.innerHTML = template;
-
-  return newElement.firstChild;
-};
-
-// render function
-export const render = (container, element) => {
-  container.append(element);
-};
-
 export {getRandomIntegerNumber, getRandomArrayItem, getRandomNumber, capitalizeChar, capitalizeEveryFirstChar, getSeveralRandomItems, convertArrayToString, convertSecondsToHoursMinutes, getHoursMinutesRuntimeString};

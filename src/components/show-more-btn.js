@@ -5,4 +5,9 @@ export default class ShowMoreBtn extends AbstractComponent {
   getTemplate() {
     return createShowMoreTemplate();
   }
+
+  setClickHandler(handler) {
+    this.getElement().addEventListener(`click`, handler);
+  }
+
 }

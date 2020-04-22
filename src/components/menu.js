@@ -1,4 +1,3 @@
-import {createElement} from './../utils/common.js';
 import {createMenuTemplate} from './../templates/menu-template.js';
 import AbstractComponent from "./abstract-component.js";
 

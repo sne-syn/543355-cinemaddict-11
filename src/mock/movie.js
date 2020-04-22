@@ -35,8 +35,6 @@ const getRandomReleaseDate = () => {
   return releaseDate;
 };
 
-
-
 const generateMoviesInfo = () => {
   return {
     poster: getRandomArrayItem(Posters),
@@ -52,7 +50,7 @@ const generateMoviesInfo = () => {
     genre: getSeveralRandomItems(Genres, getRandomIntegerNumber(2, 3)),
     description: getRandomStringLength(Descriptions),
     age: getRandomIntegerNumber(0, 18),
-    comments: getRandomIntegerNumber(1, 5),
+    comments: getRandomIntegerNumber(1, 6),
     isInWatchlist: Math.random() > 0.5,
     isAlreadyWatched: Math.random() > 0.5,
     isInFavorites: Math.random() > 0.5,
