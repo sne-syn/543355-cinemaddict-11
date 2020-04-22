@@ -27,7 +27,7 @@ import {
 } from "./mock/profile.js";
 import {
   render
-} from "./utils.js";
+} from "./utils/common.js";
 
 const MAIN_CARD_COUNT = 5;
 const EXTRA_CARD_COUNT = 2;

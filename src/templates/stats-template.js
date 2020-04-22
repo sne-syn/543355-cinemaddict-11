@@ -1,4 +1,4 @@
-import {capitalizeChar, capitalizeEveryFirstChar, convertSecondsToHoursMinutes} from './../utils';
+import {capitalizeChar, capitalizeEveryFirstChar, convertSecondsToHoursMinutes} from './../utils/common';
 
 export const countWatchedMovies = (data) => {
   let count = 0;
@@ -12,7 +12,6 @@ const countTotalDuration = (data) => {
   let total = 0;
   for (let movie of data) {
     total = (movie.isAlreadyWatched === true) ? total + movie.runtime : total;
-    (movie.isAlreadyWatched === true) ? console.log(movie.runtime) : ``;
   }
   return total;
 };
@@ -22,7 +21,6 @@ const frequencyCounter = (arr) => {
   for (let val of arr) {
     frequencyCounter[val] = (frequencyCounter[val] || 0) + 1;
   }
-  console.log(frequencyCounter);
   return frequencyCounter;
 };
 

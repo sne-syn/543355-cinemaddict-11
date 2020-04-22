@@ -1,25 +1,9 @@
-import {createElement} from '../utils.js';
 import {createMoviesSectionTemplate} from './../templates/movies-section-template';
+import AbstractComponent from "./abstract-component.js";
 
-export default class MovieSection {
-  constructor() {
-    this._element = null;
-  }
-
+export default class MovieSection extends AbstractComponent {
   getTemplate() {
     return createMoviesSectionTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
 

@@ -1,4 +1,4 @@
-import {capitalizeEveryFirstChar} from '../utils.js';
+import {capitalizeEveryFirstChar} from './../utils/common.js';
 
 
 export const createProfileTemplate = (profile) => {

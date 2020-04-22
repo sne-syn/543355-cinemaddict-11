@@ -1,4 +1,4 @@
-import {getRandomIntegerNumber} from '../utils.js';
+import {getRandomIntegerNumber} from '../utils/common.js';
 const watchedMovies = getRandomIntegerNumber(0, 30);
 
 const ratingRange = new Map();

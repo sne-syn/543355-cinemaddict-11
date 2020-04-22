@@ -1,25 +1,14 @@
-import {createElement} from '../utils.js';
 import {createProfileTemplate} from './../templates/profile-template.js';
+import AbstractComponent from "./abstract-component.js";
 
-export default class Profile {
+export default class Profile extends AbstractComponent {
   constructor(profile) {
+    super();
+
     this._profile = profile;
-    this._element = null;
   }
 
   getTemplate() {
     return createProfileTemplate(this._profile);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

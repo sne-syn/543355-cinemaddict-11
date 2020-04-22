@@ -1,4 +1,4 @@
-import {getRandomIntegerNumber} from '../utils.js';
+import {getRandomIntegerNumber} from '../utils/common.js';
 
 export const createMovieCountTemplate = () => {
   const moviesCount = new Intl.NumberFormat(`ru-RU`).format((getRandomIntegerNumber(10000, 300000)));

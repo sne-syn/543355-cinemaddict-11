@@ -1,25 +1,14 @@
-import {createElement} from '../utils.js';
 import {createDetailsTemplate} from './../templates/details-template.js';
+import AbstractComponent from "./abstract-component.js";
 
-export default class MovieDetailes {
+export default class MovieDetailes extends AbstractComponent {
   constructor(movie) {
+    super();
+
     this._movie = movie;
-    this._element = null;
   }
 
   getTemplate() {
     return createDetailsTemplate(this._movie);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

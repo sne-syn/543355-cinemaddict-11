@@ -1,4 +1,4 @@
-import {getHoursMinutesRuntimeString} from './../utils';
+import {getHoursMinutesRuntimeString} from './../utils/common.js';
 
 const addEllipsisToString = (str) => {
   let sliced = str.slice(0, 140);

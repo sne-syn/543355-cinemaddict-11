@@ -1,25 +1,9 @@
-import {createElement} from '../utils.js';
 import {createMovieCountTemplate} from '../templates/movie-count-template';
+import AbstractComponent from "./abstract-component.js";
 
-export default class Stats {
-  constructor() {
-    this._element = null;
-  }
-
+export default class Stats extends AbstractComponent {
   getTemplate() {
     return createMovieCountTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
 

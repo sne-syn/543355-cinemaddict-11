@@ -1,4 +1,4 @@
-import {capitalizeChar, getHoursMinutesRuntimeString} from '../utils.js';
+import {capitalizeChar, getHoursMinutesRuntimeString} from './../utils/common.js';
 import {MONTH_NAMES} from './../const.js';
 
 // create genres template
@@ -8,14 +8,12 @@ const createMovieGenres = (movie) => {
   genre.forEach((item) => {
     genreString += `<span class="film-details__genre">${capitalizeChar(item)}</span>`;
   });
-
   return genreString;
 };
 
 // format date dd month yyyy
 const formatReleaseDate = (date) => {
   const formatedDate = `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
-
   return formatedDate;
 };
 
