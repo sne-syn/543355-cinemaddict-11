@@ -26,20 +26,33 @@ const EXTRA_CARD_COUNT = 2;
 let showingMovieCardsCount = MAIN_CARD_COUNT;
 
 const menuItems = generateMenu();
-const movieSectionComponent = new MovieSectionComponent();
 
 export default class MainController {
   constructor(container) {
     this._container = container;
+    this._menuComponent = new MenuComponent(menuItems);
+    this._sortComponent = new SortComponent();
+    this._movieSectionComponent = new MovieSectionComponent();
+    this._showMoreButtonComponent = new ShowMoreBtnComponent();
+    this._movieList = new MovieListComponent();
+    this._topRatedList = new TopRatedComponent();
+    this._mostCommentedList = new MostCommentedComponent();
+    this._noMoviesComponent = new NoMoviesComponent();
   }
 
   render(movies, profile) {
+    const movieSectionComponent = this._movieSectionComponent;
+    const showMoreButtonComponent = this._showMoreButtonComponent;
+    const movieList = this._movieList;
+    const topRatedList = this._topRatedList;
+    const mostCommentedList = this._mostCommentedList;
+    const noMoviesComponent = this._noMoviesComponent;
+    const menuComponent = this._menuComponent;
+    const stats = new StatsComponent(movies, profile);
     // render menu
-    const menuComponent = new MenuComponent(menuItems);
     render(this._container, menuComponent);
 
     // replace stats on click
-    const stats = new StatsComponent(movies, profile);
     const showStats = (evt) => {
       evt.preventDefault();
       replace(stats, movieSectionComponent);
@@ -55,7 +68,7 @@ export default class MainController {
     menuComponent.getElement().querySelector(`.main-navigation__items`).addEventListener(`click`, showMoviesLists);
 
     // render sort and movies by default
-    render(this._container, new SortComponent());
+    render(this._container, this._sortComponent);
     render(this._container, movieSectionComponent);
 
     // create comment
@@ -117,8 +130,6 @@ export default class MainController {
     const renderMainMovieList = (movieList, moviesSelection) => {
       const filmListElement = movieList.getElement().querySelector(`.films-list__container`);
       renderMovieList(movieList, moviesSelection, showingMovieCardsCount);
-
-      const showMoreButtonComponent = new ShowMoreBtnComponent();
       render(movieSectionComponent.getElement(), showMoreButtonComponent);
 
       // add event on showMoreButton
@@ -137,25 +148,23 @@ export default class MainController {
 
     const renderMoviesSectionsContent = () => {
       // main list movies
-      const movieList = new MovieListComponent();
       render(movieSectionComponent.getElement(), movieList);
       renderMainMovieList(movieList, movies);
 
       // top rated list movies
-      const topRatedList = new TopRatedComponent();
       const topRatedMovies = [...movies].sort((a, b) => (a.rating < b.rating) ? 1 : -1);
       render(movieSectionComponent.getElement(), topRatedList);
       renderMovieList(topRatedList, topRatedMovies, EXTRA_CARD_COUNT);
 
       // most commented list movies
-      const mostCommentedList = new MostCommentedComponent();
+
       const mostCommentedMovies = [...movies].sort((a, b) => (a.comments < b.comments) ? 1 : -1);
       render(movieSectionComponent.getElement(), mostCommentedList);
       renderMovieList(mostCommentedList, mostCommentedMovies, EXTRA_CARD_COUNT);
     };
 
     const noMovies = () => {
-      render(movieSectionComponent.getElement(), new NoMoviesComponent());
+      render(movieSectionComponent.getElement(), noMoviesComponent);
     };
 
     const isMoviesInDatabase = () => {
