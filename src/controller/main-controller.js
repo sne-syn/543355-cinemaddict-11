@@ -18,9 +18,6 @@ import {
   generateMenu
 } from "./../mock/menu.js";
 import {
-  generateMovie
-} from "./../mock/movie.js";
-import {
   render, replace, remove, appendChild, removeChild
 } from "./../utils/render.js";
 
@@ -61,7 +58,7 @@ export default class MainController {
     render(this._container, new SortComponent());
     render(this._container, movieSectionComponent);
 
-    //create comment
+    // create comment
     const renderComment = (commentListElement, comment) => {
       const commentComponent = new CommentComponent(comment);
       render(commentListElement, commentComponent);
@@ -110,22 +107,22 @@ export default class MainController {
       render(filmListElement, movieCardComponent);
     };
 
-    const renderMovieList = (movieList, movies, count) => {
+    const renderMovieList = (movieList, count) => {
       const filmListElement = movieList.getElement().querySelector(`.films-list__container`);
       movies.slice(0, count).forEach((movie) => {
         renderMovie(filmListElement, movie);
       });
     };
 
-    const renderMainMovieList = (movieList, movies) => {
+    const renderMainMovieList = (movieList) => {
       const filmListElement = movieList.getElement().querySelector(`.films-list__container`);
-      renderMovieList(movieList, movies, showingMovieCardsCount);
+      renderMovieList(movieList, showingMovieCardsCount);
 
       const showMoreButtonComponent = new ShowMoreBtnComponent();
       render(movieSectionComponent.getElement(), showMoreButtonComponent);
 
       // add event on showMoreButton
-      showMoreButtonComponent.setClickHandler (() => {
+      showMoreButtonComponent.setClickHandler(() => {
         const prevMovieCards = showingMovieCardsCount;
         showingMovieCardsCount = showingMovieCardsCount + MAIN_CARD_COUNT;
 
@@ -138,11 +135,11 @@ export default class MainController {
       });
     };
 
-    const renderMoviesSectionsContent = (movies) => {
+    const renderMoviesSectionsContent = () => {
       // main list movies
       const movieList = new MovieListComponent();
       render(movieSectionComponent.getElement(), movieList);
-      renderMainMovieList(movieList, movies);
+      renderMainMovieList(movieList);
 
       // top rated list movies
       const topRatedList = new TopRatedComponent();
@@ -161,11 +158,10 @@ export default class MainController {
       render(movieSectionComponent.getElement(), new NoMoviesComponent());
     };
 
-    const isMoviesInDatabase = (movies) => {
-      (movies.length === 0) ? noMovies(): renderMoviesSectionsContent(movies);
+    const isMoviesInDatabase = () => {
+      return (movies.length === 0) ? noMovies() : renderMoviesSectionsContent();
     };
 
     isMoviesInDatabase(movies);
   }
 }
-

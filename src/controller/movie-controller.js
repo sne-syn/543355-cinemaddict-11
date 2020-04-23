@@ -3,7 +3,7 @@ export default class MovieController {
     this._container = container;
   }
 
-  render(movies) {
-    renderMovie(this._container, movies);
+  render() {
+    // renderMovie(this._container, movies);
   }
 }

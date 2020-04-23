@@ -3,7 +3,7 @@ import {capitalizeChar, capitalizeEveryFirstChar, convertSecondsToHoursMinutes} 
 export const countWatchedMovies = (data) => {
   let count = 0;
   for (let movie of data) {
-    (movie.isAlreadyWatched === true) ? count++ : count;
+    count = (movie.isAlreadyWatched === true) ? count++ : count;
   }
   return count;
 };
@@ -16,7 +16,7 @@ const countTotalDuration = (data) => {
   return total;
 };
 
-const frequencyCounter = (arr) => {
+const countFrequency = (arr) => {
   let frequencyCounter = {};
   for (let val of arr) {
     frequencyCounter[val] = (frequencyCounter[val] || 0) + 1;
@@ -36,7 +36,7 @@ const collectGenres = (data) => {
 
 const getTopGenre = (movies) => {
   let arr = collectGenres(movies);
-  let genresObj = frequencyCounter(arr);
+  let genresObj = countFrequency(arr);
   let count = 0;
   let genre = ``;
   for (let key in genresObj) {

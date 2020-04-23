@@ -25,7 +25,9 @@ const getSeveralRandomItems = (array, count) => {
 
 // capitalize first char only
 const capitalizeChar = (str) => {
-  if (typeof str !== 'string') return '';
+  if (typeof str !== `string`) {
+    return ``;
+  }
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
@@ -33,14 +35,14 @@ const capitalizeChar = (str) => {
 const capitalizeEveryFirstChar = (str) => {
   return str
     .toLowerCase()
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+    .split(` `)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(` `);
 };
 
 // copy array and convert it to string
 const convertArrayToString = (arr) => {
-  return [...arr].join(', ');
+  return [...arr].join(`, `);
 };
 
 const createRuntimeRepresentation = (elem, elemLetter) => {
