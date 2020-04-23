@@ -7,6 +7,7 @@ import MainController from './controller/main-controller.js';
 import MovieSectionComponent from "./components/movies-section.js";
 import MovieCountComponent from "./components/movie-count";
 
+
 import {
   generateMenu
 } from "./mock/menu.js";
