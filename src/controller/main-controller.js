@@ -107,16 +107,16 @@ export default class MainController {
       render(filmListElement, movieCardComponent);
     };
 
-    const renderMovieList = (movieList, moviesArr, count) => {
+    const renderMovieList = (movieList, moviesSelection, count) => {
       const filmListElement = movieList.getElement().querySelector(`.films-list__container`);
-      moviesArr.slice(0, count).forEach((movie) => {
+      moviesSelection.slice(0, count).forEach((movie) => {
         renderMovie(filmListElement, movie);
       });
     };
 
-    const renderMainMovieList = (movieList, moviesArr) => {
+    const renderMainMovieList = (movieList, moviesSelection) => {
       const filmListElement = movieList.getElement().querySelector(`.films-list__container`);
-      renderMovieList(movieList, moviesArr, showingMovieCardsCount);
+      renderMovieList(movieList, moviesSelection, showingMovieCardsCount);
 
       const showMoreButtonComponent = new ShowMoreBtnComponent();
       render(movieSectionComponent.getElement(), showMoreButtonComponent);
@@ -126,10 +126,10 @@ export default class MainController {
         const prevMovieCards = showingMovieCardsCount;
         showingMovieCardsCount = showingMovieCardsCount + MAIN_CARD_COUNT;
 
-        moviesArr.slice(prevMovieCards, showingMovieCardsCount)
+        moviesSelection.slice(prevMovieCards, showingMovieCardsCount)
           .forEach((movie) => renderMovie(filmListElement, movie));
 
-        if (showingMovieCardsCount >= moviesArr.length) {
+        if (showingMovieCardsCount >= moviesSelection.length) {
           remove(showMoreButtonComponent);
         }
       });
