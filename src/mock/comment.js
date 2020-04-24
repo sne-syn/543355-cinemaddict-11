@@ -26,9 +26,9 @@ const formatCommentDate = () => {
 const generateComment = () => {
   return {
     // get first elem from list
-    emoji: emojis[getRandomIntegerNumber(0, emojis.length - 1)],
-    text: texts[getRandomIntegerNumber(0, texts.length - 1)],
-    author: authors[getRandomIntegerNumber(0, authors.length - 1)],
+    emoji: emojis[getRandomIntegerNumber(0, emojis.length)],
+    text: texts[getRandomIntegerNumber(0, texts.length)],
+    author: authors[getRandomIntegerNumber(0, authors.length)],
     date: formatCommentDate(),
   };
 };
