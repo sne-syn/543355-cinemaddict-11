@@ -11,7 +11,11 @@ import {
 import {
   render
 } from "./utils/render.js";
+import {
+  generateMenu
+} from "./mock/menu.js";
 
+const menuItems = generateMenu();
 const profile = generateProfile();
 export const movies = generateMovie(20);
 
@@ -25,5 +29,5 @@ render(siteHeaderElement, new ProfileComponent(profile));
 render(footerStatisticsElement, new MovieCountComponent());
 
 // call mainController
-const mainController = new MainController(siteMainElement);
+const mainController = new MainController(siteMainElement, menuItems, movies, profile);
 mainController.render(movies, profile);

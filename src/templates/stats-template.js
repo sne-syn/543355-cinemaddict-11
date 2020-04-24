@@ -3,7 +3,7 @@ import {capitalizeChar, capitalizeEveryFirstChar, convertSecondsToHoursMinutes} 
 export const countWatchedMovies = (data) => {
   let count = 0;
   for (let movie of data) {
-    count = (movie.isAlreadyWatched === true) ? count++ : count;
+    count += (movie.isAlreadyWatched === true) ? 1 : 0;
   }
   return count;
 };

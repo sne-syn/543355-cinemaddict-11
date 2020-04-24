@@ -11,24 +11,15 @@ import MovieDetailsComponent from "./../components/movie-details.js";
 import CommentComponent from "./../components/comment.js";
 import NoMoviesComponent from "./../components/no-movies.js";
 
-import {
-  generateComments
-} from "./../mock/comment.js";
-import {
-  generateMenu
-} from "./../mock/menu.js";
-import {
-  render, replace, remove, appendChild, removeChild
-} from "./../utils/render.js";
+import {generateComments} from "./../mock/comment.js";
+import {render, remove, appendChild, removeChild} from "./../utils/render.js";
 
 const MAIN_CARD_COUNT = 5;
 const EXTRA_CARD_COUNT = 2;
 let showingMovieCardsCount = MAIN_CARD_COUNT;
 
-const menuItems = generateMenu();
-
 export default class MainController {
-  constructor(container) {
+  constructor(container, menuItems, movies, profile) {
     this._container = container;
     this._menuComponent = new MenuComponent(menuItems);
     this._sortComponent = new SortComponent();
@@ -38,63 +29,61 @@ export default class MainController {
     this._topRatedList = new TopRatedComponent();
     this._mostCommentedList = new MostCommentedComponent();
     this._noMoviesComponent = new NoMoviesComponent();
+    this._stats = new StatsComponent(movies, profile);
+    this._showStats = this._showStats.bind(this);
+    this._showMoviesLists = this._showMoviesLists.bind(this);
   }
 
-  render(movies, profile) {
-    const movieSectionComponent = this._movieSectionComponent;
-    const showMoreButtonComponent = this._showMoreButtonComponent;
-    const movieList = this._movieList;
-    const topRatedList = this._topRatedList;
-    const mostCommentedList = this._mostCommentedList;
-    const noMoviesComponent = this._noMoviesComponent;
-    const menuComponent = this._menuComponent;
-    const stats = new StatsComponent(movies, profile);
-    // render menu
-    render(this._container, menuComponent);
+  _showStats(evt) {
+    evt.preventDefault();
+    removeChild(this._container, this._movieSectionComponent);
+    removeChild(this._container, this._sortComponent);
+    appendChild(this._container, this._stats);
+  }
 
-    // replace stats on click
-    const showStats = (evt) => {
-      evt.preventDefault();
-      replace(stats, movieSectionComponent);
-    };
+  // replace stats on click
+  _showMoviesLists() {
+    if (this._container && this._stats) {
+      removeChild(this._container, this._stats);
+      appendChild(this._container, this._sortComponent);
+      appendChild(this._container, this._movieSectionComponent);
+    }
+  }
 
-    // replace stats on click
-    const showMoviesLists = () => {
-      replace(movieSectionComponent, stats);
-    };
+  render(movies) {
+    render(this._container, this._menuComponent);
+    render(this._container, this._sortComponent);
+    render(this._container, this._movieSectionComponent);
+
 
     // set events
-    menuComponent.getElement().querySelector(`.main-navigation__additional`).addEventListener(`click`, showStats);
-    menuComponent.getElement().querySelector(`.main-navigation__items`).addEventListener(`click`, showMoviesLists);
-
-    // render sort and movies by default
-    render(this._container, this._sortComponent);
-    render(this._container, movieSectionComponent);
-
-    // create comment
-    const renderComment = (commentListElement, comment) => {
-      const commentComponent = new CommentComponent(comment);
-      render(commentListElement, commentComponent);
-    };
+    this._menuComponent.getElement().querySelector(`.main-navigation__additional`).addEventListener(`click`, this._showStats);
+    this._menuComponent.getElement().querySelector(`.main-navigation__items`).addEventListener(`click`, this._showMoviesLists);
 
     // create comments list
     const renderCommentList = (movie) => {
       const comments = generateComments(movie.comments);
       const commentListElement = document.querySelector(`.film-details__comments-list`);
+      // remove prev comments
+      while (commentListElement.firstChild) {
+        commentListElement.removeChild(commentListElement.firstChild);
+      }
+      // render new comments
       comments.forEach((comment) => {
-        renderComment(commentListElement, comment);
+        const commentComponent = new CommentComponent(comment);
+        render(commentListElement, commentComponent);
       });
     };
 
     const renderMovie = (filmListElement, movie) => {
       const showMovieDetails = () => {
-        appendChild(movieSectionComponent.getElement(), movieDetailsComponent);
+        appendChild(this._movieSectionComponent.getElement(), movieDetailsComponent);
         // render comments
         renderCommentList(movie);
       };
 
       const closeMovieDetails = () => {
-        removeChild(movieSectionComponent.getElement(), movieDetailsComponent);
+        removeChild(this._movieSectionComponent.getElement(), movieDetailsComponent);
       };
 
       const onEscKeyDown = (evt) => {
@@ -104,7 +93,7 @@ export default class MainController {
           document.removeEventListener(`keydown`, onEscKeyDown);
         }
       };
-
+      //
       const movieCardComponent = new MovieCardComponent(movie);
       movieCardComponent.setOnCardClickHandler(() => {
         showMovieDetails();
@@ -130,10 +119,10 @@ export default class MainController {
     const renderMainMovieList = (movieList, moviesSelection) => {
       const filmListElement = movieList.getElement().querySelector(`.films-list__container`);
       renderMovieList(movieList, moviesSelection, showingMovieCardsCount);
-      render(movieSectionComponent.getElement(), showMoreButtonComponent);
+      render(this._movieSectionComponent.getElement(), this._showMoreButtonComponent);
 
       // add event on showMoreButton
-      showMoreButtonComponent.setClickHandler(() => {
+      this._showMoreButtonComponent.setClickHandler(() => {
         const prevMovieCards = showingMovieCardsCount;
         showingMovieCardsCount = showingMovieCardsCount + MAIN_CARD_COUNT;
 
@@ -141,30 +130,30 @@ export default class MainController {
           .forEach((movie) => renderMovie(filmListElement, movie));
 
         if (showingMovieCardsCount >= moviesSelection.length) {
-          remove(showMoreButtonComponent);
+          remove(this._showMoreButtonComponent);
         }
       });
     };
 
     const renderMoviesSectionsContent = () => {
       // main list movies
-      render(movieSectionComponent.getElement(), movieList);
-      renderMainMovieList(movieList, movies);
+      render(this._movieSectionComponent.getElement(), this._movieList);
+      renderMainMovieList(this._movieList, movies);
 
       // top rated list movies
       const topRatedMovies = [...movies].sort((a, b) => (a.rating < b.rating) ? 1 : -1);
-      render(movieSectionComponent.getElement(), topRatedList);
-      renderMovieList(topRatedList, topRatedMovies, EXTRA_CARD_COUNT);
+      render(this._movieSectionComponent.getElement(), this._topRatedList);
+      renderMovieList(this._topRatedList, topRatedMovies, EXTRA_CARD_COUNT);
 
       // most commented list movies
 
       const mostCommentedMovies = [...movies].sort((a, b) => (a.comments < b.comments) ? 1 : -1);
-      render(movieSectionComponent.getElement(), mostCommentedList);
-      renderMovieList(mostCommentedList, mostCommentedMovies, EXTRA_CARD_COUNT);
+      render(this._movieSectionComponent.getElement(), this._mostCommentedList);
+      renderMovieList(this._mostCommentedList, mostCommentedMovies, EXTRA_CARD_COUNT);
     };
 
     const noMovies = () => {
-      render(movieSectionComponent.getElement(), noMoviesComponent);
+      render(this._movieSectionComponent.getElement(), this._noMoviesComponent);
     };
 
     const isMoviesInDatabase = () => {
