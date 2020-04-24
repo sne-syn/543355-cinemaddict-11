@@ -41,9 +41,9 @@ export default class MainController {
     appendChild(this._container, this._stats);
   }
 
-  // replace stats on click
   _showMoviesLists() {
-    if (this._container && this._stats) {
+    const isExist = !!(this._container && this._stats && this._movieSectionComponent && this._sortComponent);
+    if (isExist && this._container.contains(this._stats.getElement())) {
       removeChild(this._container, this._stats);
       appendChild(this._container, this._sortComponent);
       appendChild(this._container, this._movieSectionComponent);
@@ -54,7 +54,6 @@ export default class MainController {
     render(this._container, this._menuComponent);
     render(this._container, this._sortComponent);
     render(this._container, this._movieSectionComponent);
-
 
     // set events
     this._menuComponent.getElement().querySelector(`.main-navigation__additional`).addEventListener(`click`, this._showStats);
@@ -93,7 +92,7 @@ export default class MainController {
           document.removeEventListener(`keydown`, onEscKeyDown);
         }
       };
-      //
+
       const movieCardComponent = new MovieCardComponent(movie);
       movieCardComponent.setOnCardClickHandler(() => {
         showMovieDetails();
@@ -105,7 +104,6 @@ export default class MainController {
         closeMovieDetails();
         document.removeEventListener(`keydown`, onEscKeyDown);
       });
-
       render(filmListElement, movieCardComponent);
     };
 
@@ -146,7 +144,6 @@ export default class MainController {
       renderMovieList(this._topRatedList, topRatedMovies, EXTRA_CARD_COUNT);
 
       // most commented list movies
-
       const mostCommentedMovies = [...movies].sort((a, b) => (a.comments < b.comments) ? 1 : -1);
       render(this._movieSectionComponent.getElement(), this._mostCommentedList);
       renderMovieList(this._mostCommentedList, mostCommentedMovies, EXTRA_CARD_COUNT);
