@@ -1,5 +1,5 @@
 import ProfileComponent from "./components/profile.js";
-import MainController from './controller/main-controller.js';
+import PageController from './controller/page-controller.js';
 import MovieCountComponent from "./components/movie-count";
 
 import {
@@ -28,6 +28,6 @@ const footerStatisticsElement = footerElement.querySelector(`.footer__statistics
 render(siteHeaderElement, new ProfileComponent(profile));
 render(footerStatisticsElement, new MovieCountComponent());
 
-// call mainController
-const mainController = new MainController(siteMainElement, menuItems, movies, profile);
-mainController.render(movies, profile);
+// call pageController
+const pageController = new PageController(siteMainElement, menuItems, movies, profile);
+pageController.render(movies, profile);

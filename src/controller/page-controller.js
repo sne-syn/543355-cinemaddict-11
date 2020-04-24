@@ -18,7 +18,7 @@ const MAIN_CARD_COUNT = 5;
 const EXTRA_CARD_COUNT = 2;
 let showingMovieCardsCount = MAIN_CARD_COUNT;
 
-export default class MainController {
+export default class PageController {
   constructor(container, menuItems, movies, profile) {
     this._container = container;
     this._menuComponent = new MenuComponent(menuItems);
