@@ -1,6 +1,5 @@
-import {getRandomIntegerNumber} from '../utils.js';
-
-const countWatchedMovies = getRandomIntegerNumber(0, 30);
+import {getRandomIntegerNumber} from '../utils/common.js';
+const watchedMovies = getRandomIntegerNumber(0, 30);
 
 const ratingRange = new Map();
 ratingRange.set(`low`, 10);
@@ -26,13 +25,13 @@ avatarMap.set(`movie buff`, {
 
 const generateProfile = () => {
   switch (true) {
-    case (countWatchedMovies === 0):
+    case (watchedMovies === 0):
       return avatarMap.get(`no-rating`);
-    case (countWatchedMovies <= ratingRange.get(`low`)):
+    case (watchedMovies <= ratingRange.get(`low`)):
       return avatarMap.get(`novice`);
-    case (countWatchedMovies > ratingRange.get(`low`) && countWatchedMovies <= ratingRange.get(`high`)):
+    case (watchedMovies > ratingRange.get(`low`) && watchedMovies <= ratingRange.get(`high`)):
       return avatarMap.get(`fan`);
-    case (countWatchedMovies > ratingRange.get(`high`)):
+    case (watchedMovies > ratingRange.get(`high`)):
       return avatarMap.get(`movie buff`);
     default:
       return false;
@@ -40,4 +39,3 @@ const generateProfile = () => {
 };
 
 export {generateProfile};
-

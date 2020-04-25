@@ -4,7 +4,7 @@ import {
   getRandomNumber,
   getSeveralRandomItems,
   convertArrayToString
-} from '../utils.js';
+} from '../utils/common.js';
 
 const Posters = [`made-for-each-other.png`, `popeye-meets-sinbad.png`, `sagebrush-trail.jpg`, `santa-claus-conquers-the-martians.jpg`, `the-dance-of-life.jpg`, `the-great-flamarion.jpg`, `the-man-with-the-golden-arm.jpg`, `1.jpg`, `2.jpg`, `3.jpg`, `4.jpg`, `5.jpeg`, `6.jpg`, `7.jpg`, `8.png`, `10.jpg`, `11.jpg`, `12.jpg`, `13.jpg`, `14.jpg`];
 
@@ -35,20 +35,6 @@ const getRandomReleaseDate = () => {
   return releaseDate;
 };
 
-const createRuntimeRepresentation = (elem, elemLetter) => {
-  let elemStyled = elem < 1 ? `` : `${elem}${elemLetter}`;
-
-  return elemStyled;
-};
-
-const convertSecondsToHoursMinutes = (sec) => {
-  let hours = sec / 3600 ^ 0;
-  let minutes = (sec - hours * 3600) / 60 ^ 0;
-  let output = `${createRuntimeRepresentation(hours, `h`)} ${createRuntimeRepresentation(minutes, `m`)}`;
-
-  return output;
-};
-
 const generateMoviesInfo = () => {
   return {
     poster: getRandomArrayItem(Posters),
@@ -59,12 +45,12 @@ const generateMoviesInfo = () => {
     writers: convertArrayToString(getSeveralRandomItems(Names, getRandomIntegerNumber(1, 8))),
     actors: convertArrayToString(getSeveralRandomItems(Names, getRandomIntegerNumber(1, 8))),
     date: getRandomReleaseDate(),
-    runtime: convertSecondsToHoursMinutes(getRandomIntegerNumber(500, 10000)),
+    runtime: getRandomIntegerNumber(500, 10000),
     country: convertArrayToString(getSeveralRandomItems(Countries, getRandomIntegerNumber(1, 3))),
     genre: getSeveralRandomItems(Genres, getRandomIntegerNumber(2, 3)),
     description: getRandomStringLength(Descriptions),
     age: getRandomIntegerNumber(0, 18),
-    comments: getRandomIntegerNumber(1, 5),
+    comments: getRandomIntegerNumber(1, 6),
     isInWatchlist: Math.random() > 0.5,
     isAlreadyWatched: Math.random() > 0.5,
     isInFavorites: Math.random() > 0.5,
