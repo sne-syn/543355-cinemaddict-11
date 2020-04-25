@@ -10,4 +10,8 @@ export default class ShowMoreBtn extends AbstractComponent {
     this.getElement().addEventListener(`click`, handler);
   }
 
+  removeClickHandler(handler) {
+    this.getElement().removeEventListener(`click`, handler);
+  }
+
 }

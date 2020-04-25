@@ -76,6 +76,23 @@ const renderMovie = (listContainer, movie, section) => {
   render(listContainer, movieCardComponent);
 };
 
+const getSortedMovies = (movies, sortType, from, to) => {
+  let sortedMovies = [];
+  switch (sortType) {
+    case SortType.RATING:
+      sortedMovies = [...movies].sort((a, b) => (a.rating < b.rating) ? 1 : -1);
+      break;
+    case SortType.DATE:
+      sortedMovies = [...movies].sort((a, b) => (a.date < b.date) ? 1 : -1);
+      break;
+    case SortType.DEFAULT:
+      sortedMovies = [...movies];
+      break;
+  }
+
+  return sortedMovies;
+};
+
 export default class PageController {
   constructor(container, menuItems, movies, profile) {
     this._container = container;
@@ -113,6 +130,21 @@ export default class PageController {
     render(this._container, this._sortComponent);
     render(this._container, this._movieSectionComponent);
 
+    const renderLoadMoreButton = (component, arr) => {
+      this._showMoreButtonComponent.setClickHandler(() => {
+        const prevMovieCards = showingMovieCardsCount;
+        showingMovieCardsCount = showingMovieCardsCount + MAIN_CARD_COUNT;
+
+        arr.slice(prevMovieCards, showingMovieCardsCount)
+          .forEach((movie) => renderMovie(component.listContainer, movie, this._movieSectionComponent));
+
+        if (showingMovieCardsCount >= arr.length) {
+          remove(this._showMoreButtonComponent);
+
+        }
+      });
+    };
+
     // set events
     this._menuComponent.setStatsClickHandler((evt) => {
       this._showStats(evt);
@@ -127,43 +159,30 @@ export default class PageController {
       });
     };
 
-    const renderMainMovieList = (component, moviesSelection) => {
-      renderMovieList(component, moviesSelection, showingMovieCardsCount);
+    const renderMainMovieList = (component, movies) => {
+      showingMovieCardsCount = MAIN_CARD_COUNT;
+      remove(this._showMoreButtonComponent);
+      movies.slice(0, showingMovieCardsCount).forEach((movie) => {
+        renderMovie(component.listContainer, movie, this._movieSectionComponent);
+      });
       render(component.getElement(), this._showMoreButtonComponent);
 
-      // add event on showMoreButton
-      this._showMoreButtonComponent.setClickHandler(() => {
-        const prevMovieCards = showingMovieCardsCount;
-        showingMovieCardsCount = showingMovieCardsCount + MAIN_CARD_COUNT;
+      renderLoadMoreButton(component, movies);
 
-        moviesSelection.slice(prevMovieCards, showingMovieCardsCount)
-          .forEach((movie) => renderMovie(component.listContainer, movie, this._movieSectionComponent));
+      // ===============================
 
-        if (showingMovieCardsCount >= moviesSelection.length) {
-          remove(this._showMoreButtonComponent);
-        }
-      });
+      this._sortComponent.setSortTypeChangeHandler((sortType) => {
+        showingMovieCardsCount = MAIN_CARD_COUNT;
+        remove(this._showMoreButtonComponent);
+        const sortedMovies = getSortedMovies(movies, sortType, 0, showingMovieCardsCount);
 
-      this._sortComponent.setSortTypeChangeHandler(() => {
         component.listContainer.innerHTML = ``;
-
-        moviesSelection.slice(0, MAIN_CARD_COUNT).forEach((movie) => {
+        sortedMovies.slice(0, showingMovieCardsCount).forEach((movie) => {
           renderMovie(component.listContainer, movie, this._movieSectionComponent);
         });
 
         render(component.getElement(), this._showMoreButtonComponent);
-        // add event on showMoreButton
-        this._showMoreButtonComponent.setClickHandler(() => {
-          prevMovieCards = showingMovieCardsCount;
-          showingMovieCardsCount = showingMovieCardsCount + MAIN_CARD_COUNT;
-
-          moviesSelection.slice(prevMovieCards, showingMovieCardsCount)
-            .forEach((movie) => renderMovie(component.listContainer, movie, this._movieSectionComponent));
-
-          if (showingMovieCardsCount >= moviesSelection.length) {
-            remove(this._showMoreButtonComponent);
-          }
-        });
+        renderLoadMoreButton(component, sortedMovies);
       });
     };
 
