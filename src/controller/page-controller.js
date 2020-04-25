@@ -33,7 +33,7 @@ let showingMovieCardsCount = MAIN_CARD_COUNT;
     });
   };
 
-  const renderMovie = (filmListElement, movie, section) => {
+  const renderMovie = (listContainer, movie, section) => {
     const showMovieDetails = () => {
       appendChild(section.getElement(), movieDetailsComponent);
       // render comments
@@ -63,7 +63,7 @@ let showingMovieCardsCount = MAIN_CARD_COUNT;
       closeMovieDetails();
       document.removeEventListener(`keydown`, onEscKeyDown);
     });
-    render(filmListElement, movieCardComponent);
+    render(listContainer, movieCardComponent);
   };
 
 export default class PageController {
@@ -104,21 +104,21 @@ export default class PageController {
     render(this._container, this._movieSectionComponent);
 
     // set events
+    this._menuComponent.setStatsClickHandler((evt) => {
+      this._showStats(evt);
+    });
+    this._menuComponent.setMenuClickHandler(() => {
+      this._showMoviesLists();
+    });
 
-    this._menuComponent.getElement().querySelector(`.main-navigation__additional`).addEventListener(`click`,this._showStats);
-    this._menuComponent.getElement().querySelector(`.main-navigation__items`).addEventListener(`click`, this._showMoviesLists);
-
-
-    const renderMovieList = (movieList, moviesSelection, count) => {
-      const filmListElement = movieList.getElement().querySelector(`.films-list__container`);
+    const renderMovieList = (component, moviesSelection, count) => {
       moviesSelection.slice(0, count).forEach((movie) => {
-        renderMovie(filmListElement, movie, this._movieSectionComponent);
+        renderMovie(component.listContainer, movie, this._movieSectionComponent);
       });
     };
 
-    const renderMainMovieList = (movieList, moviesSelection) => {
-      const filmListElement = movieList.getElement().querySelector(`.films-list__container`);
-      renderMovieList(movieList, moviesSelection, showingMovieCardsCount);
+    const renderMainMovieList = (component, moviesSelection) => {
+      renderMovieList(component, moviesSelection, showingMovieCardsCount);
       render(this._movieSectionComponent.getElement(), this._showMoreButtonComponent);
 
       // add event on showMoreButton
@@ -127,7 +127,7 @@ export default class PageController {
         showingMovieCardsCount = showingMovieCardsCount + MAIN_CARD_COUNT;
 
         moviesSelection.slice(prevMovieCards, showingMovieCardsCount)
-          .forEach((movie) => renderMovie(filmListElement, movie, this._movieSectionComponent));
+          .forEach((movie) => renderMovie(component.listContainer, movie, this._movieSectionComponent));
 
         if (showingMovieCardsCount >= moviesSelection.length) {
           remove(this._showMoreButtonComponent);
