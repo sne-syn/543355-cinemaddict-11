@@ -140,7 +140,6 @@ export default class PageController {
 
         if (showingMovieCardsCount >= arr.length) {
           remove(this._showMoreButtonComponent);
-
         }
       });
     };
