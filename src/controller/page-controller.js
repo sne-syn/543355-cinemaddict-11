@@ -1,4 +1,7 @@
 import MenuComponent from "./../components/menu.js";
+import {
+  SortType
+} from "./../templates/sort-template.js";
 import SortComponent from "./../components/sort.js";
 import StatsComponent from "./../components/stats.js";
 import MovieSectionComponent from "./../components/movies-section.js";
@@ -11,60 +14,67 @@ import MovieDetailsComponent from "./../components/movie-details.js";
 import CommentComponent from "./../components/comment.js";
 import NoMoviesComponent from "./../components/no-movies.js";
 
-import {generateComments} from "./../mock/comment.js";
-import {render, remove, appendChild, removeChild} from "./../utils/render.js";
+import {
+  generateComments
+} from "./../mock/comment.js";
+import {
+  render,
+  remove,
+  appendChild,
+  removeChild
+} from "./../utils/render.js";
 
 const MAIN_CARD_COUNT = 5;
 const EXTRA_CARD_COUNT = 2;
 let showingMovieCardsCount = MAIN_CARD_COUNT;
 
-   // create comments list
-   const renderCommentList = (movie) => {
-    const comments = generateComments(movie.comments);
-    const commentListElement = document.querySelector(`.film-details__comments-list`);
-    // remove prev comments
-    while (commentListElement.firstChild) {
-      commentListElement.removeChild(commentListElement.firstChild);
-    }
-    // render new comments
-    comments.forEach((comment) => {
-      const commentComponent = new CommentComponent(comment);
-      render(commentListElement, commentComponent);
-    });
+// create comments list
+const renderCommentList = (movie) => {
+  const comments = generateComments(movie.comments);
+  const commentListElement = document.querySelector(`.film-details__comments-list`);
+  // remove prev comments
+  while (commentListElement.firstChild) {
+    commentListElement.removeChild(commentListElement.firstChild);
+  }
+  // render new comments
+  comments.forEach((comment) => {
+    const commentComponent = new CommentComponent(comment);
+    render(commentListElement, commentComponent);
+  });
+};
+
+const renderMovie = (listContainer, movie, section) => {
+  const showMovieDetails = () => {
+    appendChild(section.getElement(), movieDetailsComponent);
+    // render comments
+    renderCommentList(movie);
   };
 
-  const renderMovie = (listContainer, movie, section) => {
-    const showMovieDetails = () => {
-      appendChild(section.getElement(), movieDetailsComponent);
-      // render comments
-      renderCommentList(movie);
-    };
+  const closeMovieDetails = () => {
+    removeChild(section.getElement(), movieDetailsComponent);
+  };
 
-    const closeMovieDetails = () => {
-      removeChild(section.getElement(), movieDetailsComponent);
-    };
-
-    const onEscKeyDown = (evt) => {
-      const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
-      if (isEscKey) {
-        closeMovieDetails();
-        document.removeEventListener(`keydown`, onEscKeyDown);
-      }
-    };
-
-    const movieCardComponent = new MovieCardComponent(movie);
-    movieCardComponent.setOnCardClickHandler(() => {
-      showMovieDetails();
-      document.addEventListener(`keydown`, onEscKeyDown);
-    });
-
-    const movieDetailsComponent = new MovieDetailsComponent(movie);
-    movieDetailsComponent.setCloseButtonClickHandler(() => {
+  const onEscKeyDown = (evt) => {
+    const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
+    if (isEscKey) {
       closeMovieDetails();
       document.removeEventListener(`keydown`, onEscKeyDown);
-    });
-    render(listContainer, movieCardComponent);
+    }
   };
+
+  const movieCardComponent = new MovieCardComponent(movie);
+  movieCardComponent.setOnCardClickHandler(() => {
+    showMovieDetails();
+    document.addEventListener(`keydown`, onEscKeyDown);
+  });
+
+  const movieDetailsComponent = new MovieDetailsComponent(movie);
+  movieDetailsComponent.setCloseButtonClickHandler(() => {
+    closeMovieDetails();
+    document.removeEventListener(`keydown`, onEscKeyDown);
+  });
+  render(listContainer, movieCardComponent);
+};
 
 export default class PageController {
   constructor(container, menuItems, movies, profile) {
@@ -119,7 +129,7 @@ export default class PageController {
 
     const renderMainMovieList = (component, moviesSelection) => {
       renderMovieList(component, moviesSelection, showingMovieCardsCount);
-      render(this._movieSectionComponent.getElement(), this._showMoreButtonComponent);
+      render(component.getElement(), this._showMoreButtonComponent);
 
       // add event on showMoreButton
       this._showMoreButtonComponent.setClickHandler(() => {
@@ -132,6 +142,28 @@ export default class PageController {
         if (showingMovieCardsCount >= moviesSelection.length) {
           remove(this._showMoreButtonComponent);
         }
+      });
+
+      this._sortComponent.setSortTypeChangeHandler(() => {
+        component.listContainer.innerHTML = ``;
+
+        moviesSelection.slice(0, MAIN_CARD_COUNT).forEach((movie) => {
+          renderMovie(component.listContainer, movie, this._movieSectionComponent);
+        });
+
+        render(component.getElement(), this._showMoreButtonComponent);
+        // add event on showMoreButton
+        this._showMoreButtonComponent.setClickHandler(() => {
+          prevMovieCards = showingMovieCardsCount;
+          showingMovieCardsCount = showingMovieCardsCount + MAIN_CARD_COUNT;
+
+          moviesSelection.slice(prevMovieCards, showingMovieCardsCount)
+            .forEach((movie) => renderMovie(component.listContainer, movie, this._movieSectionComponent));
+
+          if (showingMovieCardsCount >= moviesSelection.length) {
+            remove(this._showMoreButtonComponent);
+          }
+        });
       });
     };
 

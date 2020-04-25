@@ -39,7 +39,7 @@ const generateMoviesInfo = () => {
   return {
     poster: getRandomArrayItem(Posters),
     title: getRandomArrayItem(Titles),
-    rating: (getRandomNumber(1, 10)).toFixed(1),
+    rating: (getRandomNumber(0, 10)).toFixed(1),
     original: getRandomArrayItem(OriginalTitles),
     director: getRandomArrayItem(Names),
     writers: convertArrayToString(getSeveralRandomItems(Names, getRandomIntegerNumber(1, 8))),
