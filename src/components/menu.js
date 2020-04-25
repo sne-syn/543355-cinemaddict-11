@@ -4,7 +4,6 @@ import AbstractComponent from "./abstract-component.js";
 export default class Menu extends AbstractComponent {
   constructor(menuItems) {
     super();
-
     this._menuItems = menuItems;
   }
 
