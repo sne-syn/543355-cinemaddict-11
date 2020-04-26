@@ -30,10 +30,10 @@ export default class Sort extends AbstractComponent {
 
       // add active class
       const sortButtons = this.getElement().querySelectorAll(`.sort__button`);
-      sortButtons.forEach( (item) => {
+      sortButtons.forEach((item) => {
         if (item.classList.contains(`sort__button--active`)) {
           item.classList.remove(`sort__button--active`);
-          }
+        }
       });
 
       evt.target.classList.add(`sort__button--active`);

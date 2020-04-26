@@ -1,5 +1,5 @@
 export const SortType = {
-  DATE: `date`, //from new to old
+  DATE: `date`,
   RATING: `rating`,
   DEFAULT: `default`,
 };
