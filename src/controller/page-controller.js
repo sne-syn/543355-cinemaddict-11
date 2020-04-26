@@ -32,10 +32,7 @@ let showingMovieCardsCount = MAIN_CARD_COUNT;
 const renderCommentList = (movie) => {
   const comments = generateComments(movie.comments);
   const commentListElement = document.querySelector(`.film-details__comments-list`);
-  // remove prev comments
-  while (commentListElement.firstChild) {
-    commentListElement.removeChild(commentListElement.firstChild);
-  }
+  commentListElement.innerHTML = ``;
   // render new comments
   comments.forEach((comment) => {
     const commentComponent = new CommentComponent(comment);
