@@ -76,7 +76,7 @@ const renderMovie = (listContainer, movie, section) => {
   render(listContainer, movieCardComponent);
 };
 
-const getSortedMovies = (movies, sortType, from, to) => {
+const getSortedMovies = (movies, sortType) => {
   let sortedMovies = [];
   switch (sortType) {
     case SortType.RATING:
@@ -86,7 +86,7 @@ const getSortedMovies = (movies, sortType, from, to) => {
       sortedMovies = [...movies].sort((a, b) => (a.date < b.date) ? 1 : -1);
       break;
     case SortType.DEFAULT:
-      sortedMovies = [...movies];
+      sortedMovies = movies;
       break;
   }
 
@@ -107,6 +107,7 @@ export default class PageController {
     this._stats = new StatsComponent(movies, profile);
     this._showStats = this._showStats.bind(this);
     this._showMoviesLists = this._showMoviesLists.bind(this);
+    this._renderLoadMoreButton = this._renderLoadMoreButton.bind(this);
   }
 
   _showStats(evt) {
@@ -125,24 +126,24 @@ export default class PageController {
     }
   }
 
+  _renderLoadMoreButton(component, arr) {
+    this._showMoreButtonComponent.setClickHandler(() => {
+      const prevMovieCards = showingMovieCardsCount;
+      showingMovieCardsCount = showingMovieCardsCount + MAIN_CARD_COUNT;
+
+      arr.slice(prevMovieCards, showingMovieCardsCount)
+        .forEach((movie) => renderMovie(component.getListContainer(), movie, this._movieSectionComponent));
+
+      if (showingMovieCardsCount >= arr.length) {
+        remove(this._showMoreButtonComponent);
+      }
+    });
+  }
+
   render(movies) {
     render(this._container, this._menuComponent);
     render(this._container, this._sortComponent);
     render(this._container, this._movieSectionComponent);
-
-    const renderLoadMoreButton = (component, arr) => {
-      this._showMoreButtonComponent.setClickHandler(() => {
-        const prevMovieCards = showingMovieCardsCount;
-        showingMovieCardsCount = showingMovieCardsCount + MAIN_CARD_COUNT;
-
-        arr.slice(prevMovieCards, showingMovieCardsCount)
-          .forEach((movie) => renderMovie(component.listContainer, movie, this._movieSectionComponent));
-
-        if (showingMovieCardsCount >= arr.length) {
-          remove(this._showMoreButtonComponent);
-        }
-      });
-    };
 
     // set events
     this._menuComponent.setStatsClickHandler((evt) => {
@@ -154,41 +155,28 @@ export default class PageController {
 
     const renderMovieList = (component, moviesSelection, count) => {
       moviesSelection.slice(0, count).forEach((movie) => {
-        renderMovie(component.listContainer, movie, this._movieSectionComponent);
+        renderMovie(component.getListContainer(), movie, this._movieSectionComponent);
       });
     };
 
-    const renderMainMovieList = (component, movies) => {
+    const renderMainMovieList = (component, arr) => {
       showingMovieCardsCount = MAIN_CARD_COUNT;
       remove(this._showMoreButtonComponent);
-      movies.slice(0, showingMovieCardsCount).forEach((movie) => {
-        renderMovie(component.listContainer, movie, this._movieSectionComponent);
-      });
+      renderMovieList(component, arr, showingMovieCardsCount);
       render(component.getElement(), this._showMoreButtonComponent);
-
-      renderLoadMoreButton(component, movies);
-
-      // ===============================
-
-      this._sortComponent.setSortTypeChangeHandler((sortType) => {
-        showingMovieCardsCount = MAIN_CARD_COUNT;
-        remove(this._showMoreButtonComponent);
-        const sortedMovies = getSortedMovies(movies, sortType, 0, showingMovieCardsCount);
-
-        component.listContainer.innerHTML = ``;
-        sortedMovies.slice(0, showingMovieCardsCount).forEach((movie) => {
-          renderMovie(component.listContainer, movie, this._movieSectionComponent);
-        });
-
-        render(component.getElement(), this._showMoreButtonComponent);
-        renderLoadMoreButton(component, sortedMovies);
-      });
+      this._renderLoadMoreButton(component, arr);
     };
 
     const renderMoviesSectionsContent = () => {
       // main list movies
       render(this._movieSectionComponent.getElement(), this._movieList);
       renderMainMovieList(this._movieList, movies);
+
+      this._sortComponent.setSortTypeChangeHandler((sortType) => {
+        const sortedMovies = getSortedMovies(movies, sortType);
+        this._movieList.getListContainer().innerHTML = ``;
+        renderMainMovieList(this._movieList, sortedMovies);
+      });
 
       // top rated list movies
       const topRatedMovies = [...movies].sort((a, b) => (a.rating < b.rating) ? 1 : -1);

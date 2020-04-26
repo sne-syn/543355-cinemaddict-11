@@ -7,10 +7,9 @@ export default class MostCommented extends AbstractComponent {
   constructor() {
     super();
     this._container = this.getElement().querySelector(`.films-list__container`);
-  }
-
-  get listContainer() {
-    return this._container;
+    this.getListContainer = function () {
+      return this._container;
+    };
   }
 
   getTemplate() {
