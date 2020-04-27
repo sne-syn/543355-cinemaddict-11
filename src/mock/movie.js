@@ -39,7 +39,7 @@ const generateMoviesInfo = () => {
   return {
     poster: getRandomArrayItem(Posters),
     title: getRandomArrayItem(Titles),
-    rating: (getRandomNumber(1, 10)).toFixed(1),
+    rating: (getRandomNumber(0, 10)).toFixed(1),
     original: getRandomArrayItem(OriginalTitles),
     director: getRandomArrayItem(Names),
     writers: convertArrayToString(getSeveralRandomItems(Names, getRandomIntegerNumber(1, 8))),
@@ -49,7 +49,7 @@ const generateMoviesInfo = () => {
     country: convertArrayToString(getSeveralRandomItems(Countries, getRandomIntegerNumber(1, 3))),
     genre: getSeveralRandomItems(Genres, getRandomIntegerNumber(2, 3)),
     description: getRandomStringLength(Descriptions),
-    age: getRandomIntegerNumber(0, 18),
+    age: getRandomIntegerNumber(10, 18),
     comments: getRandomIntegerNumber(1, 6),
     isInWatchlist: Math.random() > 0.5,
     isAlreadyWatched: Math.random() > 0.5,
