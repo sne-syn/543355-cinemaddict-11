@@ -5,7 +5,6 @@ import CommentComponent from "./../components/comment.js";
 import {render,remove, appendChild,removeChild} from "./../utils/render.js";
 import {generateComments} from "./../mock/comment.js";
 
-
 // create comments list
 const renderCommentList = (movie) => {
   const comments = generateComments(movie.comments);
@@ -18,7 +17,6 @@ const renderCommentList = (movie) => {
   });
 };
 
-
 export default class MovieController {
   constructor(container) {
     this._container = container;
@@ -28,10 +26,10 @@ export default class MovieController {
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
   }
 
-  _showMovieDetails(section) {
+  _showMovieDetails(movie, section) {
     console.log(this._container);
     appendChild(section.getElement(), this._detailsComponent);
-    //renderCommentList(movie);
+    renderCommentList(movie);
   }
 
   _closeMovieDetails(section) {
@@ -52,7 +50,7 @@ export default class MovieController {
     this._detailsComponent = new MovieDetailsComponent(movie);
 
     this._cardComponent.setOnCardClickHandler(() => {
-      this._showMovieDetails(section);
+      this._showMovieDetails(movie, section);
       document.addEventListener(`keydown`, this._onEscKeyDown);
     });
 
