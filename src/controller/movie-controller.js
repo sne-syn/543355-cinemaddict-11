@@ -18,23 +18,21 @@ const renderCommentList = (movie) => {
 };
 
 export default class MovieController {
-  constructor(container) {
-    this._container = container;
+  constructor(properContainer) {
+    this._properContainer = properContainer;
     this._cardComponent = null;
     this._detailsComponent = null;
-
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
   }
 
-  _showMovieDetails(movie, section) {
-    console.log(this._container);
-    appendChild(section.getElement(), this._detailsComponent);
+  _showMovieDetails(movie, commonContainer) {
+    appendChild(commonContainer.getElement(), this._detailsComponent);
     renderCommentList(movie);
   }
 
-  _closeMovieDetails(section) {
+  _closeMovieDetails(commonContainer) {
     document.removeEventListener(`keydown`, this._onEscKeyDown);
-    removeChild(section.getElement(), this._detailsComponent);
+    removeChild(commonContainer.getElement(), this._detailsComponent);
   }
 
   _onEscKeyDown(evt) {
@@ -45,19 +43,19 @@ export default class MovieController {
     }
   }
 
-  render(movie, section) {
+  render(movie, commonContainer) {
     this._cardComponent = new MovieCardComponent(movie);
     this._detailsComponent = new MovieDetailsComponent(movie);
 
     this._cardComponent.setOnCardClickHandler(() => {
-      this._showMovieDetails(movie, section);
+      this._showMovieDetails(movie, commonContainer);
       document.addEventListener(`keydown`, this._onEscKeyDown);
     });
 
     this._detailsComponent.setCloseButtonClickHandler(() => {
-      this._closeMovieDetails(section);
+      this._closeMovieDetails(commonContainer);
     });
 
-    render(this._container, this._cardComponent);
+    render(this._properContainer, this._cardComponent);
   }
 }
