@@ -13,9 +13,7 @@ import {
 } from "./../mock/comment.js";
 
 // create comments list
-const controller = new CommentController();
-const renderCommentList = (movie) => {
-  const commentListElement = document.querySelector(`.film-details__comments-list`);
+const renderCommentList = (movie, controller, commentListElement) => {
   const comments = generateComments(movie.comments);
   commentListElement.innerHTML = ``;
   return comments.map((comment) => {
@@ -24,9 +22,9 @@ const renderCommentList = (movie) => {
   });
 };
 
-const generateCommentWrap = (movie) => {
-  const comm = document.querySelector(`.film-details__comments-wrap`);
-  renderCommentList(movie);
+const generateCommentWrap = (movie, comm, commentListElement) => {
+  const controller = new CommentController();
+  renderCommentList(movie, controller, commentListElement);
   controller.renderNewCommentInput(comm);
 };
 
@@ -41,7 +39,9 @@ export default class MovieController {
 
   _showMovieDetails(movie, commonContainer) {
     appendChild(commonContainer.getElement(), this._detailsComponent);
-    generateCommentWrap(movie);
+    const commentListElement = document.querySelector(`.film-details__comments-list`);
+    const comm = document.querySelector(`.film-details__comments-wrap`);
+    generateCommentWrap(movie, comm, commentListElement);
   }
 
   _closeMovieDetails(commonContainer) {

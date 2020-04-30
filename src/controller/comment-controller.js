@@ -1,8 +1,6 @@
 import CommentComponent from "./../components/comment.js";
 import NewComment from "./../components/new-comment-component.js";
-import {
-  render
-} from "./../utils/render.js";
+import {render} from "./../utils/render.js";
 
 export default class CommentController {
   constructor() {
@@ -20,4 +18,3 @@ export default class CommentController {
     render(container, this._newComponent);
   }
 }
-
