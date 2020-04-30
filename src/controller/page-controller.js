@@ -66,7 +66,7 @@ export default class PageController {
     this._mostCommentedList = new MostCommentedComponent();
     this._noMoviesComponent = new NoMoviesComponent();
 
-    // como pasar movies
+    // como pasar movies?
     this._stats = new StatsComponent(this._movies, profile);
     this._showStats = this._showStats.bind(this);
     this._showMoviesLists = this._showMoviesLists.bind(this);
@@ -77,6 +77,7 @@ export default class PageController {
     this._renderLoadMoreButton = this._renderLoadMoreButton.bind(this);
     this._onSortTypeChange = this._onSortTypeChange.bind(this);
     this._sortComponent.setSortTypeChangeHandler(this._onSortTypeChange);
+
     //===========
     this._mainMovieContainer = this._movieList.getListContainer();
     this._topRatedContainer = this._topRatedList.getListContainer();
@@ -96,7 +97,6 @@ export default class PageController {
     }
 
     render(this._movieSectionComponent.getElement(), this._movieList);
-    remove(this._showMoreButtonComponent);
     const newMovies = renderMovies(this._mainMovieContainer, this._movies.slice(0, this._showingMoviesCount), this._movieSectionComponent);
     this._showedMoviesControllers = this._showedMoviesControllers.concat(newMovies);
     this._renderLoadMoreButton();
@@ -138,10 +138,11 @@ export default class PageController {
 
     this._showMoreButtonComponent.setClickHandler(() => {
       const prevMovieCards = this._showingMoviesCount;
-      this._showingMoviesCount = this._showingMoviesCount + SHOWING_MOVIES_COUNT_BY_BUTTON;
+      this._showingMoviesCount += SHOWING_MOVIES_COUNT_BY_BUTTON;
 
       const sortedMovies = getSortedMovies(this._movies, this._sortComponent.getSortType(), prevMovieCards, this._showingMoviesCount);
 
+      console.log(this._sortComponent.getSortType(), prevMovieCards, this._showingMoviesCount);
       const newMovies = renderMovies(this._mainMovieContainer, sortedMovies, this._movieSectionComponent);
       this._showedMoviesControllers = this._showedMoviesControllers.concat(newMovies);
 
@@ -152,16 +153,14 @@ export default class PageController {
   }
 
   _onSortTypeChange(sortType) {
-    this._showingMoviesCount = SHOWING_MOVIES_COUNT_ON_START;
-
-    const sortedMovies = getSortedMovies(this._movies, sortType, 0, this._showingMoviesCount);
-    this._mainMovieContainer.innerHTML = ``;
-
     remove(this._showMoreButtonComponent);
+    this._showingMoviesCount = SHOWING_MOVIES_COUNT_ON_START;
+    this._mainMovieContainer.innerHTML = ``;
+    const sortedMovies = getSortedMovies(this._movies, sortType, 0, this._showingMoviesCount);
+
     const newMovies = renderMovies(this._mainMovieContainer, sortedMovies, this._movieSectionComponent);
     this._showedMoviesControllers = newMovies;
 
     this._renderLoadMoreButton();
   }
-
 }

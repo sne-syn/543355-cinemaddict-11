@@ -1,17 +1,7 @@
-import {
-  createMostCommentedTemplate
-} from './../templates/most-commented-template.js';
-import AbstractComponent from "./abstract-component.js";
+import {createMostCommentedTemplate} from './../templates/most-commented-template.js';
+import ListComponent from "./list-component.js";
 
-export default class MostCommented extends AbstractComponent {
-  constructor() {
-    super();
-    this._container = this.getElement().querySelector(`.films-list__container`);
-    this.getListContainer = function () {
-      return this._container;
-    };
-  }
-
+export default class MostCommented extends ListComponent {
   getTemplate() {
     return createMostCommentedTemplate();
   }

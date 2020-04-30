@@ -1,24 +1,37 @@
 import MovieCardComponent from "./../components/movie-card.js";
 import MovieDetailsComponent from "./../components/movie-details.js";
 import CommentComponent from "./../components/comment.js";
-
 import {render,remove, appendChild,removeChild} from "./../utils/render.js";
 import {generateComments} from "./../mock/comment.js";
+import CommentController from "./comment-controller.js";
 
 // create comments list
-const renderCommentList = (movie) => {
+const renderCommentList = ( movie) => {
   const comments = generateComments(movie.comments);
   const commentListElement = document.querySelector(`.film-details__comments-list`);
   commentListElement.innerHTML = ``;
-  // render new comments
-  comments.forEach((comment) => {
-    const commentComponent = new CommentComponent(comment);
-    render(commentListElement, commentComponent);
+  //   // render new comments
+  // comments.forEach((comment) => {
+  //   render(commentListElement, comment);
+  // });
+
+  return comments.map((comment) => {
+    const commentController = new CommentController(commentListElement);
+
+    commentController.render(comment);
+    return commentController;
   });
+
+  // comments.map((comment) => {
+  //   const commentController = new CommentController(comm);
+  //   commentController.render(comment, commentListElement);
+  // });
+
 };
 
 export default class MovieController {
   constructor(properContainer) {
+    this._comments = [];
     this._properContainer = properContainer;
     this._cardComponent = null;
     this._detailsComponent = null;
@@ -28,7 +41,10 @@ export default class MovieController {
   _showMovieDetails(movie, commonContainer) {
     appendChild(commonContainer.getElement(), this._detailsComponent);
     renderCommentList(movie);
+    console.log(renderCommentList(movie));
   }
+
+  _renderCommentsList(comments) {}
 
   _closeMovieDetails(commonContainer) {
     document.removeEventListener(`keydown`, this._onEscKeyDown);
