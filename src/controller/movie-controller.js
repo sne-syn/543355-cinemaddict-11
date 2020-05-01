@@ -39,6 +39,19 @@ export default class MovieController {
 
   _showMovieDetails(movie, commonContainer) {
     appendChild(commonContainer.getElement(), this._detailsComponent);
+
+    this._detailsComponent.setWatchlistButtonClickHandler(() => {
+      console.log('To Watch');
+    });
+
+    this._detailsComponent.setAlreadyWatchedButtonClickHandler(() => {
+      console.log('Already');
+    });
+
+    this._detailsComponent.setFavoriteButtonClickHandler(() => {
+      console.log('Favorite');
+    });
+
     const commentListElement = document.querySelector(`.film-details__comments-list`);
     const comm = document.querySelector(`.film-details__comments-wrap`);
     generateCommentWrap(movie, comm, commentListElement);
@@ -60,6 +73,19 @@ export default class MovieController {
   render(movie, commonContainer) {
     this._cardComponent = new MovieCardComponent(movie);
     this._detailsComponent = new MovieDetailsComponent(movie);
+
+    this._cardComponent.setWatchlistButtonClickHandler(() => {
+       movie.isInWatchlist = !movie.isInWatchlist;
+       console.log(movie.isInWatchlist);
+    });
+
+    this._cardComponent.setAlreadyWatchedButtonClickHandler(() => {
+      console.log('Already');
+    });
+
+    this._cardComponent.setFavoriteButtonClickHandler(() => {
+      console.log('Favorite');
+    });
 
     this._cardComponent.setOnCardClickHandler(() => {
       this._showMovieDetails(movie, commonContainer);

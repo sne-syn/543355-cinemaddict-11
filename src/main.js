@@ -29,5 +29,5 @@ render(siteHeaderElement, new ProfileComponent(profile));
 render(footerStatisticsElement, new MovieCountComponent());
 
 // call pageController
-const pageController = new PageController(siteMainElement, menuItems, profile);
+const pageController = new PageController(siteMainElement, menuItems, movies, profile);
 pageController.render(movies, profile);
