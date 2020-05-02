@@ -50,7 +50,7 @@ const getSortedMovies = (movies, sortType, from, to) => {
 };
 
 export default class PageController {
-  constructor(container, menuItems,movies, profile) {
+  constructor(container, menuItems, movies, profile) {
     this._container = container;
 
     this._movies = [];
@@ -66,7 +66,6 @@ export default class PageController {
     this._mostCommentedList = new MostCommentedComponent();
     this._noMoviesComponent = new NoMoviesComponent();
 
-    // como pasar movies?
     this._stats = new StatsComponent(movies, profile);
     this._showStats = this._showStats.bind(this);
     this._showMoviesLists = this._showMoviesLists.bind(this);
@@ -115,15 +114,14 @@ export default class PageController {
   }
 
   _onDataChange(oldData, newData) {
-    // const index = this._movies.findIndex((it) => it === oldData);
+    const index = this._movies.findIndex((it) => it === oldData);
 
-    // if (index === -1) {
-    //   return;
-    // }
+    if (index === -1) {
+      return;
+    }
 
-    // this._movies = [].concat(this._movies.slice(0, index), newData, this._tasks.slice(index + 1));
-
-
+    this._movies = [].concat(this._movies.slice(0, index), newData, this._movies.slice(index + 1));
+    this._showedMoviesControllers[index].render(this._movies[index]);
   }
 
   _showStats(evt) {

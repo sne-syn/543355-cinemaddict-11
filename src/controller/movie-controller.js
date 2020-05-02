@@ -29,19 +29,20 @@ const generateCommentWrap = (movie, comm, commentListElement) => {
 };
 
 export default class MovieController {
-  constructor(properContainer) {
+  constructor(properContainer, onDataChange) {
     this._comments = [];
     this._properContainer = properContainer;
     this._cardComponent = null;
     this._detailsComponent = null;
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
+    this._onDataChange = onDataChange;
   }
 
   _showMovieDetails(movie, commonContainer) {
     appendChild(commonContainer.getElement(), this._detailsComponent);
 
     this._detailsComponent.setWatchlistButtonClickHandler(() => {
-      console.log('To Watch');
+      console.log('Watchlist');
     });
 
     this._detailsComponent.setAlreadyWatchedButtonClickHandler(() => {
@@ -75,8 +76,9 @@ export default class MovieController {
     this._detailsComponent = new MovieDetailsComponent(movie);
 
     this._cardComponent.setWatchlistButtonClickHandler(() => {
-       movie.isInWatchlist = !movie.isInWatchlist;
-       console.log(movie.isInWatchlist);
+      this._onDataChange(movie, Object.assign({}, movie, {
+        isInWatchlist: !movie.isInWatchlist,
+      }));
     });
 
     this._cardComponent.setAlreadyWatchedButtonClickHandler(() => {
