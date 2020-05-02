@@ -1,32 +1,12 @@
 import MovieCardComponent from "./../components/movie-card.js";
 import MovieDetailsComponent from "./../components/movie-details.js";
-import CommentController from "./comment-controller.js";
+import CommentsController from "./comments-controller.js";
 
 import {
   render,
-  remove,
   appendChild,
   removeChild
 } from "./../utils/render.js";
-import {
-  generateComments
-} from "./../mock/comment.js";
-
-// create comments list
-const renderCommentList = (movie, controller, commentListElement) => {
-  const comments = generateComments(movie.comments);
-  commentListElement.innerHTML = ``;
-  return comments.map((comment) => {
-    controller.renderComment(comment, commentListElement);
-    return controller;
-  });
-};
-
-const generateCommentWrap = (movie, comm, commentListElement) => {
-  const controller = new CommentController();
-  renderCommentList(movie, controller, commentListElement);
-  controller.renderNewCommentInput(comm);
-};
 
 export default class MovieController {
   constructor(properContainer, onDataChange) {
@@ -46,16 +26,15 @@ export default class MovieController {
     });
 
     this._detailsComponent.setAlreadyWatchedButtonClickHandler(() => {
-      console.log('Already');
+      console.log('Already Watched');
     });
 
     this._detailsComponent.setFavoriteButtonClickHandler(() => {
       console.log('Favorite');
     });
 
-    const commentListElement = document.querySelector(`.film-details__comments-list`);
-    const comm = document.querySelector(`.film-details__comments-wrap`);
-    generateCommentWrap(movie, comm, commentListElement);
+    const commentsController = new CommentsController(this._detailsComponent.getElement());
+    commentsController.render(movie);
   }
 
   _closeMovieDetails(commonContainer) {
@@ -82,11 +61,15 @@ export default class MovieController {
     });
 
     this._cardComponent.setAlreadyWatchedButtonClickHandler(() => {
-      console.log('Already');
+      this._onDataChange(movie, Object.assign({}, movie, {
+        isAlreadyWatched: !movie.isAlreadyWatched,
+      }));
     });
 
     this._cardComponent.setFavoriteButtonClickHandler(() => {
-      console.log('Favorite');
+      this._onDataChange(movie, Object.assign({}, movie, {
+        isInFavorites: !movie.isInFavorites,
+      }));
     });
 
     this._cardComponent.setOnCardClickHandler(() => {

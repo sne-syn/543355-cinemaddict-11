@@ -75,69 +75,11 @@ const createControls = (movie) => {
   `;
 };
 
-// const createEmojiList = () => {
-//   return `
-//   <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="smile">
-//   <label class="film-details__emoji-label" for="emoji-smile">
-//   <img src="./images/emoji/smile.png" width="30" height="30" alt="emoji">
-//   </label>
 
-//   <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-sleeping" value="sleeping">
-//   <label class="film-details__emoji-label" for="emoji-sleeping">
-//   <img src="./images/emoji/sleeping.png" width="30" height="30" alt="emoji">
-//   </label>
-
-//   <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-puke" value="puke">
-//   <label class="film-details__emoji-label" for="emoji-puke">
-//   <img src="./images/emoji/puke.png" width="30" height="30" alt="emoji">
-//   </label>
-
-//   <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-angry" value="angry">
-//   <label class="film-details__emoji-label" for="emoji-angry">
-//   <img src="./images/emoji/angry.png" width="30" height="30" alt="emoji">
-//   </label>
-//   `;
-// };
-
-// const createCommentSection = (movie) => {
-//   const {comments} = movie;
-//   const emojiList = createEmojiList();
-//   return `
-//   <section class="film-details__comments-wrap">
-//   <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments}</span></h3>
-
-//   <ul class="film-details__comments-list"></ul>
-
-//   <div class="film-details__new-comment">
-//   <div for="add-emoji" class="film-details__add-emoji-label"></div>
-
-//   <label class="film-details__comment-label">
-//     <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
-//   </label>
-
-//   <div class="film-details__emoji-list">${emojiList}</div>
-//   </div>
-//   </section>
-//   `;
-// };
-
-const createCommentSection = (movie) => {
-  const {comments} = movie;
- // const emojiList = createEmojiList();
-  return `
-  <section class="film-details__comments-wrap">
-  <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments}</span></h3>
-
-  <ul class="film-details__comments-list"></ul>
-
-  </section>
-  `;
-};
 
 export const createDetailsTemplate = (movie) => {
   const {poster, title, rating, original, description, age} = movie;
   const controls = createControls(movie);
-  const comments = createCommentSection(movie);
   const detailsTable = createMovieDetailsTable(movie);
 
   return `<section class="film-details">
@@ -170,7 +112,7 @@ export const createDetailsTemplate = (movie) => {
     </div>
     <section class="film-details__controls">${controls}</section>
     </div>
-    <div class="form-details__bottom-container">${comments}</div>
+
   </form>
   </section>`;
 };
