@@ -114,5 +114,6 @@ export const createDetailsTemplate = (movie) => {
     </div>
 
   </form>
+  <div class="form-details__bottom-container"></div>
   </section>`;
 };

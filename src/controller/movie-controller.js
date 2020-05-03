@@ -1,12 +1,29 @@
 import MovieCardComponent from "./../components/movie-card.js";
 import MovieDetailsComponent from "./../components/movie-details.js";
-import CommentsController from "./comments-controller.js";
+//import CommentsController from "./comments-controller.js";
+import CommentSectionComponent from "../components/comment-section";
+import CommentComponent from "./../components/comment.js";
 
 import {
   render,
   appendChild,
   removeChild
 } from "./../utils/render.js";
+
+import {
+  generateComments
+} from "./../mock/comment.js";
+
+const renderCommentList = (movie) => {
+  const comments = generateComments(movie.comments);
+  const commentListElement = document.querySelector(`.film-details__comments-list`);
+  commentListElement.innerHTML = ``;
+  // render new comments
+  comments.forEach((comment) => {
+    const commentComponent = new CommentComponent(comment);
+    render(commentListElement, commentComponent);
+  });
+};
 
 export default class MovieController {
   constructor(properContainer, onDataChange) {
@@ -16,6 +33,21 @@ export default class MovieController {
     this._detailsComponent = null;
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
     this._onDataChange = onDataChange;
+    this._changeEmoji = this._changeEmoji.bind(this);
+  }
+
+  _changeEmoji (evt) {
+    const newComment =  this._detailsComponent.getElement().querySelector(`.film-details__new-comment`);
+    const addEmojiLabel =  this._detailsComponent.getElement().querySelector(`.film-details__add-emoji-label`);
+
+      let emojiImg = document.createElement(`span`);
+      emojiImg.classList.add(`film-details__comment-emoji`);
+      emojiImg.innerHTML = `<img src="./images/emoji/${evt.target.value}.png" width="55" height="55" alt="emoji-${evt.target.value}">`;
+
+      if (newComment.contains(addEmojiLabel)) {
+        newComment.removeChild(addEmojiLabel);
+      }
+      newComment.replaceChild(emojiImg, newComment.firstChild);
   }
 
   _showMovieDetails(movie, commonContainer) {
@@ -33,8 +65,14 @@ export default class MovieController {
       console.log('Favorite');
     });
 
-    const commentsController = new CommentsController(this._detailsComponent.getElement());
-    commentsController.render(movie);
+    const cont = document.querySelector(`.form-details__bottom-container`);
+    const commentSection = new CommentSectionComponent(movie);
+    cont.innerHTML = ``;
+    render(cont, commentSection);
+    if (movie.comments > 0) {
+      renderCommentList(movie);
+    }
+    commentSection.addEmojiHandler(this._changeEmoji);
   }
 
   _closeMovieDetails(commonContainer) {

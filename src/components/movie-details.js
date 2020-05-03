@@ -1,4 +1,4 @@
-import {createDetailsTemplate} from '../templates/details-top';
+import {createDetailsTemplate} from '../templates/details';
 import AbstractComponent from "./abstract-component.js";
 
 export default class MovieDetails extends AbstractComponent {
