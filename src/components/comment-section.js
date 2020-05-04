@@ -12,7 +12,9 @@ export default class CommentSectionComponent extends AbstractComponent {
     return createDetailsCommentTemplate(this._movie);
   }
 
-  addCommentHandler(handler) {}
+  addCommentHandler(handler) {
+
+  }
 
   deleteCommentHandler(handler) {}
 
