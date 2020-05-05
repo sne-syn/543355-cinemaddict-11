@@ -62,7 +62,6 @@ const createControls = (movie) => {
   const {isInWatchlist, isAlreadyWatched, isInFavorites} = movie;
   // mark input as checked
   const isChecked = (control) => control ? `checked` : ``;
-
   return `
   <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" ${isChecked(isInWatchlist)}>
   <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist ">Add to watchlist</label>
@@ -91,26 +90,22 @@ export const createDetailsTemplate = (movie) => {
         <img class="film-details__poster-img" src="./images/posters/${poster}" alt="">
         <p class="film-details__age">${age}+</p>
       </div>
-
       <div class="film-details__info">
         <div class="film-details__info-head">
           <div class="film-details__title-wrap">
             <h3 class="film-details__title">${title}</h3>
             <p class="film-details__title-original">Original: ${original}</p>
           </div>
-
           <div class="film-details__rating">
             <p class="film-details__total-rating">${rating}</p>
           </div>
         </div>
-
         <table class="film-details__table">${detailsTable}</table>
         <p class="film-details__film-description">${description}.</p>
       </div>
     </div>
     <section class="film-details__controls">${controls}</section>
     </div>
-
   </form>
   <div class="form-details__bottom-container"></div>
   </section>`;

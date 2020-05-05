@@ -4,8 +4,7 @@ import CommentsController from "./comments-controller.js";
 
 import {
   render,
-  appendChild,
-  removeChild
+  appendChild
 } from "./../utils/render.js";
 
 export default class MovieController {
@@ -18,12 +17,12 @@ export default class MovieController {
 
   _showMovieDetails(movie, commonContainer, properContainer) {
     appendChild(commonContainer.getElement(), this._detailsComponent);
-
     const detailsBottomContainer = document.querySelector(`.form-details__bottom-container`);
     const commentsController = new CommentsController(detailsBottomContainer);
     commentsController.render(movie);
   }
 
+  // не срабатывает удаление через this._element
   _closeMovieDetails(commonContainer) {
     document.removeEventListener(`keydown`, this._onEscKeyDown);
     console.log(this._detailsComponent.getElement().parentNode);

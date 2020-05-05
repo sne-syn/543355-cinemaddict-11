@@ -7,7 +7,6 @@ export default class CommentSectionComponent extends AbstractComponent {
 
     this._movie = movie;
   }
-
   getTemplate() {
     return createDetailsCommentTemplate(this._movie);
   }

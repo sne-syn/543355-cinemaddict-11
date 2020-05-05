@@ -4,13 +4,21 @@ import AbstractSmartComponent from "./abstract-smart-component.js";
 export default class MovieDetails extends AbstractSmartComponent {
   constructor(movie) {
     super();
-
     this._movie = movie;
     this.__closeDetailsHandler = null;
+    this._isInWatchlist = movie.isInWatchlist;
+    this._isAlreadyWatched = movie.isAlreadyWatched;
+    this._isInFavorites = movie.isInFavorites;
     this._subscribeOnEvents();
   }
 
   getTemplate() {
+    console.log(this._movie, {
+      isInWatchlist: this._isInWatchlist,
+      isAlreadyWatched: this._isAlreadyWatched,
+      isInFavorites: this._isInFavorites
+    });
+
     return createDetailsTemplate(this._movie, {
       isInWatchlist: this._isInWatchlist,
       isAlreadyWatched: this._isAlreadyWatched,
@@ -36,22 +44,21 @@ export default class MovieDetails extends AbstractSmartComponent {
     const watchlistControl = this.getElement().querySelector(`.film-details__control-label--watchlist`);
     const alreadyWatchedControl = this.getElement().querySelector(`.film-details__control-label--watched`);
     const favoritesControl = this.getElement().querySelector(`.film-details__control-label--favorite`);
+    const checkbox = this.getElement().querySelector(`.film-details__control-input`);
 
     watchlistControl.addEventListener(`click`, () => {
       this._isInWatchlist = !this._isInWatchlist;
-      watchlistControl.querySelector(`.film-details__control-input`).checked = true;
+      //watchlistControl.checkbox.checked = !checkbox.checked;
       this.rerender();
     });
 
     alreadyWatchedControl.addEventListener(`click`, () => {
       this._isAlreadyWatched = !this._isAlreadyWatched;
-      alreadyWatchedControl.querySelector(`.film-details__control-input`).checked = true;
       this.rerender();
     });
 
     favoritesControl.addEventListener(`click`, () => {
       this._isInFavorites = !this._isInFavorites;
-      favoritesControl.querySelector(`.film-details__control-input`).checked = true;
       this.rerender();
     });
   }
