@@ -18,6 +18,7 @@ export default class MovieController {
   _showMovieDetails(movie, commonContainer, properContainer) {
     appendChild(commonContainer.getElement(), this._detailsComponent);
     const detailsBottomContainer = document.querySelector(`.form-details__bottom-container`);
+    detailsBottomContainer.innerHTML = ``;
     const commentsController = new CommentsController(detailsBottomContainer);
     commentsController.render(movie);
   }
