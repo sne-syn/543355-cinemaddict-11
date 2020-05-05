@@ -33,25 +33,25 @@ export default class MovieDetails extends AbstractSmartComponent {
   }
 
   _subscribeOnEvents() {
-    const element = this.getElement();
-    element.querySelector(`.film-details__control-label--watchlist`)
-    .addEventListener(`click`, () => {
+    const watchlistControl = this.getElement().querySelector(`.film-details__control-label--watchlist`);
+    const alreadyWatchedControl = this.getElement().querySelector(`.film-details__control-label--watched`);
+    const favoritesControl = this.getElement().querySelector(`.film-details__control-label--favorite`);
+
+    watchlistControl.addEventListener(`click`, () => {
       this._isInWatchlist = !this._isInWatchlist;
-      
+      watchlistControl.querySelector(`.film-details__control-input`).checked = true;
       this.rerender();
     });
 
-    element.querySelector(`.film-details__control-label--watched`)
-    .addEventListener(`click`, () => {
+    alreadyWatchedControl.addEventListener(`click`, () => {
       this._isAlreadyWatched = !this._isAlreadyWatched;
-
+      alreadyWatchedControl.querySelector(`.film-details__control-input`).checked = true;
       this.rerender();
     });
 
-    element.querySelector(`.film-details__control-label--favorite`)
-    .addEventListener(`click`, () => {
+    favoritesControl.addEventListener(`click`, () => {
       this._isInFavorites = !this._isInFavorites;
-
+      favoritesControl.querySelector(`.film-details__control-input`).checked = true;
       this.rerender();
     });
   }
