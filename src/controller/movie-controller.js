@@ -1,49 +1,34 @@
 import MovieCardComponent from "./../components/movie-card.js";
 import MovieDetailsComponent from "./../components/movie-details.js";
-import CommentSectionComponent from "../components/comment-section";
-import CommentComponent from "./../components/comment.js";
+import CommentsController from "./comments-controller.js";
 
 import {
   render,
   appendChild,
   removeChild
 } from "./../utils/render.js";
-import CommentsController from "./comments-controller.js";
-
-
 
 export default class MovieController {
-  constructor(properContainer, onDataChange) {
-    this._properContainer = properContainer;
+  constructor(onDataChange) {
     this._cardComponent = null;
     this._detailsComponent = null;
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
     this._onDataChange = onDataChange;
   }
 
-  _showMovieDetails(movie, commonContainer) {
+  _showMovieDetails(movie, commonContainer, properContainer) {
     appendChild(commonContainer.getElement(), this._detailsComponent);
 
-    this._detailsComponent.setWatchlistButtonClickHandler(() => {
-      console.log('Watchlist');
-    });
-
-    this._detailsComponent.setAlreadyWatchedButtonClickHandler(() => {
-      console.log('Already Watched');
-    });
-
-    this._detailsComponent.setFavoriteButtonClickHandler(() => {
-      console.log('Favorite');
-    });
-
-    const cont = document.querySelector(`.form-details__bottom-container`);
-    const commentsController = new CommentsController(cont);
+    const detailsBottomContainer = document.querySelector(`.form-details__bottom-container`);
+    const commentsController = new CommentsController(detailsBottomContainer);
     commentsController.render(movie);
   }
 
   _closeMovieDetails(commonContainer) {
     document.removeEventListener(`keydown`, this._onEscKeyDown);
-    removeChild(commonContainer.getElement(), this._detailsComponent);
+    console.log(this._detailsComponent.getElement().parentNode);
+    commonContainer.getElement().removeChild(document.querySelector(`.film-details`));
+    //removeChild(commonContainer.getElement(), this._detailsComponent);
   }
 
   _onEscKeyDown(evt) {
@@ -54,30 +39,30 @@ export default class MovieController {
     }
   }
 
-  render(movie, commonContainer) {
+  render(movie, commonContainer, properContainer) {
     this._cardComponent = new MovieCardComponent(movie);
     this._detailsComponent = new MovieDetailsComponent(movie);
 
     this._cardComponent.setWatchlistButtonClickHandler(() => {
       this._onDataChange(movie, Object.assign({}, movie, {
         isInWatchlist: !movie.isInWatchlist,
-      }));
+      }), commonContainer, properContainer);
     });
 
     this._cardComponent.setAlreadyWatchedButtonClickHandler(() => {
       this._onDataChange(movie, Object.assign({}, movie, {
         isAlreadyWatched: !movie.isAlreadyWatched,
-      }));
+      }), commonContainer, properContainer);
     });
 
     this._cardComponent.setFavoriteButtonClickHandler(() => {
       this._onDataChange(movie, Object.assign({}, movie, {
         isInFavorites: !movie.isInFavorites,
-      }));
+      }), commonContainer, properContainer);
     });
 
     this._cardComponent.setOnCardClickHandler(() => {
-      this._showMovieDetails(movie, commonContainer);
+      this._showMovieDetails(movie, commonContainer, properContainer);
       document.addEventListener(`keydown`, this._onEscKeyDown);
     });
 
@@ -85,6 +70,6 @@ export default class MovieController {
       this._closeMovieDetails(commonContainer);
     });
 
-    render(this._properContainer, this._cardComponent);
+    render(properContainer, this._cardComponent);
   }
 }

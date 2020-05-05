@@ -75,8 +75,6 @@ const createControls = (movie) => {
   `;
 };
 
-
-
 export const createDetailsTemplate = (movie) => {
   const {poster, title, rating, original, description, age} = movie;
   const controls = createControls(movie);

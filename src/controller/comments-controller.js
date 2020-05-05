@@ -1,18 +1,13 @@
 import CommentSectionComponent from "../components/comment-section";
 import CommentComponent from "./../components/comment.js";
-import {
-  render
-} from "./../utils/render.js";
-import {
-  generateComments
-} from "./../mock/comment.js";
+import {render} from "./../utils/render.js";
+import {generateComments} from "./../mock/comment.js";
 
 export default class CommentsController {
   constructor(container) {
     this._container = container;
     this._commentComponent = null;
     this._commentSection = null;
-    this._renderComment = this._renderComment.bind(this);
     this._renderCommentList = this._renderCommentList.bind(this);
     this._changeEmoji = this._changeEmoji.bind(this);
   }
@@ -36,11 +31,6 @@ export default class CommentsController {
       const commentComponent = new CommentComponent(comment);
       render(commentListElement, commentComponent);
     });
-  }
-
-  _renderComment(comment, container) {
-    this._commentComponent = new CommentComponent(comment);
-    render(container, this._commentComponent);
   }
 
   _changeEmoji(evt) {
