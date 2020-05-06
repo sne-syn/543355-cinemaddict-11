@@ -41,24 +41,38 @@ export default class MovieDetails extends AbstractSmartComponent {
   }
 
   _subscribeOnEvents() {
-    const watchlistControl = this.getElement().querySelector(`.film-details__control-label--watchlist`);
-    const alreadyWatchedControl = this.getElement().querySelector(`.film-details__control-label--watched`);
-    const favoritesControl = this.getElement().querySelector(`.film-details__control-label--favorite`);
-    const checkbox = this.getElement().querySelector(`.film-details__control-input`);
+    const element = this.getElement();
+    const watchlistControl = this.getElement().querySelector(`input[name="watchlist"]`);
+    const alreadyWatchedControl = this.getElement().querySelector(`input[name="watched"]`);
+    const favoritesControl = this.getElement().querySelector(`input[name="favorite"]`);
 
-    watchlistControl.addEventListener(`click`, () => {
+    function switchCheckbox(input) {
+      if (input.checked) {
+        input.checked = false;
+      } else {
+        input.checked = true;
+      }
+    }
+
+    element.querySelector(`.film-details__control-label--watchlist`).addEventListener(`click`, () => {
       this._isInWatchlist = !this._isInWatchlist;
-      //watchlistControl.checkbox.checked = !checkbox.checked;
+      console.log(watchlistControl);
+      console.log(watchlistControl.checked);
+      switchCheckbox(watchlistControl);
+      console.log(watchlistControl.checked);
       this.rerender();
     });
 
-    alreadyWatchedControl.addEventListener(`click`, () => {
+    element.querySelector(`.film-details__control-label--watched`).addEventListener(`click`, () => {
       this._isAlreadyWatched = !this._isAlreadyWatched;
+      switchCheckbox(alreadyWatchedControl);
       this.rerender();
     });
 
-    favoritesControl.addEventListener(`click`, () => {
+    element.querySelector(`.film-details__control-label--favorite`).addEventListener(`click`, () => {
       this._isInFavorites = !this._isInFavorites;
+
+      switchCheckbox(favoritesControl);
       this.rerender();
     });
   }
