@@ -2,7 +2,7 @@ import MovieCardComponent from "./../components/movie-card.js";
 import MovieDetailsComponent from "./../components/movie-details.js";
 import CommentsController from "./comments-controller.js";
 
-import {render, appendChild} from "./../utils/render.js";
+import {render, appendChild, removeChild} from "./../utils/render.js";
 
 export default class MovieController {
   constructor(onDataChange) {
@@ -24,9 +24,7 @@ export default class MovieController {
   // не срабатывает удаление через this._element
   _closeMovieDetails(commonContainer) {
     document.removeEventListener(`keydown`, this._onEscKeyDown);
-    console.log(this._detailsComponent.getElement().parentNode);
-    commonContainer.getElement().removeChild(document.querySelector(`.film-details`));
-    //removeChild(commonContainer.getElement(), this._detailsComponent);
+    removeChild(commonContainer.getElement(), this._detailsComponent);
   }
 
   _onEscKeyDown(evt) {
