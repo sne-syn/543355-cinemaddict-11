@@ -3,6 +3,11 @@ import CommentComponent from "./../components/comment.js";
 import {render} from "./../utils/render.js";
 import {generateComments} from "./../mock/comment.js";
 
+const keyCodes = {
+  CTRL: 17,
+  ENTER: 13,
+};
+
 export default class CommentsController {
   constructor(container) {
     this._container = container;
@@ -10,6 +15,7 @@ export default class CommentsController {
     this._commentSection = null;
     this._renderCommentList = this._renderCommentList.bind(this);
     this._changeEmoji = this._changeEmoji.bind(this);
+    this._addCommentHandler = this._addCommentHandler.bind(this);
   }
 
   render(movie) {
@@ -45,5 +51,13 @@ export default class CommentsController {
       newCommentElement.removeChild(addEmojiLabel);
     }
     newCommentElement.replaceChild(emojiImg, newCommentElement.firstChild);
+    
+    document.querySelector(`.film-details__comment-input`).addEventListener(`keydown`, this._addCommentHandler);
+  }
+
+  _addCommentHandler(evt) {
+    if (evt.keyCode === keyCodes.ENTER) {
+      console.log(`gotcha`);
+    }
   }
 }

@@ -84,7 +84,7 @@ export default class PageController {
     this._onViewChange = this._onViewChange.bind(this);
   }
 
-  render() { 
+  render() {
     render(this._container, this._menuComponent);
     render(this._container, this._sortComponent);
     render(this._container, this._movieSectionComponent);

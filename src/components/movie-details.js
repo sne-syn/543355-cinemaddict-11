@@ -1,6 +1,6 @@
 import {createDetailsTemplate} from '../templates/details.js';
 import AbstractSmartComponent from "./abstract-smart-component.js";
-import CommentsController from "./../controller/comments-controller"
+import CommentsController from "./../controller/comments-controller";
 
 export default class MovieDetails extends AbstractSmartComponent {
   constructor(movie) {
@@ -14,11 +14,11 @@ export default class MovieDetails extends AbstractSmartComponent {
   }
 
   getTemplate() {
-    console.log(this._movie, {
-      isInWatchlist: this._isInWatchlist,
-      isAlreadyWatched: this._isAlreadyWatched,
-      isInFavorites: this._isInFavorites
-    });
+    // console.log(this._movie, {
+    //   isInWatchlist: this._isInWatchlist,
+    //   isAlreadyWatched: this._isAlreadyWatched,
+    //   isInFavorites: this._isInFavorites
+    // });
 
     return createDetailsTemplate(Object.assign({}, this._movie, {
       isInWatchlist: this._isInWatchlist,
