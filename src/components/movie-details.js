@@ -1,5 +1,6 @@
 import {createDetailsTemplate} from '../templates/details.js';
 import AbstractSmartComponent from "./abstract-smart-component.js";
+import CommentsController from "./../controller/comments-controller"
 
 export default class MovieDetails extends AbstractSmartComponent {
   constructor(movie) {
@@ -13,17 +14,17 @@ export default class MovieDetails extends AbstractSmartComponent {
   }
 
   getTemplate() {
-    // console.log(this._movie, {
-    //   isInWatchlist: this._isInWatchlist,
-    //   isAlreadyWatched: this._isAlreadyWatched,
-    //   isInFavorites: this._isInFavorites
-    // });
-
-    return createDetailsTemplate(this._movie, {
+    console.log(this._movie, {
       isInWatchlist: this._isInWatchlist,
       isAlreadyWatched: this._isAlreadyWatched,
       isInFavorites: this._isInFavorites
     });
+
+    return createDetailsTemplate(Object.assign({}, this._movie, {
+      isInWatchlist: this._isInWatchlist,
+      isAlreadyWatched: this._isAlreadyWatched,
+      isInFavorites: this._isInFavorites
+    }));
   }
 
   recoveryListeners() {
@@ -33,6 +34,9 @@ export default class MovieDetails extends AbstractSmartComponent {
 
   rerender() {
     super.rerender();
+    const detailsBottomContainer = document.querySelector(`.form-details__bottom-container`);
+    const commentsController = new CommentsController(detailsBottomContainer);
+    commentsController.render(this._movie);
   }
 
   setCloseButtonClickHandler(handler) {
@@ -42,37 +46,25 @@ export default class MovieDetails extends AbstractSmartComponent {
 
   _subscribeOnEvents() {
     const element = this.getElement();
-    const watchlistControl = this.getElement().querySelector(`input[name="watchlist"]`);
-    const alreadyWatchedControl = this.getElement().querySelector(`input[name="watched"]`);
-    const favoritesControl = this.getElement().querySelector(`input[name="favorite"]`);
-
-    function switchCheckbox(input) {
-      if (input.checked) {
-        input.checked = false;
-      } else {
-        input.checked = true;
-      }
-    }
+    const watchlistControl = element.querySelector(`input[name="watchlist"]`);
+    const alreadyWatchedControl = element.querySelector(`input[name="watched"]`);
+    const favoritesControl = element.querySelector(`input[name="favorite"]`);
 
     element.querySelector(`.film-details__control-label--watchlist`).addEventListener(`click`, () => {
       this._isInWatchlist = !this._isInWatchlist;
-      console.log(watchlistControl);
-      console.log(watchlistControl.checked);
-      switchCheckbox(watchlistControl);
-      console.log(watchlistControl.checked);
+      watchlistControl.checked = !watchlistControl.checked;
       this.rerender();
     });
 
     element.querySelector(`.film-details__control-label--watched`).addEventListener(`click`, () => {
       this._isAlreadyWatched = !this._isAlreadyWatched;
-      switchCheckbox(alreadyWatchedControl);
+      alreadyWatchedControl.checked = !alreadyWatchedControl.checked;
       this.rerender();
     });
 
     element.querySelector(`.film-details__control-label--favorite`).addEventListener(`click`, () => {
       this._isInFavorites = !this._isInFavorites;
-
-      switchCheckbox(favoritesControl);
+      favoritesControl.checked = !favoritesControl.checked;
       this.rerender();
     });
   }

@@ -13,7 +13,7 @@ export default class MovieController {
     this._setDefaultView = this._setDefaultView.bind(this);
   }
 
-  _showMovieDetails(movie, commonContainer, properContainer) {
+  _showMovieDetails(movie, commonContainer) {
     appendChild(commonContainer.getElement(), this._detailsComponent);
     const detailsBottomContainer = document.querySelector(`.form-details__bottom-container`);
     detailsBottomContainer.innerHTML = ``;
@@ -21,7 +21,6 @@ export default class MovieController {
     commentsController.render(movie);
   }
 
-  // не срабатывает удаление через this._element
   _closeMovieDetails(commonContainer) {
     document.removeEventListener(`keydown`, this._onEscKeyDown);
     removeChild(commonContainer.getElement(), this._detailsComponent);
