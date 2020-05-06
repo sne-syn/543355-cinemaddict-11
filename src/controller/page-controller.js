@@ -81,6 +81,7 @@ export default class PageController {
     this._mostCommentedContainer = this._mostCommentedList.getListContainer();
 
     this._onDataChange = this._onDataChange.bind(this);
+    this._onViewChange = this._onViewChange.bind(this);
   }
 
   render(movies) {
@@ -98,34 +99,36 @@ export default class PageController {
     render(this._movieSectionComponent.getElement(), this._movieList);
     const newMovies = renderMovies(this._movies.slice(0, this._showingMoviesCount), this._movieSectionComponent, this._mainMovieContainer, this._onDataChange);
     this._showedMoviesControllers = this._showedMoviesControllers.concat(newMovies);
+
     this._renderLoadMoreButton();
 
     // top rated list movies
     const topRatedMovies = [...movies].sort((a, b) => (a.rating < b.rating) ? 1 : -1);
     if (topRatedMovies[0].rating > 0 || topRatedMovies[1].rating > 0) {
-     // this._movies = topRatedMovies;
       render(this._movieSectionComponent.getElement(), this._topRatedList);
-      renderMovies( this._movies.slice(0, this._showingExtraCards), this._movieSectionComponent, this._topRatedContainer, this._onDataChange);
+      const ratedMovies = renderMovies(topRatedMovies.slice(0, this._showingExtraCards), this._movieSectionComponent, this._topRatedContainer, this._onDataChange);
+      this._showedMoviesControllers = this._showedMoviesControllers.concat(ratedMovies);
     }
 
     // most commented list movies
     const mostCommentedMovies = [...movies].sort((a, b) => (a.comments < b.comments) ? 1 : -1);
     if (mostCommentedMovies[0].comments > 0 || mostCommentedMovies[1].comments > 0) {
-      //this._movies = mostCommentedMovies;
       render(this._movieSectionComponent.getElement(), this._mostCommentedList);
-      renderMovies(this._movies.slice(0, this._showingExtraCards), this._movieSectionComponent, this._mostCommentedContainer, this._onDataChange);
+      const commentedMovies = renderMovies(mostCommentedMovies.slice(0, this._showingExtraCards), this._movieSectionComponent, this._mostCommentedContainer, this._onDataChange);
+      this._showedMoviesControllers = this._showedMoviesControllers.concat(commentedMovies);
     }
   }
 
-  _onDataChange(oldData, newData, commonContainer, properContainer) {
-    const index = this._movies.findIndex((it) => it === oldData);
+  _onViewChange() {}
 
+  _onDataChange(movieController, oldData, newData, commonContainer, properContainer) {
+    const index = this._movies.findIndex((it) => it === oldData);
     if (index === -1) {
       return;
     }
 
-    this._movies = [].concat(this._movies.slice(0, index), newData,  this._movies.slice(index + 1));
-    this._showedMoviesControllers[index].render(this._movies[index], commonContainer, properContainer);
+    this._movies = [].concat(this._movies.slice(0, index), newData, this._movies.slice(index + 1));
+    movieController.render(this._movies[index], commonContainer, properContainer);
   }
 
   _showStats(evt) {

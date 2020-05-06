@@ -4,16 +4,14 @@ import AbstractComponent from "./abstract-component.js";
 export default class CommentSectionComponent extends AbstractComponent {
   constructor(movie) {
     super();
-
     this._movie = movie;
   }
+
   getTemplate() {
     return createDetailsCommentTemplate(this._movie);
   }
 
-  addCommentHandler(handler) {
-
-  }
+  addCommentHandler(handler) {}
 
   deleteCommentHandler(handler) {}
 

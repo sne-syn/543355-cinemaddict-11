@@ -2,17 +2,15 @@ import MovieCardComponent from "./../components/movie-card.js";
 import MovieDetailsComponent from "./../components/movie-details.js";
 import CommentsController from "./comments-controller.js";
 
-import {
-  render,
-  appendChild
-} from "./../utils/render.js";
+import {render, appendChild} from "./../utils/render.js";
 
 export default class MovieController {
   constructor(onDataChange) {
     this._cardComponent = null;
     this._detailsComponent = null;
-    this._onEscKeyDown = this._onEscKeyDown.bind(this);
     this._onDataChange = onDataChange;
+    this._onEscKeyDown = this._onEscKeyDown.bind(this);
+    this._setDefaultView = this._setDefaultView.bind(this);
   }
 
   _showMovieDetails(movie, commonContainer, properContainer) {
@@ -39,24 +37,26 @@ export default class MovieController {
     }
   }
 
+  _setDefaultView() {}
+
   render(movie, commonContainer, properContainer) {
     this._cardComponent = new MovieCardComponent(movie);
     this._detailsComponent = new MovieDetailsComponent(movie);
 
     this._cardComponent.setWatchlistButtonClickHandler(() => {
-      this._onDataChange(movie, Object.assign({}, movie, {
+      this._onDataChange(this, movie, Object.assign({}, movie, {
         isInWatchlist: !movie.isInWatchlist,
       }), commonContainer, properContainer);
     });
 
     this._cardComponent.setAlreadyWatchedButtonClickHandler(() => {
-      this._onDataChange(movie, Object.assign({}, movie, {
+      this._onDataChange(this, movie, Object.assign({}, movie, {
         isAlreadyWatched: !movie.isAlreadyWatched,
       }), commonContainer, properContainer);
     });
 
     this._cardComponent.setFavoriteButtonClickHandler(() => {
-      this._onDataChange(movie, Object.assign({}, movie, {
+      this._onDataChange(this, movie, Object.assign({}, movie, {
         isInFavorites: !movie.isInFavorites,
       }), commonContainer, properContainer);
     });

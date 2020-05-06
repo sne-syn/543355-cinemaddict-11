@@ -13,11 +13,11 @@ export default class MovieDetails extends AbstractSmartComponent {
   }
 
   getTemplate() {
-    console.log(this._movie, {
-      isInWatchlist: this._isInWatchlist,
-      isAlreadyWatched: this._isAlreadyWatched,
-      isInFavorites: this._isInFavorites
-    });
+    // console.log(this._movie, {
+    //   isInWatchlist: this._isInWatchlist,
+    //   isAlreadyWatched: this._isAlreadyWatched,
+    //   isInFavorites: this._isInFavorites
+    // });
 
     return createDetailsTemplate(this._movie, {
       isInWatchlist: this._isInWatchlist,
