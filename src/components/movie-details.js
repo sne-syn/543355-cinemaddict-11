@@ -1,4 +1,6 @@
-import {createDetailsTemplate} from '../templates/details.js';
+import {
+  createDetailsTemplate
+} from '../templates/details.js';
 import AbstractSmartComponent from "./abstract-smart-component.js";
 import CommentsController from "./../controller/comments-controller";
 
@@ -37,6 +39,11 @@ export default class MovieDetails extends AbstractSmartComponent {
     const detailsBottomContainer = document.querySelector(`.form-details__bottom-container`);
     const commentsController = new CommentsController(detailsBottomContainer);
     commentsController.render(this._movie);
+  }
+
+  reset() {
+    console.log('reset');
+    this._rerender();
   }
 
   setCloseButtonClickHandler(handler) {

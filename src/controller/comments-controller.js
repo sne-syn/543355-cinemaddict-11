@@ -51,13 +51,13 @@ export default class CommentsController {
       newCommentElement.removeChild(addEmojiLabel);
     }
     newCommentElement.replaceChild(emojiImg, newCommentElement.firstChild);
-    
+
     document.querySelector(`.film-details__comment-input`).addEventListener(`keydown`, this._addCommentHandler);
   }
 
   _addCommentHandler(evt) {
     if (evt.keyCode === keyCodes.ENTER) {
-      console.log(`gotcha`);
+      console.log(evt.keyCode + ` gotcha`);
     }
   }
 }

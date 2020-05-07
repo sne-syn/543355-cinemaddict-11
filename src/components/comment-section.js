@@ -16,6 +16,7 @@ export default class CommentSectionComponent extends AbstractComponent {
   addCommentHandler(handler2) {
     this.getElement().querySelector(`.film-details__comment-input`).addEventListener(`click`, handler2);
   }
+  
   deleteCommentHandler(handler) {}
 
   addEmojiHandler(handler) {
