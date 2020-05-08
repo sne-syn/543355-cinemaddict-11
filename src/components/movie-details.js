@@ -8,7 +8,7 @@ export default class MovieDetails extends AbstractSmartComponent {
   constructor(movie) {
     super();
     this._movie = movie;
-    this.__closeDetailsHandler = null;
+    this._closeDetailsHandler = null;
     this._isInWatchlist = movie.isInWatchlist;
     this._isAlreadyWatched = movie.isAlreadyWatched;
     this._isInFavorites = movie.isInFavorites;
@@ -16,12 +16,6 @@ export default class MovieDetails extends AbstractSmartComponent {
   }
 
   getTemplate() {
-    // console.log(this._movie, {
-    //   isInWatchlist: this._isInWatchlist,
-    //   isAlreadyWatched: this._isAlreadyWatched,
-    //   isInFavorites: this._isInFavorites
-    // });
-
     return createDetailsTemplate(Object.assign({}, this._movie, {
       isInWatchlist: this._isInWatchlist,
       isAlreadyWatched: this._isAlreadyWatched,
@@ -39,11 +33,6 @@ export default class MovieDetails extends AbstractSmartComponent {
     const detailsBottomContainer = document.querySelector(`.form-details__bottom-container`);
     const commentsController = new CommentsController(detailsBottomContainer);
     commentsController.render(this._movie);
-  }
-
-  reset() {
-    console.log('reset');
-    this._rerender();
   }
 
   setCloseButtonClickHandler(handler) {

@@ -2,36 +2,46 @@ import MovieCardComponent from "./../components/movie-card.js";
 import MovieDetailsComponent from "./../components/movie-details.js";
 import CommentsController from "./comments-controller.js";
 
-import {render, replace, appendChild, removeChild} from "./../utils/render.js";
+import {
+  render,
+  replace,
+  appendChild,
+  removeChild
+} from "./../utils/render.js";
 
-const Mode = {
+const State = {
   DEFAULT: `default`,
-  EDIT: `edit`,
+  MODAL: `modal-open`,
 };
 
 export default class MovieController {
-  constructor(onDataChange, onViewChange) {
+  constructor(onDataChange, onViewChange, commonContainer) {
+    this._commonContainer = commonContainer;
     this._cardComponent = null;
     this._detailsComponent = null;
     this._onDataChange = onDataChange;
     this._onViewChange = onViewChange;
-    this._mode = Mode.DEFAULT;
+    this._state = State.DEFAULT;
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
   }
 
-  _showMovieDetails(movie, commonContainer) {
-    appendChild(commonContainer.getElement(), this._detailsComponent);
+  _showMovieDetails(movie) {
+    this._onViewChange();
+    appendChild(this._commonContainer.getElement(), this._detailsComponent);
+    this._state = State.MODAL;
+
     const detailsBottomContainer = document.querySelector(`.form-details__bottom-container`);
     detailsBottomContainer.innerHTML = ``;
     const commentsController = new CommentsController(detailsBottomContainer);
     commentsController.render(movie);
-    this._mode = Mode.EDIT;
   }
 
-  _closeMovieDetails(commonContainer) {
+  _closeMovieDetails() {
     document.removeEventListener(`keydown`, this._onEscKeyDown);
-    removeChild(commonContainer.getElement(), this._detailsComponent);
-    this._mode = Mode.DEFAULT;
+    if (this._state === State.MODAL) {
+      removeChild(this._commonContainer.getElement(), this._detailsComponent);
+    }
+    this._state = State.DEFAULT;
   }
 
   _onEscKeyDown(evt) {
@@ -42,13 +52,13 @@ export default class MovieController {
     }
   }
 
-  _setDefaultView() {
-    if (this._mode !== Mode.DEFAULT) {
+  setDefaultView() {
+    if (this._state == State.MODAL) {
       this._closeMovieDetails();
     }
   }
 
-  render(movie, commonContainer, properContainer) {
+  render(movie, properContainer) {
     const oldCardComponent = this._cardComponent;
     const oldMovieDetailsComponent = this._detailsComponent;
 
@@ -58,34 +68,32 @@ export default class MovieController {
     this._cardComponent.setWatchlistButtonClickHandler(() => {
       this._onDataChange(this, movie, Object.assign({}, movie, {
         isInWatchlist: !movie.isInWatchlist,
-      }), commonContainer, properContainer);
+      }), this._commonContainer, properContainer);
     });
 
     this._cardComponent.setAlreadyWatchedButtonClickHandler(() => {
       this._onDataChange(this, movie, Object.assign({}, movie, {
         isAlreadyWatched: !movie.isAlreadyWatched,
-      }), commonContainer, properContainer);
+      }), this._commonContainer, properContainer);
     });
 
     this._cardComponent.setFavoriteButtonClickHandler(() => {
       this._onDataChange(this, movie, Object.assign({}, movie, {
         isInFavorites: !movie.isInFavorites,
-      }), commonContainer, properContainer);
+      }), this._commonContainer, properContainer);
     });
 
     this._cardComponent.setOnCardClickHandler(() => {
-      this._showMovieDetails(movie, commonContainer, properContainer);
+      this._showMovieDetails(movie);
       document.addEventListener(`keydown`, this._onEscKeyDown);
     });
 
     this._detailsComponent.setCloseButtonClickHandler(() => {
-      this._closeMovieDetails(commonContainer);
+      this._closeMovieDetails();
     });
 
     if (oldCardComponent) {
-      const parentElement = oldCardComponent.getElement().parentElement;
-      console.log(parentElement);
-      parentElement.replaceChild(this._cardComponent.getElement(), oldCardComponent.getElement());
+      replace(this._cardComponent.getElement(), oldCardComponent.getElement());
     } else {
       render(properContainer, this._cardComponent);
     }

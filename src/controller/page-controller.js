@@ -24,8 +24,8 @@ const SHOWING_MOVIES_COUNT_BY_BUTTON = 5;
 
 const renderMovies = (moviesSelection, commonContainer, properMovieListContainer, onDataChange, onViewChange) => {
   return moviesSelection.map((movie) => {
-    const movieController = new MovieController(onDataChange, onViewChange);
-    movieController.render(movie, commonContainer, properMovieListContainer);
+    const movieController = new MovieController(onDataChange, onViewChange, commonContainer);
+    movieController.render(movie, properMovieListContainer);
     return movieController;
   });
 };
@@ -72,7 +72,7 @@ export default class PageController {
     this._menuComponent.setStatsClickHandler(this._showStats);
 
     this._renderLoadMoreButton = this._renderLoadMoreButton.bind(this);
-    this._onSortTypeChange = this._onSortTypeChange.bind(this);
+
     this._sortComponent.setSortTypeChangeHandler(this._onSortTypeChange);
 
     //===========
@@ -80,6 +80,7 @@ export default class PageController {
     this._topRatedContainer = this._topRatedList.getListContainer();
     this._mostCommentedContainer = this._mostCommentedList.getListContainer();
 
+    this._onSortTypeChange = this._onSortTypeChange.bind(this);
     this._onDataChange = this._onDataChange.bind(this);
     this._onViewChange = this._onViewChange.bind(this);
   }
@@ -121,7 +122,7 @@ export default class PageController {
   }
 
   _onDataChange(movieController, oldData, newData, commonContainer, properContainer) {
-    const index = this._movies.findIndex((it) => it === oldData);
+    let index = this._movies.findIndex((it) => it === oldData);
     if (index === -1) {
       return;
     }

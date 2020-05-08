@@ -1,12 +1,18 @@
 import CommentSectionComponent from "../components/comment-section";
 import CommentComponent from "./../components/comment.js";
-import {render} from "./../utils/render.js";
-import {generateComments} from "./../mock/comment.js";
+import {
+  render
+} from "./../utils/render.js";
+import {
+  generateComments
+} from "./../mock/comment.js";
 
 const keyCodes = {
   CTRL: 17,
   ENTER: 13,
 };
+
+let flag = false;
 
 export default class CommentsController {
   constructor(container) {
@@ -25,15 +31,17 @@ export default class CommentsController {
     if (movie.comments > 0) {
       this._renderCommentList(movie);
     }
+
     this._commentSection.addEmojiHandler(this._changeEmoji);
+    document.querySelector(`.film-details__comment-input`).addEventListener(`keydown`, this._addCommentHandler);
   }
 
   _renderCommentList(movie) {
-    const comments = generateComments(movie.comments);
+    this._comments = generateComments(movie.comments);
     const commentListElement = document.querySelector(`.film-details__comments-list`);
     commentListElement.innerHTML = ``;
     // render new comments
-    comments.forEach((comment) => {
+    this._comments.forEach((comment) => {
       const commentComponent = new CommentComponent(comment);
       render(commentListElement, commentComponent);
     });
@@ -51,13 +59,16 @@ export default class CommentsController {
       newCommentElement.removeChild(addEmojiLabel);
     }
     newCommentElement.replaceChild(emojiImg, newCommentElement.firstChild);
-
-    document.querySelector(`.film-details__comment-input`).addEventListener(`keydown`, this._addCommentHandler);
   }
 
   _addCommentHandler(evt) {
-    if (evt.keyCode === keyCodes.ENTER) {
-      console.log(evt.keyCode + ` gotcha`);
+    if(evt.keyCode === keyCodes.CTRL) flag = true;
+    if(evt.keyCode === keyCodes.ENTER && flag) {
+      flag = false;
+      // create an object with emoji, comment, timestamp, and push it into array for the next render process. Check if emoji && comment exists
+      console.log(document.querySelector(`.film-details__comment-input`).value);
+      console.log('gotcha comment');
     }
   }
 }
+

@@ -13,8 +13,8 @@ export default class CommentSectionComponent extends AbstractComponent {
     return createDetailsCommentTemplate(this._movie);
   }
 
-  addCommentHandler(handler2) {
-    this.getElement().querySelector(`.film-details__comment-input`).addEventListener(`click`, handler2);
+  addCommentHandler(handler) {
+    this.getElement().querySelector(`.film-details__comment-input`).addEventListener(`keydown`, handler);
   }
   
   deleteCommentHandler(handler) {}
