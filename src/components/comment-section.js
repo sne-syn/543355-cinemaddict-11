@@ -30,7 +30,11 @@ export default class CommentSectionComponent extends AbstractComponent {
     });
   }
 
-  deleteCommentHandler(handler) {}
+  deleteCommentHandler(handler) {
+    this.getElement().querySelector(`.film-details__comments-list`).addEventListener(`click`, (evt) => {
+      handler(evt);
+    });
+  }
 
   addEmojiHandler(handler) {
     this.getElement().querySelector(`.film-details__emoji-list`).addEventListener(`change`, handler);

@@ -25,6 +25,7 @@ export default class CommentsController {
     this._changeEmoji = this._changeEmoji.bind(this);
     this._addComment = this._addComment.bind(this);
     this._update = this._update.bind(this);
+    this._deleteComment = this._deleteComment.bind(this);
   }
 
   render(movie) {
@@ -37,14 +38,17 @@ export default class CommentsController {
 
     this._commentSection.addEmojiHandler(this._changeEmoji);
     this._commentSection.addCommentHandler(this._addComment);
+    this._commentSection.deleteCommentHandler(this._deleteComment);
   }
 
   _update(movie) {
-    let commentsFixed = movie.comments++;
-    this._renderCommentList(this._comments);
+    let commentsFixed = ++movie.comments;
     const newObj = Object.assign({}, movie, {comments: commentsFixed});
-    this._commentSection = new CommentSectionComponent(newObj);
-    render(this._container, this._commentSection);
+    const parent = new CommentSectionComponent(newObj);
+    //render(this._container, this._commentSection);
+    const oldElement = parent.getElement();
+    console.log(oldElement);
+    console.log(newObj);
     this._renderCommentList(this._comments);
   }
 
@@ -79,5 +83,9 @@ export default class CommentsController {
     };
     this._comments.push(newComment);
     this._update(movie);
+  }
+
+  _deleteComment(evt) {
+    evt.target.parentElement.parentElement.parentElement.parentElement.removeChild(evt.target.parentElement.parentElement.parentElement);
   }
 }
