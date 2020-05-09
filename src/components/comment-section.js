@@ -31,8 +31,9 @@ export default class CommentSectionComponent extends AbstractComponent {
   }
 
   deleteCommentHandler(handler) {
-    this.getElement().querySelector(`.film-details__comments-list`).addEventListener(`click`, (evt) => {
-      handler(evt);
+    const comments = this.getElement().querySelectorAll(`.film-details__comment`);
+    comments.forEach((comment) => {
+      comment.addEventListener(`click`, (evt) =>  handler(evt));
     });
   }
 

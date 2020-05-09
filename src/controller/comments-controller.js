@@ -1,7 +1,7 @@
 import CommentSectionComponent from "../components/comment-section";
 import CommentComponent from "./../components/comment.js";
 import {
-  capitalizeEveryFirstChar
+  capitalizeEveryFirstChar, formateDate
 } from "./../utils/common.js";
 import {
   render
@@ -9,10 +9,6 @@ import {
 import {
   generateComments
 } from "./../mock/comment.js";
-
-const addLeadingZero = (value) => {
-  return (value < 10) ? `0${value}` : value;
-};
 
 export default class CommentsController {
   constructor(container, profile) {
@@ -73,19 +69,18 @@ export default class CommentsController {
   }
 
   _addComment(movie) {
-    let date = new Date();
-    let formatedDate = `${date.getFullYear()}/${addLeadingZero(date.getMonth())}/${addLeadingZero(date.getDate())} ${addLeadingZero(date.getHours())}:${addLeadingZero(date.getMinutes())}`;
     const newComment = {
       emoji: `smile`,
       text: document.querySelector(`.film-details__comment-input`).value,
       author: capitalizeEveryFirstChar(this._profile.rating),
-      date: formatedDate,
+      date: formateDate(new Date()),
     };
     this._comments.push(newComment);
     this._update(movie);
   }
 
   _deleteComment(evt) {
-    evt.target.parentElement.parentElement.parentElement.parentElement.removeChild(evt.target.parentElement.parentElement.parentElement);
+    const commentToRemove = evt.target.closest(`.film-details__comment`);
+    commentToRemove.parentElement.removeChild(commentToRemove);
   }
 }
