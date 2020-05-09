@@ -1,29 +1,30 @@
 import CommentSectionComponent from "../components/comment-section";
 import CommentComponent from "./../components/comment.js";
 import {
+  capitalizeEveryFirstChar
+} from "./../utils/common.js";
+import {
   render
 } from "./../utils/render.js";
 import {
   generateComments
 } from "./../mock/comment.js";
 
-const keyCodes = {
-  CTRL: 17,
-  ENTER: 13,
+const addLeadingZero = (value) => {
+  return (value < 10) ? `0${value}` : value;
 };
-
-let flag = false;
 
 export default class CommentsController {
   constructor(container, profile) {
     this._container = container;
+    this._comments = [];
     this._profile = profile;
     this._commentComponent = null;
     this._commentSection = null;
     this._renderCommentList = this._renderCommentList.bind(this);
     this._changeEmoji = this._changeEmoji.bind(this);
-    this._addCommentHandler = this._addCommentHandler.bind(this);
-    this._createNewCommentValue = this._createNewCommentValue.bind(this);
+    this._addComment = this._addComment.bind(this);
+    this._update = this._update.bind(this);
   }
 
   render(movie) {
@@ -31,18 +32,27 @@ export default class CommentsController {
     this._commentSection = new CommentSectionComponent(movie);
     render(this._container, this._commentSection);
     if (movie.comments > 0) {
-      this._renderCommentList(movie);
+      this._renderCommentList(this._comments);
     }
 
     this._commentSection.addEmojiHandler(this._changeEmoji);
-    document.querySelector(`.film-details__comment-input`).addEventListener(`keydown`, this._addCommentHandler);
+    this._commentSection.addCommentHandler(this._addComment);
   }
 
-  _renderCommentList() {
+  _update(movie) {
+    let commentsFixed = movie.comments++;
+    this._renderCommentList(this._comments);
+    const newObj = Object.assign({}, movie, {comments: commentsFixed});
+    this._commentSection = new CommentSectionComponent(newObj);
+    render(this._container, this._commentSection);
+    this._renderCommentList(this._comments);
+  }
+
+  _renderCommentList(comments) {
     const commentListElement = document.querySelector(`.film-details__comments-list`);
     commentListElement.innerHTML = ``;
     // render new comments
-    this._comments.forEach((comment) => {
+    comments.forEach((comment) => {
       const commentComponent = new CommentComponent(comment);
       render(commentListElement, commentComponent);
     });
@@ -50,7 +60,6 @@ export default class CommentsController {
 
   _changeEmoji(evt) {
     const addEmojiLabel = document.querySelector(`.film-details__add-emoji-label`);
-
     let emojiImg = document.createElement(`img`);
     emojiImg.src = `./images/emoji/${evt.target.value}.png`;
     emojiImg.width = `55`;
@@ -59,23 +68,16 @@ export default class CommentsController {
     addEmojiLabel.appendChild(emojiImg);
   }
 
-  _createNewCommentValue() {
+  _addComment(movie) {
+    let date = new Date();
+    let formatedDate = `${date.getFullYear()}/${addLeadingZero(date.getMonth())}/${addLeadingZero(date.getDate())} ${addLeadingZero(date.getHours())}:${addLeadingZero(date.getMinutes())}`;
     const newComment = {
-      emoji:`smile`,
+      emoji: `smile`,
       text: document.querySelector(`.film-details__comment-input`).value,
-      author: this._profile.rating,
-      date: new Date(),
+      author: capitalizeEveryFirstChar(this._profile.rating),
+      date: formatedDate,
     };
-    console.log(newComment);
-    return newComment;
+    this._comments.push(newComment);
+    this._update(movie);
   }
-
-  _addCommentHandler(evt) {
-    if (evt.keyCode === keyCodes.CTRL) flag = true;
-    if (evt.keyCode === keyCodes.ENTER && flag) {
-      flag = false;
-      this._createNewCommentValue();
-    }
-  }
-
 }
