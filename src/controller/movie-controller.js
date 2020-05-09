@@ -15,7 +15,8 @@ const State = {
 };
 
 export default class MovieController {
-  constructor(onDataChange, onViewChange, commonContainer) {
+  constructor(onDataChange, onViewChange, commonContainer, profile) {
+    this._profile = profile;
     this._commonContainer = commonContainer;
     this._cardComponent = null;
     this._detailsComponent = null;
@@ -32,7 +33,7 @@ export default class MovieController {
 
     const detailsBottomContainer = document.querySelector(`.form-details__bottom-container`);
     detailsBottomContainer.innerHTML = ``;
-    const commentsController = new CommentsController(detailsBottomContainer);
+    const commentsController = new CommentsController(detailsBottomContainer, this._profile);
     commentsController.render(movie);
   }
 
@@ -60,7 +61,6 @@ export default class MovieController {
 
   render(movie, properContainer) {
     const oldCardComponent = this._cardComponent;
-    const oldMovieDetailsComponent = this._detailsComponent;
 
     this._cardComponent = new MovieCardComponent(movie);
     this._detailsComponent = new MovieDetailsComponent(movie);

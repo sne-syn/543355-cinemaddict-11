@@ -782,7 +782,7 @@ button {
   opacity: 1;
 }
 .film-details__emoji-item:checked + .film-details__emoji-label {
-  opacity: 1;
+  /* opacity: 1; */
 }
 .film-details__comments-wrap {
   width: 630px;

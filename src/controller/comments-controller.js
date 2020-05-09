@@ -15,19 +15,21 @@ const keyCodes = {
 let flag = false;
 
 export default class CommentsController {
-  constructor(container) {
+  constructor(container, profile) {
     this._container = container;
+    this._profile = profile;
     this._commentComponent = null;
     this._commentSection = null;
     this._renderCommentList = this._renderCommentList.bind(this);
     this._changeEmoji = this._changeEmoji.bind(this);
     this._addCommentHandler = this._addCommentHandler.bind(this);
+    this._createNewCommentValue = this._createNewCommentValue.bind(this);
   }
 
   render(movie) {
+    this._comments = generateComments(movie.comments);
     this._commentSection = new CommentSectionComponent(movie);
     render(this._container, this._commentSection);
-
     if (movie.comments > 0) {
       this._renderCommentList(movie);
     }
@@ -36,8 +38,7 @@ export default class CommentsController {
     document.querySelector(`.film-details__comment-input`).addEventListener(`keydown`, this._addCommentHandler);
   }
 
-  _renderCommentList(movie) {
-    this._comments = generateComments(movie.comments);
+  _renderCommentList() {
     const commentListElement = document.querySelector(`.film-details__comments-list`);
     commentListElement.innerHTML = ``;
     // render new comments
@@ -48,27 +49,33 @@ export default class CommentsController {
   }
 
   _changeEmoji(evt) {
-    const newCommentElement = document.querySelector(`.film-details__new-comment`);
     const addEmojiLabel = document.querySelector(`.film-details__add-emoji-label`);
 
-    let emojiImg = document.createElement(`span`);
-    emojiImg.classList.add(`film-details__comment-emoji`);
-    emojiImg.innerHTML = `<img src="./images/emoji/${evt.target.value}.png" width="55" height="55" alt="emoji-${evt.target.value}">`;
+    let emojiImg = document.createElement(`img`);
+    emojiImg.src = `./images/emoji/${evt.target.value}.png`;
+    emojiImg.width = `55`;
+    emojiImg.height = `55`;
+    addEmojiLabel.innerHTML = ``;
+    addEmojiLabel.appendChild(emojiImg);
+  }
 
-    if (newCommentElement.contains(addEmojiLabel)) {
-      newCommentElement.removeChild(addEmojiLabel);
-    }
-    newCommentElement.replaceChild(emojiImg, newCommentElement.firstChild);
+  _createNewCommentValue() {
+    const newComment = {
+      emoji:`smile`,
+      text: document.querySelector(`.film-details__comment-input`).value,
+      author: this._profile.rating,
+      date: new Date(),
+    };
+    console.log(newComment);
+    return newComment;
   }
 
   _addCommentHandler(evt) {
-    if(evt.keyCode === keyCodes.CTRL) flag = true;
-    if(evt.keyCode === keyCodes.ENTER && flag) {
+    if (evt.keyCode === keyCodes.CTRL) flag = true;
+    if (evt.keyCode === keyCodes.ENTER && flag) {
       flag = false;
-      // create an object with emoji, comment, timestamp, and push it into array for the next render process. Check if emoji && comment exists
-      console.log(document.querySelector(`.film-details__comment-input`).value);
-      console.log('gotcha comment');
+      this._createNewCommentValue();
     }
   }
-}
 
+}

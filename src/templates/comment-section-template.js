@@ -1,4 +1,4 @@
-const emojis = [`angry`, `puke`, `sleeping`, `smile`];
+const emojis = [`smile`, `sleeping`, `puke`, `angry`];
 
 const createEmojiInput = (emojiName) => {
   return `
