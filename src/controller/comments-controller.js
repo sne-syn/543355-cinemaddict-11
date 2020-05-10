@@ -1,10 +1,11 @@
 import CommentSectionComponent from "../components/comment-section";
 import CommentComponent from "./../components/comment.js";
 import {
-  capitalizeEveryFirstChar, formateDate
+  capitalizeEveryFirstChar,
+  formateDate
 } from "./../utils/common.js";
 import {
-  render
+  render, remove
 } from "./../utils/render.js";
 import {
   generateComments
@@ -17,10 +18,10 @@ export default class CommentsController {
     this._profile = profile;
     this._commentComponent = null;
     this._commentSection = null;
+    this._newSection = null;
     this._renderCommentList = this._renderCommentList.bind(this);
     this._changeEmoji = this._changeEmoji.bind(this);
     this._addComment = this._addComment.bind(this);
-    this._update = this._update.bind(this);
     this._deleteComment = this._deleteComment.bind(this);
   }
 
@@ -32,20 +33,9 @@ export default class CommentsController {
       this._renderCommentList(this._comments);
     }
 
-    this._commentSection.addEmojiHandler(this._changeEmoji);
-    this._commentSection.addCommentHandler(this._addComment);
-    this._commentSection.deleteCommentHandler(this._deleteComment);
-  }
-
-  _update(movie) {
-    let commentsFixed = ++movie.comments;
-    const newObj = Object.assign({}, movie, {comments: commentsFixed});
-    const parent = new CommentSectionComponent(newObj);
-    //render(this._container, this._commentSection);
-    const oldElement = parent.getElement();
-    console.log(oldElement);
-    console.log(newObj);
-    this._renderCommentList(this._comments);
+    this._commentSection.setAddEmojiHandler(this._changeEmoji);
+    this._commentSection.setAddCommentHandler(this._addComment);
+    this._commentSection.setDeleteCommentHandler(this._deleteComment);
   }
 
   _renderCommentList(comments) {
@@ -75,8 +65,10 @@ export default class CommentsController {
       author: capitalizeEveryFirstChar(this._profile.rating),
       date: formateDate(new Date()),
     };
+
     this._comments.push(newComment);
-    this._update(movie);
+    this._renderCommentList(this._comments);
+    this._commentSection.recoveryListeners();
   }
 
   _deleteComment(evt) {
