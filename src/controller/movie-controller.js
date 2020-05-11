@@ -54,7 +54,7 @@ export default class MovieController {
   }
 
   setDefaultView() {
-    if (this._state == State.MODAL) {
+    if (this._state === State.MODAL) {
       this._closeMovieDetails();
     }
   }
@@ -63,7 +63,7 @@ export default class MovieController {
     const oldCardComponent = this._cardComponent;
 
     this._cardComponent = new MovieCardComponent(movie);
-    this._detailsComponent = new MovieDetailsComponent(movie);
+    this._detailsComponent = new MovieDetailsComponent(movie,  this._profile);
 
     this._cardComponent.setWatchlistButtonClickHandler(() => {
       this._onDataChange(this, movie, Object.assign({}, movie, {

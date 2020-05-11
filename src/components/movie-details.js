@@ -5,9 +5,10 @@ import AbstractSmartComponent from "./abstract-smart-component.js";
 import CommentsController from "./../controller/comments-controller";
 
 export default class MovieDetails extends AbstractSmartComponent {
-  constructor(movie) {
+  constructor(movie, profile) {
     super();
     this._movie = movie;
+    this._profile = profile;
     this._closeDetailsHandler = null;
     this._isInWatchlist = movie.isInWatchlist;
     this._isAlreadyWatched = movie.isAlreadyWatched;
@@ -31,7 +32,7 @@ export default class MovieDetails extends AbstractSmartComponent {
   rerender() {
     super.rerender();
     const detailsBottomContainer = document.querySelector(`.form-details__bottom-container`);
-    const commentsController = new CommentsController(detailsBottomContainer);
+    const commentsController = new CommentsController(detailsBottomContainer, this._profile);
     commentsController.render(this._movie);
   }
 

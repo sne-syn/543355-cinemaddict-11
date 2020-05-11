@@ -34,7 +34,9 @@ export default class CommentSectionComponent extends AbstractSmartComponent {
 
   setAddCommentHandler(handler) {
     this.getElement().querySelector(`.film-details__comment-input`).addEventListener(`keydown`, (evt) => {
-      if (evt.keyCode === keyCodes.CTRL) flag = true;
+      if (evt.keyCode === keyCodes.CTRL) {
+        flag = true;
+      }
       if (evt.keyCode === keyCodes.ENTER && flag) {
         flag = false;
         handler(this._movie);
@@ -48,7 +50,7 @@ export default class CommentSectionComponent extends AbstractSmartComponent {
   setDeleteCommentHandler(handler) {
     const comments = this.getElement().querySelectorAll(`.film-details__comment`);
     comments.forEach((comment) => {
-      comment.addEventListener(`click`, (evt) =>  handler(evt));
+      comment.addEventListener(`click`, (evt) => handler(evt, this._movie));
     });
     this._deleteCommentHandler = handler;
   }

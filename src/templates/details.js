@@ -1,5 +1,5 @@
 import {capitalizeChar, getHoursMinutesRuntimeString} from './../utils/common.js';
-import {MONTH_NAMES} from './../const.js';
+import {MONTH_NAMES} from './../utils/const.js';
 
 // create genres template
 const createMovieGenres = (movie) => {

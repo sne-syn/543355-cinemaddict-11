@@ -4,18 +4,14 @@ import {
   capitalizeEveryFirstChar,
   formateDate
 } from "./../utils/common.js";
-import {
-  render, remove
-} from "./../utils/render.js";
-import {
-  generateComments
-} from "./../mock/comment.js";
+import {render} from "./../utils/render.js";
+import {generateComments} from "./../mock/comment.js";
 
 export default class CommentsController {
   constructor(container, profile) {
     this._container = container;
     this._comments = [];
-    this._profile = profile;
+    this._userName = profile.rating;
     this._commentComponent = null;
     this._commentSection = null;
     this._newSection = null;
@@ -60,19 +56,28 @@ export default class CommentsController {
 
   _addComment(movie) {
     const newComment = {
+      // find checked element for emoji
       emoji: `smile`,
       text: document.querySelector(`.film-details__comment-input`).value,
-      author: capitalizeEveryFirstChar(this._profile.rating),
+      author: (this._userName.length > 0) ? capitalizeEveryFirstChar(this._userName) : ``,
       date: formateDate(new Date()),
     };
 
+    // updates movie.comments count by adding 1
+    const newMovieInfo = Object.assign({}, movie, {
+      comments: ++movie.comments
+    });
     this._comments.push(newComment);
     this._renderCommentList(this._comments);
     this._commentSection.recoveryListeners();
   }
 
-  _deleteComment(evt) {
+  _deleteComment(evt, movie) {
     const commentToRemove = evt.target.closest(`.film-details__comment`);
     commentToRemove.parentElement.removeChild(commentToRemove);
+    // updates movie.comments count by adding 1
+    const newMovieInfo = Object.assign({}, movie, {
+      comments: --movie.comments
+    });
   }
 }
