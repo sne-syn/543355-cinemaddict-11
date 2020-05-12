@@ -12,11 +12,11 @@ const createControls = (movie) => {
     isAlreadyWatched,
     isInFavorites
   } = movie;
-  const isActive = (control) => control ? `active` : ``;
+  const isActive = (control) => control ? `film-card__controls-item--active` : ``;
   return `
-  <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist film-card__controls-item--${isActive(isInWatchlist)}">Add to watchlist</button>
-  <button class="film-card__controls-item button film-card__controls-item--mark-as-watched  film-card__controls-item--${isActive(isAlreadyWatched)}">Mark as watched</button>
-  <button class="film-card__controls-item button film-card__controls-item--favorite film-card__controls-item--${isActive(isInFavorites)}">Mark as favorite</button>
+  <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${isActive(isInWatchlist)}">Add to watchlist</button>
+  <button class="film-card__controls-item button film-card__controls-item--mark-as-watched ${isActive(isAlreadyWatched)}">Mark as watched</button>
+  <button class="film-card__controls-item button film-card__controls-item--favorite ${isActive(isInFavorites)}">Mark as favorite</button>
   `;
 };
 

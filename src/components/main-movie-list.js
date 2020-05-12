@@ -1,18 +1,7 @@
-import {
-  createMovieListTemplate
-} from './../templates/main-movie-list-template.js';
-import AbstractComponent from "./abstract-component.js";
+import {createMovieListTemplate} from './../templates/main-movie-list-template.js';
+import ListComponent from "./list-component.js";
 
-export default class MovieList extends AbstractComponent {
-  constructor() {
-    super();
-    this._container = this.getElement().querySelector(`.films-list__container`);
-
-    this.getListContainer = function () {
-      return this._container;
-    };
-  }
-
+export default class MovieList extends ListComponent {
   getTemplate() {
     return createMovieListTemplate();
   }

@@ -30,4 +30,4 @@ render(footerStatisticsElement, new MovieCountComponent());
 
 // call pageController
 const pageController = new PageController(siteMainElement, menuItems, movies, profile);
-pageController.render(movies, profile);
+pageController.render();

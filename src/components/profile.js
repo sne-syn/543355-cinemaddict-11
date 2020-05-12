@@ -4,7 +4,6 @@ import AbstractComponent from "./abstract-component.js";
 export default class Profile extends AbstractComponent {
   constructor(profile) {
     super();
-
     this._profile = profile;
   }
 

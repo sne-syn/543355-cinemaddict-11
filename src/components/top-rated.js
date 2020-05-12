@@ -1,17 +1,7 @@
-import {
-  createTopRatedTemplate
-} from './../templates/top-rated-template.js';
-import AbstractComponent from "./abstract-component.js";
+import {createTopRatedTemplate} from './../templates/top-rated-template.js';
+import ListComponent from "./list-component.js";
 
-export default class TopRated extends AbstractComponent {
-  constructor() {
-    super();
-    this._container = this.getElement().querySelector(`.films-list__container`);
-    this.getListContainer = function () {
-      return this._container;
-    };
-  }
-
+export default class TopRated extends ListComponent {
   getTemplate() {
     return createTopRatedTemplate();
   }

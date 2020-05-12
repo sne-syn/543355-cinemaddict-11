@@ -67,4 +67,14 @@ const getHoursMinutesRuntimeString = (sec) => {
   return output;
 };
 
-export {getRandomIntegerNumber, getRandomArrayItem, getRandomNumber, capitalizeChar, capitalizeEveryFirstChar, getSeveralRandomItems, convertArrayToString, convertSecondsToHoursMinutes, getHoursMinutesRuntimeString};
+// add leading zero to num < 10
+const addLeadingZero = (value) => {
+  return (value < 10) ? `0${value}` : value;
+};
+
+const formateDate = (date) => {
+  let formatedDate = `${date.getFullYear()}/${addLeadingZero(date.getMonth())}/${addLeadingZero(date.getDate())} ${addLeadingZero(date.getHours())}:${addLeadingZero(date.getMinutes())}`;
+  return formatedDate;
+};
+
+export {getRandomIntegerNumber, getRandomArrayItem, getRandomNumber, capitalizeChar, capitalizeEveryFirstChar, getSeveralRandomItems, convertArrayToString, convertSecondsToHoursMinutes, getHoursMinutesRuntimeString, addLeadingZero, formateDate};
