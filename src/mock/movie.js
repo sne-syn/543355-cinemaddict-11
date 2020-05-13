@@ -20,23 +20,16 @@ const Countries = [`USA`, `UK`, `France`, `Spain`, `Canada`];
 
 const Descriptions = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`;
 
+const releaseDate = [`2000-06-05T16:12:32.554Z`, `2006-08-12T16:12:32.554Z`, `1989-06-01T16:12:32.554Z`, `1992-05-11T16:12:32.554Z`, `1985-05-11T16:12:32.554Z`, `1997-05-11T16:12:32.554Z`, `2019-06-05T16:12:32.554Z`, `2015-08-12T16:12:32.554Z`, `2013-06-01T16:12:32.554Z`, `2004-05-11T16:12:32.554Z`];
 
 const getRandomStringLength = (str) => {
   let description = str.split(`. `).slice(getRandomIntegerNumber(0, 5), getRandomIntegerNumber(5, 5)).join(`. `);
   return description;
 };
 
-const getRandomReleaseDate = () => {
-  const releaseDate = new Date();
-  releaseDate.setDate(getRandomIntegerNumber(1, 31));
-  releaseDate.setMonth(getRandomIntegerNumber(0, 11));
-  releaseDate.setFullYear(getRandomIntegerNumber(1940, 2000));
-
-  return releaseDate;
-};
-
 const generateMoviesInfo = () => {
   return {
+    id: String(new Date() + Math.random()),
     poster: getRandomArrayItem(Posters),
     title: getRandomArrayItem(Titles),
     rating: (getRandomNumber(0, 10)).toFixed(1),
@@ -44,8 +37,8 @@ const generateMoviesInfo = () => {
     director: getRandomArrayItem(Names),
     writers: convertArrayToString(getSeveralRandomItems(Names, getRandomIntegerNumber(1, 8))),
     actors: convertArrayToString(getSeveralRandomItems(Names, getRandomIntegerNumber(1, 8))),
-    date: getRandomReleaseDate(),
-    runtime: getRandomIntegerNumber(500, 10000),
+    date: getRandomArrayItem(releaseDate),
+    runtime: getRandomIntegerNumber(50, 100),
     country: convertArrayToString(getSeveralRandomItems(Countries, getRandomIntegerNumber(1, 3))),
     genre: getSeveralRandomItems(Genres, getRandomIntegerNumber(2, 3)),
     description: getRandomStringLength(Descriptions),
@@ -54,6 +47,7 @@ const generateMoviesInfo = () => {
     isInWatchlist: Math.random() > 0.5,
     isAlreadyWatched: Math.random() > 0.5,
     isInFavorites: Math.random() > 0.5,
+    watchingDate: new Date().toISOString(),
   };
 };
 

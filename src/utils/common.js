@@ -45,36 +45,12 @@ const convertArrayToString = (arr) => {
   return [...arr].join(`, `);
 };
 
-const createRuntimeRepresentation = (elem, elemLetter) => {
-  let elemStyled = elem < 1 ? `` : `${elem}${elemLetter}`;
-  return elemStyled;
+export {
+  getRandomIntegerNumber,
+  getRandomArrayItem,
+  getRandomNumber,
+  capitalizeChar,
+  capitalizeEveryFirstChar,
+  getSeveralRandomItems,
+  convertArrayToString,
 };
-
-const convertSecondsToHoursMinutes = (sec) => {
-  let timeObj = {};
-  let hour = sec / 3600 ^ 0;
-  let min = (sec - hour * 3600) / 60 ^ 0;
-  timeObj.hours = hour;
-  timeObj.minutes = min;
-
-  return timeObj;
-};
-
-const getHoursMinutesRuntimeString = (sec) => {
-  let element = convertSecondsToHoursMinutes(sec);
-  let output = `${createRuntimeRepresentation(element.hours, `h`)} ${createRuntimeRepresentation(element.minutes, `m`)}`;
-
-  return output;
-};
-
-// add leading zero to num < 10
-const addLeadingZero = (value) => {
-  return (value < 10) ? `0${value}` : value;
-};
-
-const formateDate = (date) => {
-  let formatedDate = `${date.getFullYear()}/${addLeadingZero(date.getMonth())}/${addLeadingZero(date.getDate())} ${addLeadingZero(date.getHours())}:${addLeadingZero(date.getMinutes())}`;
-  return formatedDate;
-};
-
-export {getRandomIntegerNumber, getRandomArrayItem, getRandomNumber, capitalizeChar, capitalizeEveryFirstChar, getSeveralRandomItems, convertArrayToString, convertSecondsToHoursMinutes, getHoursMinutesRuntimeString, addLeadingZero, formateDate};

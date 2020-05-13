@@ -1,9 +1,6 @@
 import CommentSectionComponent from "../components/comment-section";
 import CommentComponent from "./../components/comment.js";
-import {
-  capitalizeEveryFirstChar,
-  formateDate
-} from "./../utils/common.js";
+import {capitalizeEveryFirstChar} from "./../utils/common.js";
 import {render} from "./../utils/render.js";
 import {generateComments} from "./../mock/comment.js";
 
@@ -60,7 +57,7 @@ export default class CommentsController {
       emoji: `smile`,
       text: document.querySelector(`.film-details__comment-input`).value,
       author: (this._userName.length > 0) ? capitalizeEveryFirstChar(this._userName) : ``,
-      date: formateDate(new Date()),
+      date: new Date().toISOString(),
     };
 
     // updates movie.comments count by adding 1

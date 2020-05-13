@@ -1,4 +1,5 @@
-import {getHoursMinutesRuntimeString} from './../utils/common.js';
+import moment from 'moment';
+import 'moment-duration-format';
 
 const addEllipsisToString = (str) => {
   let sliced = str.slice(0, 140).trim();
@@ -33,9 +34,9 @@ export const createMovieCardTemplate = (movie) => {
   } = movie;
   const controls = createControls(movie);
   const ellipsisDescription = addEllipsisToString(description);
-  const releaseYear = date.getFullYear();
+  const releaseYear = moment(date).format(`YYYY`);
   const firstGenre = genre[0];
-  const convertedRuntime = getHoursMinutesRuntimeString(runtime);
+  const convertedRuntime = moment.duration(runtime, `minutes`).format(`h[h] m[m]`);
 
   return `<article class="film-card">
     <h3 class="film-card__title">${title}</h3>
