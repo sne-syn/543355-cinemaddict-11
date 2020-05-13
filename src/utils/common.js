@@ -45,6 +45,11 @@ const convertArrayToString = (arr) => {
   return [...arr].join(`, `);
 };
 
+const createRuntimeRepresentation = (elem, elemLetter) => {
+  let elemStyled = elem < 1 ? `` : `${elem}${elemLetter}`;
+  return elemStyled;
+};
+
 export {
   getRandomIntegerNumber,
   getRandomArrayItem,
@@ -53,4 +58,5 @@ export {
   capitalizeEveryFirstChar,
   getSeveralRandomItems,
   convertArrayToString,
+  createRuntimeRepresentation
 };

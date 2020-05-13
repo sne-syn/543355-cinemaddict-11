@@ -1,11 +1,12 @@
 import moment from 'moment';
-import 'moment-duration-format';
+import {createRuntimeRepresentation} from './../utils/common';
 
 const addEllipsisToString = (str) => {
   let sliced = str.slice(0, 140).trim();
   sliced += (sliced.length < str.length) ? `...` : `.`;
   return sliced;
 };
+
 
 const createControls = (movie) => {
   const {
@@ -36,7 +37,8 @@ export const createMovieCardTemplate = (movie) => {
   const ellipsisDescription = addEllipsisToString(description);
   const releaseYear = moment(date).format(`YYYY`);
   const firstGenre = genre[0];
-  const convertedRuntime = moment.duration(runtime, `minutes`).format(`h[h] m[m]`);
+  const duration = moment.duration(runtime, `minutes`);
+  const convertedRuntime = `${createRuntimeRepresentation(duration.hours(), `h`)} ${createRuntimeRepresentation(duration.minutes(), `m`)}`;
 
   return `<article class="film-card">
     <h3 class="film-card__title">${title}</h3>

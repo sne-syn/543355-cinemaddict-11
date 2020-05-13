@@ -1,5 +1,4 @@
 import moment from 'moment';
-import 'moment-duration-format';
 import {capitalizeChar, capitalizeEveryFirstChar} from './../utils/common';
 
 export const countWatchedMovies = (data) => {

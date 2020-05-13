@@ -1,6 +1,5 @@
 import moment from 'moment';
-import 'moment-duration-format';
-import {capitalizeChar} from './../utils/common.js';
+import {capitalizeChar, createRuntimeRepresentation} from './../utils/common.js';
 
 // create genres template
 const createMovieGenres = (movie) => {
@@ -16,7 +15,8 @@ const createMovieDetailsTable = (movie) => {
   const {director, writers, actors, date, runtime, country} = movie;
   const releaseDate = moment(date).format(`DD MMMM YYYY`);
   const genre = createMovieGenres(movie);
-  const convertedRuntime = moment.duration(runtime, `minutes`).format(`h[h] m[m]`);
+  const duration = moment.duration(runtime, `minutes`);
+  const convertedRuntime = `${createRuntimeRepresentation(duration.hours(), `h`)} ${createRuntimeRepresentation(duration.minutes(), `m`)}`;
   let isMultiple = ([...movie.genre].length > 1) ? `Genres` : `Genre`;
 
   return `
