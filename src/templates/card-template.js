@@ -7,7 +7,6 @@ const addEllipsisToString = (str) => {
   return sliced;
 };
 
-
 const createControls = (movie) => {
   const {
     isInWatchlist,

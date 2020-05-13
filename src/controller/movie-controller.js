@@ -74,6 +74,7 @@ export default class MovieController {
     this._cardComponent.setAlreadyWatchedButtonClickHandler(() => {
       this._onDataChange(this, movie, Object.assign({}, movie, {
         isAlreadyWatched: !movie.isAlreadyWatched,
+        watchingDate: !movie.isAlreadyWatched ? new Date().toISOString() : null,
       }), this._commonContainer, properContainer);
     });
 

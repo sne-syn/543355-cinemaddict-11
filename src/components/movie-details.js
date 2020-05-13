@@ -13,14 +13,23 @@ export default class MovieDetails extends AbstractSmartComponent {
     this._isInWatchlist = movie.isInWatchlist;
     this._isAlreadyWatched = movie.isAlreadyWatched;
     this._isInFavorites = movie.isInFavorites;
+    this._movieWatchingDate = movie.watchingDate;
     this._subscribeOnEvents();
   }
 
   getTemplate() {
+    console.log(Object.assign({}, this._movie, {
+      isInWatchlist: this._isInWatchlist,
+      isAlreadyWatched: this._isAlreadyWatched,
+      isInFavorites: this._isInFavorites,
+      watchingDate: this._movieWatchingDate
+    }));
+
     return createDetailsTemplate(Object.assign({}, this._movie, {
       isInWatchlist: this._isInWatchlist,
       isAlreadyWatched: this._isAlreadyWatched,
-      isInFavorites: this._isInFavorites
+      isInFavorites: this._isInFavorites,
+      watchingDate: this._movieWatchingDate
     }));
   }
 
@@ -56,6 +65,7 @@ export default class MovieDetails extends AbstractSmartComponent {
     element.querySelector(`.film-details__control-label--watched`).addEventListener(`click`, () => {
       this._isAlreadyWatched = !this._isAlreadyWatched;
       alreadyWatchedControl.checked = !alreadyWatchedControl.checked;
+      this._movieWatchingDate = alreadyWatchedControl.checked ? new Date().toISOString() : null,
       this.rerender();
     });
 

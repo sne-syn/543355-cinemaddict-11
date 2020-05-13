@@ -47,7 +47,7 @@ const generateMoviesInfo = () => {
     isInWatchlist: Math.random() > 0.5,
     isAlreadyWatched: Math.random() > 0.5,
     isInFavorites: Math.random() > 0.5,
-    watchingDate: new Date().toISOString(),
+    watchingDate:  null,
   };
 };
 
