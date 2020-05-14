@@ -29,7 +29,7 @@ const getRandomStringLength = (str) => {
 
 const generateMoviesInfo = () => {
   return {
-    id: String(new Date() + Math.random()),
+    id: String(`_` + Math.random().toString(36).substr(2, 9)),
     poster: getRandomArrayItem(Posters),
     title: getRandomArrayItem(Titles),
     rating: (getRandomNumber(0, 10)).toFixed(1),
@@ -47,7 +47,7 @@ const generateMoviesInfo = () => {
     isInWatchlist: Math.random() > 0.5,
     isAlreadyWatched: Math.random() > 0.5,
     isInFavorites: Math.random() > 0.5,
-    watchingDate:  null,
+    watchingDate: null,
   };
 };
 

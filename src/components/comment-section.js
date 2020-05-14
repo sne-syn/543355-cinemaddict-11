@@ -1,4 +1,3 @@
-import moment from "moment";
 import {
   createDetailsCommentTemplate
 } from '../templates/comment-section-template';

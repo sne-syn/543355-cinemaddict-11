@@ -126,8 +126,12 @@ export default class PageController {
       return;
     }
 
-    this._movies = [].concat(this._movies.slice(0, index), newData, this._movies.slice(index + 1));
+    const newMovies = [...this._movies];
+    newMovies[index] = newData;
+    this._movies = newMovies;
+
     movieController.render(this._movies[index], commonContainer, properContainer);
+    // this._showedMoviesControllers[index].render(this._movies[index], commonContainer, properContainer);
   }
 
   _showStats(evt) {

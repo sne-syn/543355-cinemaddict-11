@@ -53,7 +53,7 @@ export const createStatsTemplate = (movies, profile) => {
   const {rating, avatar} = profile;
   const ratingCapitalized = capitalizeEveryFirstChar(rating);
   const totalWatchedMovies = countWatchedMovies(movies);
-  const runtime = moment.duration(countTotalDuration(movies), 'minutes');
+  const runtime = moment.duration(countTotalDuration(movies), `minutes`);
   const topGenre = capitalizeChar(getTopGenre(movies));
 
   return `<section class="statistic">
