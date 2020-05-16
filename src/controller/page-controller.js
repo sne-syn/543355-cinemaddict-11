@@ -48,10 +48,10 @@ const getSortedMovies = (movies, sortType, from, to) => {
 };
 
 export default class PageController {
-  constructor(container, menuItems, movies, profile) {
+  constructor(container, menuItems, profile, moviesModel) {
     this._container = container;
     this._profile = profile;
-    this._movies = movies;
+    this._moviesModel = moviesModel;
     this._showedMoviesControllers = [];
     this._showingMoviesCount = SHOWING_MOVIES_COUNT_ON_START;
     this._showingExtraCards = EXTRA_CARD_COUNT;
@@ -64,7 +64,7 @@ export default class PageController {
     this._mostCommentedList = new MostCommentedComponent();
     this._noMoviesComponent = new NoMoviesComponent();
 
-    this._stats = new StatsComponent(this._movies, this._profile);
+    this._stats = new StatsComponent(moviesModel.getMovies(), this._profile);
     this._showStats = this._showStats.bind(this);
     this._showMoviesLists = this._showMoviesLists.bind(this);
 
@@ -79,28 +79,29 @@ export default class PageController {
     this._topRatedContainer = this._topRatedList.getListContainer();
     this._mostCommentedContainer = this._mostCommentedList.getListContainer();
 
-
     this._onDataChange = this._onDataChange.bind(this);
     this._onViewChange = this._onViewChange.bind(this);
+    this._menuComponent.subscribeOnEvents();
   }
 
   render() {
+    const movies = this._moviesModel.getMovies();
+
     render(this._container, this._menuComponent);
     render(this._container, this._sortComponent);
     render(this._container, this._movieSectionComponent);
-
-    if (this._movies.length === 0) {
+    if (movies.length === 0) {
       render(this._movieSectionComponent.getElement(), this._noMoviesComponent);
       return;
     }
 
     render(this._movieSectionComponent.getElement(), this._movieList);
-    const newMovies = renderMovies(this._movies.slice(0, this._showingMoviesCount), this._movieSectionComponent, this._mainMovieContainer, this._onDataChange, this._onViewChange, this._profile);
+    const newMovies = renderMovies(movies.slice(0, this._showingMoviesCount), this._movieSectionComponent, this._mainMovieContainer, this._onDataChange, this._onViewChange, this._profile);
     this._showedMoviesControllers = this._showedMoviesControllers.concat(newMovies);
     this._renderLoadMoreButton();
 
     // top rated list movies
-    const topRatedMovies = [...this._movies].sort((a, b) => (a.rating < b.rating) ? 1 : -1);
+    const topRatedMovies = [...movies].sort((a, b) => (a.rating < b.rating) ? 1 : -1);
     if (topRatedMovies[0].rating > 0 || topRatedMovies[1].rating > 0) {
       render(this._movieSectionComponent.getElement(), this._topRatedList);
       const ratedMovies = renderMovies(topRatedMovies.slice(0, this._showingExtraCards), this._movieSectionComponent, this._topRatedContainer, this._onDataChange, this._onViewChange, this._profile);
@@ -108,7 +109,7 @@ export default class PageController {
     }
 
     // most commented list movies
-    const mostCommentedMovies = [...this._movies].sort((a, b) => (a.comments < b.comments) ? 1 : -1);
+    const mostCommentedMovies = [...movies].sort((a, b) => (a.comments < b.comments) ? 1 : -1);
     if (mostCommentedMovies[0].comments > 0 || mostCommentedMovies[1].comments > 0) {
       render(this._movieSectionComponent.getElement(), this._mostCommentedList);
       const commentedMovies = renderMovies(mostCommentedMovies.slice(0, this._showingExtraCards), this._movieSectionComponent, this._mostCommentedContainer, this._onDataChange, this._onViewChange, this._profile);
@@ -121,17 +122,11 @@ export default class PageController {
   }
 
   _onDataChange(movieController, oldData, newData, commonContainer, properContainer) {
-    let index = this._movies.findIndex((it) => it === oldData);
-    if (index === -1) {
-      return;
+    const isSuccess = this._moviesModel.updateMovie(oldData.id, newData);
+
+    if (isSuccess) {
+      movieController.render(newData, commonContainer, properContainer);
     }
-
-    const newMovies = [...this._movies];
-    newMovies[index] = newData;
-    this._movies = newMovies;
-
-    movieController.render(this._movies[index], commonContainer, properContainer);
-    // this._showedMoviesControllers[index].render(this._movies[index], commonContainer, properContainer);
   }
 
   _showStats(evt) {
@@ -151,7 +146,8 @@ export default class PageController {
   }
 
   _renderLoadMoreButton() {
-    if (this._showingMoviesCount >= this._movies.length) {
+    const movies = this._moviesModel.getMovies();
+    if (this._showingMoviesCount >= movies.length) {
       return;
     }
 
@@ -161,22 +157,23 @@ export default class PageController {
       const prevMovieCards = this._showingMoviesCount;
       this._showingMoviesCount += SHOWING_MOVIES_COUNT_BY_BUTTON;
 
-      const sortedMovies = getSortedMovies(this._movies, this._sortComponent.getSortType(), prevMovieCards, this._showingMoviesCount);
+      const sortedMovies = getSortedMovies(movies, this._sortComponent.getSortType(), prevMovieCards, this._showingMoviesCount);
 
       const newMovies = renderMovies(sortedMovies, this._movieSectionComponent, this._mainMovieContainer, this._onDataChange, this._onViewChange, this._profile);
       this._showedMoviesControllers = this._showedMoviesControllers.concat(newMovies);
 
-      if (this._showingMoviesCount >= this._movies.length) {
+      if (this._showingMoviesCount >= movies.length) {
         remove(this._showMoreButtonComponent);
       }
     });
   }
 
   _onSortTypeChange(sortType) {
+    const movies = this._moviesModel.getMovies();
     remove(this._showMoreButtonComponent);
     this._showingMoviesCount = SHOWING_MOVIES_COUNT_ON_START;
     this._mainMovieContainer.innerHTML = ``;
-    const sortedMovies = getSortedMovies(this._movies, sortType, 0, this._showingMoviesCount);
+    const sortedMovies = getSortedMovies(movies, sortType, 0, this._showingMoviesCount);
 
     const newMovies = renderMovies(sortedMovies, this._movieSectionComponent, this._mainMovieContainer, this._onDataChange, this._onViewChange, this._profile);
     this._showedMoviesControllers = newMovies;
