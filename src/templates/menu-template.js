@@ -1,11 +1,13 @@
-export const createMenuMarkup = (menuItem) => {
+import {capitalizeChar} from "./../utils/common.js";
+
+const createMenuMarkup = (menuItem) => {
   const {name, count} = menuItem;
 
   const countMark = createMenuCount(count);
-  if (name === `All`) {
-    return `<a href="#${name}" class="main-navigation__item  main-navigation__item--active">${name} movies</a>`;
+  if (name === `all`) {
+    return `<a href="#${capitalizeChar(name)}" class="main-navigation__item  main-navigation__item--active">${capitalizeChar(name)} movies</a>`;
   } else {
-    return `<a href="#${name}" class="main-navigation__item">${name} ${countMark}</a>`;
+    return `<a href="#${capitalizeChar(name)}" class="main-navigation__item">${capitalizeChar(name)} ${countMark}</a>`;
   }
 };
 

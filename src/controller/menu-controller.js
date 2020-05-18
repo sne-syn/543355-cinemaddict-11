@@ -1,14 +1,14 @@
-import MenuComponent from "../components/menu.js";
+import MenuComponent from "./../components/menu";
 import {
   MenuType
-} from "../const.js";
+} from "./../utils/const.js";
 import {
   render,
   replace
-} from "../utils/render.js";
+} from "./../utils/render.js";
 import {
   getMoviesByMenu
-} from "../utils/menu.js";
+} from "./../utils/menu.js";
 
 export default class MenuController {
   constructor(container, moviesModel) {
@@ -26,7 +26,7 @@ export default class MenuController {
 
   render() {
     const container = this._container;
-    const allMovies = this._moviesModel.getMovies();
+    const allMovies = this._moviesModel.getMoviesAll();
 
     const menusItems = Object.values(MenuType).map((menuType) => {
       return {
@@ -45,6 +45,7 @@ export default class MenuController {
       render(container, this._menuComponent);
     }
   }
+
   _onMenuChange(menuType) {
     this._moviesModel.setMenu(menuType);
     this._activeMenuType = menuType;

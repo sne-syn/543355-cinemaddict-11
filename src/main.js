@@ -1,7 +1,7 @@
 import ProfileComponent from "./components/profile.js";
-import PageController from './controller/page-controller.js';
+import PageController from "./controller/page-controller.js";
 import MovieCountComponent from "./components/movie-count";
-import MoviesModel from "./models/movies.js";
+import MoviesModel from "./models/movies-model.js";
 
 import {
   generateMovie
@@ -32,5 +32,5 @@ render(siteHeaderElement, new ProfileComponent(profile));
 render(footerStatisticsElement, new MovieCountComponent());
 
 // call pageController
-const pageController = new PageController(siteMainElement, menuItems, profile, moviesModel);
+const pageController = new PageController(siteMainElement, profile, moviesModel);
 pageController.render();

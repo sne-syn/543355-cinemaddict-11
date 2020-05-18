@@ -1,4 +1,4 @@
-import MenuComponent from "./../components/menu.js";
+import MenuController from "./../controller/menu-controller";
 import {
   SortType
 } from "./../templates/sort-template.js";
@@ -48,14 +48,14 @@ const getSortedMovies = (movies, sortType, from, to) => {
 };
 
 export default class PageController {
-  constructor(container, menuItems, profile, moviesModel) {
+  constructor(container, profile, moviesModel) {
     this._container = container;
     this._profile = profile;
     this._moviesModel = moviesModel;
     this._showedMoviesControllers = [];
     this._showingMoviesCount = SHOWING_MOVIES_COUNT_ON_START;
     this._showingExtraCards = EXTRA_CARD_COUNT;
-    this._menuComponent = new MenuComponent(menuItems);
+    this._menuController = new MenuController(container, moviesModel);
     this._sortComponent = new SortComponent();
     this._movieSectionComponent = new MovieSectionComponent();
     this._showMoreButtonComponent = new ShowMoreBtnComponent();
@@ -68,11 +68,9 @@ export default class PageController {
     this._showStats = this._showStats.bind(this);
     this._showMoviesLists = this._showMoviesLists.bind(this);
 
-    this._menuComponent.setMenuClickHandler(this._showMoviesLists);
-    this._menuComponent.setStatsClickHandler(this._showStats);
-
     this._renderLoadMoreButton = this._renderLoadMoreButton.bind(this);
     this._onSortTypeChange = this._onSortTypeChange.bind(this);
+    this._onMenuChange = this._onMenuChange.bind(this);
     this._sortComponent.setSortTypeChangeHandler(this._onSortTypeChange);
 
     this._mainMovieContainer = this._movieList.getListContainer();
@@ -81,39 +79,65 @@ export default class PageController {
 
     this._onDataChange = this._onDataChange.bind(this);
     this._onViewChange = this._onViewChange.bind(this);
-    this._menuComponent.subscribeOnEvents();
+    this._moviesModel.setMenuChangeHandler(this._onMenuChange);
+    this._updateMovies = this._updateMovies.bind(this);
+    this._topRatedMovies = [...this._moviesModel.getMovies()].sort((a, b) => (a.rating < b.rating) ? 1 : -1);
+    this._mostCommentedMovies = [...this._moviesModel.getMovies()].sort((a, b) => (a.comments < b.comments) ? 1 : -1);
   }
 
   render() {
     const movies = this._moviesModel.getMovies();
-
-    render(this._container, this._menuComponent);
+    this._menuController.render();
     render(this._container, this._sortComponent);
     render(this._container, this._movieSectionComponent);
     if (movies.length === 0) {
       render(this._movieSectionComponent.getElement(), this._noMoviesComponent);
       return;
     }
+    this._renderMainMovies(movies);
 
+    // top rated list movies
+    if (this._topRatedMovies[0].rating > 0 || this._topRatedMovies[1].rating > 0) {
+      this._renderExtraMovies(this._topRatedMovies, this._topRatedList, this._topRatedContainer);
+    }
+    // most commented list movies
+    if (this._mostCommentedMovies[0].comments > 0 || this._mostCommentedMovies[1].comments > 0) {
+      this._renderExtraMovies(this._mostCommentedMovies, this._mostCommentedList, this._mostCommentedContainer);
+    }
+  }
+
+  _renderMainMovies(movies) {
     render(this._movieSectionComponent.getElement(), this._movieList);
     const newMovies = renderMovies(movies.slice(0, this._showingMoviesCount), this._movieSectionComponent, this._mainMovieContainer, this._onDataChange, this._onViewChange, this._profile);
     this._showedMoviesControllers = this._showedMoviesControllers.concat(newMovies);
     this._renderLoadMoreButton();
+  }
+
+  _renderExtraMovies(movies, properMovieList, properMovieListContainer) {
+    render(this._movieSectionComponent.getElement(), properMovieList);
+    const newArray = renderMovies(movies.slice(0, this._showingExtraCards), this._movieSectionComponent, properMovieListContainer, this._onDataChange, this._onViewChange, this._profile);
+    this._showedMoviesControllers = this._showedMoviesControllers.concat(newArray);
+  }
+
+  _removeMovies() {
+    this._showedMoviesControllers.forEach((movieController) => movieController.destroy());
+    this._showedMoviesControllers = [];
+  }
+
+  _updateMovies() {
+    this._removeMovies();
+    const movies = this._moviesModel.getMovies();
+    this._renderMainMovies(movies);
 
     // top rated list movies
     const topRatedMovies = [...movies].sort((a, b) => (a.rating < b.rating) ? 1 : -1);
     if (topRatedMovies[0].rating > 0 || topRatedMovies[1].rating > 0) {
-      render(this._movieSectionComponent.getElement(), this._topRatedList);
-      const ratedMovies = renderMovies(topRatedMovies.slice(0, this._showingExtraCards), this._movieSectionComponent, this._topRatedContainer, this._onDataChange, this._onViewChange, this._profile);
-      this._showedMoviesControllers = this._showedMoviesControllers.concat(ratedMovies);
+      this._renderExtraMovies(topRatedMovies, this._topRatedList, this._topRatedContainer);
     }
-
     // most commented list movies
     const mostCommentedMovies = [...movies].sort((a, b) => (a.comments < b.comments) ? 1 : -1);
     if (mostCommentedMovies[0].comments > 0 || mostCommentedMovies[1].comments > 0) {
-      render(this._movieSectionComponent.getElement(), this._mostCommentedList);
-      const commentedMovies = renderMovies(mostCommentedMovies.slice(0, this._showingExtraCards), this._movieSectionComponent, this._mostCommentedContainer, this._onDataChange, this._onViewChange, this._profile);
-      this._showedMoviesControllers = this._showedMoviesControllers.concat(commentedMovies);
+      this._renderExtraMovies(mostCommentedMovies, this._mostCommentedList, this._mostCommentedContainer);
     }
   }
 
@@ -123,7 +147,6 @@ export default class PageController {
 
   _onDataChange(movieController, oldData, newData, commonContainer, properContainer) {
     const isSuccess = this._moviesModel.updateMovie(oldData.id, newData);
-
     if (isSuccess) {
       movieController.render(newData, commonContainer, properContainer);
     }
@@ -179,5 +202,9 @@ export default class PageController {
     this._showedMoviesControllers = newMovies;
 
     this._renderLoadMoreButton();
+  }
+
+  _onMenuChange() {
+    this._updateMovies();
   }
 }

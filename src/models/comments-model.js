@@ -3,7 +3,7 @@ export default class CommentsModel {
     this._container = container;
     this._profile = profile;
     this._comments = [];
-    this._dataChangeHandler = [];
+   // this._dataChangeHandlers = [];
   }
 
   getComments() {
@@ -12,7 +12,7 @@ export default class CommentsModel {
 
   setComments(comments) {
     this._comments = Array.from(comments);
-    this._callHandlers(this._dataChangeHandler);
+    this._callHandlers(this._dataChangeHandlers);
   }
 
   addComment(textComment, emojiComment, dateComment, authorComment) {

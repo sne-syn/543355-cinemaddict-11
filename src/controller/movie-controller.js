@@ -1,12 +1,11 @@
 import MovieCardComponent from "./../components/movie-card.js";
 import MovieDetailsComponent from "./../components/movie-details.js";
 import CommentsController from "./comments-controller.js";
-
 import {
   render,
   replace,
   appendChild,
-  removeChild
+  removeChild, remove
 } from "./../utils/render.js";
 
 const State = {
@@ -57,6 +56,12 @@ export default class MovieController {
     if (this._state === State.MODAL) {
       this._closeMovieDetails();
     }
+  }
+
+  destroy() {
+    remove(this._detailsComponent);
+    remove(this._cardComponent);
+    document.removeEventListener(`keydown`, this._onEscKeyDown);
   }
 
   render(movie, properContainer) {
