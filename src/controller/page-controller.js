@@ -123,12 +123,18 @@ export default class PageController {
     this._removeMovies();
     const movies = this._moviesModel.getMovies();
     this._showingMoviesCount = SHOWING_MOVIES_COUNT_ON_START;
-    this._mainMovieContainer.innerHTML = ``;
-    render(this._movieSectionComponent.getElement(), this._movieList, RenderPosition.AFTERBEGIN);
-    const newArray = renderMovies(movies.slice(0, 5), this._movieSectionComponent, this._mainMovieContainer, this._onDataChange, this._onViewChange, this._profile);
-    this._showedMoviesControllers = this._showedMoviesControllers.concat(newArray);
+    this._movieSectionComponent.getElement().innerHTML = ``;
+    this._renderMovies(movies, this._movieList, this._mainMovieContainer, this._showingMoviesCount);
+
+    // top rated list movies
+    if (this._topRatedMovies[0].rating > 0 || this._topRatedMovies[1].rating > 0) {
+      this._renderMovies(this._topRatedMovies, this._topRatedList, this._topRatedContainer, this._showingExtraCards);
+    }
+    // most commented list movies
+    if (this._mostCommentedMovies[0].comments > 0 || this._mostCommentedMovies[1].comments > 0) {
+      this._renderMovies(this._mostCommentedMovies, this._mostCommentedList, this._mostCommentedContainer, this._showingExtraCards);
+    }
     this._renderLoadMoreButton();
-    console.log(this._showedMoviesControllers);
   }
 
   _onViewChange() {
