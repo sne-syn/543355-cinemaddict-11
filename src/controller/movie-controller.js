@@ -5,7 +5,8 @@ import {
   render,
   replace,
   appendChild,
-  removeChild, remove
+  removeChild, remove,
+  RenderPosition
 } from "./../utils/render.js";
 
 const State = {
@@ -101,7 +102,7 @@ export default class MovieController {
     if (oldCardComponent) {
       replace(this._cardComponent.getElement(), oldCardComponent.getElement());
     } else {
-      render(properContainer, this._cardComponent);
+      render(properContainer, this._cardComponent, RenderPosition.BEFOREEND);
     }
   }
 }

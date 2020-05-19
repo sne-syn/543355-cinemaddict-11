@@ -10,13 +10,9 @@ import {
   generateProfile
 } from "./mock/profile.js";
 import {
-  render
+  render, RenderPosition
 } from "./utils/render.js";
-import {
-  generateMenu
-} from "./mock/menu.js";
 
-const menuItems = generateMenu();
 const profile = generateProfile();
 export const movies = generateMovie(20);
 const moviesModel = new MoviesModel();
@@ -28,8 +24,8 @@ const siteMainElement = document.querySelector(`.main`);
 const footerElement = document.querySelector(`.footer`);
 const footerStatisticsElement = footerElement.querySelector(`.footer__statistics`);
 
-render(siteHeaderElement, new ProfileComponent(profile));
-render(footerStatisticsElement, new MovieCountComponent());
+render(siteHeaderElement, new ProfileComponent(profile), RenderPosition.BEFOREEND);
+render(footerStatisticsElement, new MovieCountComponent(), RenderPosition.BEFOREEND);
 
 // call pageController
 const pageController = new PageController(siteMainElement, profile, moviesModel);

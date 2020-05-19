@@ -11,7 +11,6 @@ export default class MoviesModel {
   }
 
   getMovies() {
-   // console.log(getMoviesByMenu(this._movies, this._activeMenuType))
     return getMoviesByMenu(this._movies, this._activeMenuType);
   }
 
@@ -52,6 +51,7 @@ export default class MoviesModel {
   }
 
   _callHandlers(handlers) {
+    console.log(handlers);
     handlers.forEach((handler) => handler());
   }
 }

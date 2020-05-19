@@ -1,7 +1,7 @@
 import CommentSectionComponent from "../components/comment-section";
 import CommentComponent from "./../components/comment.js";
 import {capitalizeEveryFirstChar} from "./../utils/common.js";
-import {render} from "./../utils/render.js";
+import {render, RenderPosition} from "./../utils/render.js";
 import {generateComments} from "./../mock/comment.js";
 
 export default class CommentsController {
@@ -21,7 +21,7 @@ export default class CommentsController {
   render(movie) {
     this._comments = generateComments(movie.comments);
     this._commentSection = new CommentSectionComponent(movie);
-    render(this._container, this._commentSection);
+    render(this._container, this._commentSection, RenderPosition.BEFOREEND);
     if (movie.comments > 0) {
       this._renderCommentList(this._comments);
     }
@@ -37,7 +37,7 @@ export default class CommentsController {
     // render new comments
     comments.forEach((comment) => {
       const commentComponent = new CommentComponent(comment);
-      render(commentListElement, commentComponent);
+      render(commentListElement, commentComponent, RenderPosition.BEFOREEND);
     });
   }
 
