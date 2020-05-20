@@ -1,11 +1,14 @@
 import MovieCardComponent from "./../components/movie-card.js";
 import MovieDetailsComponent from "./../components/movie-details.js";
 import CommentsController from "./comments-controller.js";
+import CommentsModel from "./../models/comments-model.js";
+
 import {
   render,
   replace,
   appendChild,
-  removeChild, remove,
+  removeChild,
+  remove,
   RenderPosition
 } from "./../utils/render.js";
 
@@ -13,6 +16,9 @@ const State = {
   DEFAULT: `default`,
   MODAL: `modal-open`,
 };
+
+// const commentsModel = new CommentsModel();
+// commentsModel.setComments(movies);
 
 export default class MovieController {
   constructor(onDataChange, onViewChange, commonContainer, profile) {
@@ -33,6 +39,8 @@ export default class MovieController {
 
     const detailsBottomContainer = document.querySelector(`.form-details__bottom-container`);
     detailsBottomContainer.innerHTML = ``;
+    // const commentsModel = new CommentsModel();
+    // commentsModel.setComments(movie);
     const commentsController = new CommentsController(detailsBottomContainer, this._profile);
     commentsController.render(movie);
   }

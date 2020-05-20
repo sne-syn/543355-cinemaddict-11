@@ -11,6 +11,7 @@ import {
   generateComments
 } from "./../mock/comment.js";
 
+
 export default class CommentsController {
   constructor(container, profile) {
     this._container = container;
@@ -32,14 +33,12 @@ export default class CommentsController {
     if (movie.comments > 0) {
       this._renderCommentList(this._comments);
     }
-
     this._commentSection.setAddEmojiHandler(this._changeEmoji);
-    this._commentSection.setAddCommentHandler(this._addComment);
     this._commentSection.setDeleteCommentHandler(this._deleteComment);
   }
 
   _renderCommentList(comments) {
-    const commentListElement = document.querySelector(`.film-details__comments-list`);
+    const commentListElement = this._container.querySelector(`.film-details__comments-list`);
     commentListElement.innerHTML = ``;
     // render new comments
     comments.forEach((comment) => {
@@ -49,7 +48,7 @@ export default class CommentsController {
   }
 
   _changeEmoji(evt) {
-    const addEmojiLabel = document.querySelector(`.film-details__add-emoji-label`);
+    const addEmojiLabel = this._container.querySelector(`.film-details__add-emoji-label`);
     let emojiImg = document.createElement(`img`);
     emojiImg.src = `./images/emoji/${evt.target.value}.png`;
     emojiImg.width = `55`;
@@ -57,25 +56,26 @@ export default class CommentsController {
     addEmojiLabel.innerHTML = ``;
     addEmojiLabel.appendChild(emojiImg);
     evt.target.setAttribute(`checked`, `checked`);
+    this._commentSection.setAddCommentHandler(this._addComment);
   }
 
   _addComment(movie) {
-    const emojis = document.querySelectorAll(`.film-details__emoji-item`);
-    let chosenEmoji = ``;
+    const emojis = this._container.querySelectorAll(`.film-details__emoji-item`);
+    let selectedEmoji = ``;
     emojis.forEach((emoji) => {
       if (emoji.getAttribute(`checked`)) {
-        chosenEmoji = emoji.value;
+        selectedEmoji = emoji.value;
       }
     });
-    
+
     const newComment = {
-      emoji: chosenEmoji,
-      text: document.querySelector(`.film-details__comment-input`).value,
+      emoji: selectedEmoji,
+      text: this._container.querySelector(`.film-details__comment-input`).value,
       author: (this._userName.length > 0) ? capitalizeEveryFirstChar(this._userName) : ``,
       date: new Date().toISOString(),
     };
 
-    // updates movie.comments count by adding 1
+    // updates movie.comments count by +1
     const newMovieInfo = Object.assign({}, movie, {
       comments: ++movie.comments
     });
@@ -87,7 +87,7 @@ export default class CommentsController {
   _deleteComment(evt, movie) {
     const commentToRemove = evt.target.closest(`.film-details__comment`);
     commentToRemove.parentElement.removeChild(commentToRemove);
-    // updates movie.comments count by adding 1
+    // updates movie.comments count by -1
     const newMovieInfo = Object.assign({}, movie, {
       comments: --movie.comments
     });

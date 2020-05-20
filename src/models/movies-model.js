@@ -51,7 +51,6 @@ export default class MoviesModel {
   }
 
   _callHandlers(handlers) {
-    console.log(handlers);
     handlers.forEach((handler) => handler());
   }
 }

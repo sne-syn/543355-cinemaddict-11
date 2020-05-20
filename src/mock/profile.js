@@ -1,5 +1,12 @@
 import {getRandomIntegerNumber} from '../utils/common.js';
-const watchedMovies = getRandomIntegerNumber(0, 30);
+//const watchedMovies = getRandomIntegerNumber(0, 30);
+export const countWatchedMovies = (data) => {
+  let count = 0;
+  for (let movie of data) {
+    count += (movie.isAlreadyWatched === true) ? 1 : 0;
+  }
+  return count;
+};
 
 const ratingRange = new Map();
 ratingRange.set(`low`, 10);
@@ -23,7 +30,8 @@ avatarMap.set(`movie buff`, {
   avatar: `bitmap`
 });
 
-const generateProfile = () => {
+const generateProfile = (movies) => {
+  const watchedMovies = countWatchedMovies(movies);
   switch (true) {
     case (watchedMovies === 0):
       return avatarMap.get(`no-rating`);

@@ -13,10 +13,10 @@ import {
   render, RenderPosition
 } from "./utils/render.js";
 
-const profile = generateProfile();
-export const movies = generateMovie(20);
+export const movies = generateMovie(30);
 const moviesModel = new MoviesModel();
 moviesModel.setMovies(movies);
+const profile = generateProfile(moviesModel.getMoviesAll());
 
 // render main content
 const siteHeaderElement = document.querySelector(`.header`);
