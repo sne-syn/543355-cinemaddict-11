@@ -14,7 +14,6 @@ import MovieController from "./movie-controller.js";
 import {
   render,
   remove,
-  replace,
   appendChild,
   removeChild,
   RenderPosition
@@ -123,9 +122,9 @@ export default class PageController {
   }
 
   _updateMovies() {
+    const movies = this._moviesModel.getMovies();
     this._removeMovies();
     this._mainMovieContainer.innerHTML = ``;
-    const movies = this._moviesModel.getMovies();
     this._showingMoviesCount = SHOWING_MOVIES_COUNT_ON_START;
     this._renderMovies(movies, this._movieList, this._mainMovieContainer, this._showingMoviesCount, RenderPosition.AFTERBEGIN, this._showedMoviesControllers);
     this._renderLoadMoreButton();
@@ -184,11 +183,10 @@ export default class PageController {
   }
 
   _onSortTypeChange(sortType) {
-    const movies = this._moviesModel.getMovies();
     remove(this._showMoreButtonComponent);
     this._showingMoviesCount = SHOWING_MOVIES_COUNT_ON_START;
     this._mainMovieContainer.innerHTML = ``;
-    const sortedMovies = getSortedMovies(movies, sortType, 0, this._showingMoviesCount);
+    const sortedMovies = getSortedMovies(this._moviesModel.getMovies(), sortType, 0, this._showingMoviesCount);
 
     const newMovies = renderMovies(sortedMovies, this._movieSectionComponent, this._mainMovieContainer, this._onDataChange, this._onViewChange, this._profile);
     this._showedMoviesControllers = newMovies;

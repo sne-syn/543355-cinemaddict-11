@@ -1,8 +1,15 @@
 import CommentSectionComponent from "../components/comment-section";
 import CommentComponent from "./../components/comment.js";
-import {capitalizeEveryFirstChar} from "./../utils/common.js";
-import {render, RenderPosition} from "./../utils/render.js";
-import {generateComments} from "./../mock/comment.js";
+import {
+  capitalizeEveryFirstChar
+} from "./../utils/common.js";
+import {
+  render,
+  RenderPosition
+} from "./../utils/render.js";
+import {
+  generateComments
+} from "./../mock/comment.js";
 
 export default class CommentsController {
   constructor(container, profile) {
@@ -49,12 +56,20 @@ export default class CommentsController {
     emojiImg.height = `55`;
     addEmojiLabel.innerHTML = ``;
     addEmojiLabel.appendChild(emojiImg);
+    evt.target.setAttribute(`checked`, `checked`);
   }
 
   _addComment(movie) {
+    const emojis = document.querySelectorAll(`.film-details__emoji-item`);
+    let chosenEmoji = ``;
+    emojis.forEach((emoji) => {
+      if (emoji.getAttribute(`checked`)) {
+        chosenEmoji = emoji.value;
+      }
+    });
+    
     const newComment = {
-      // find checked element for emoji
-      emoji: `smile`,
+      emoji: chosenEmoji,
       text: document.querySelector(`.film-details__comment-input`).value,
       author: (this._userName.length > 0) ? capitalizeEveryFirstChar(this._userName) : ``,
       date: new Date().toISOString(),

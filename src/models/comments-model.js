@@ -15,7 +15,7 @@ export default class CommentsModel {
     this._callHandlers(this._dataChangeHandlers);
   }
 
-  addComment(textComment, emojiComment, dateComment, authorComment) {
+  addComment(authorComment, emojiComment, textComment, dateComment) {
     const comment = {
       id: String(`_` + Math.random().toString(36).substr(2, 9)),
       author: authorComment,
