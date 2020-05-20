@@ -55,6 +55,7 @@ export default class PageController {
     this._profile = profile;
     this._moviesModel = moviesModel;
     this._showedMoviesControllers = [];
+    this._showedMoviesControllersExtra = [];
     this._showingMoviesCount = SHOWING_MOVIES_COUNT_ON_START;
     this._showingExtraCards = EXTRA_CARD_COUNT;
     this._menuController = new MenuController(container, moviesModel);
@@ -95,23 +96,25 @@ export default class PageController {
       render(this._movieSectionComponent.getElement(), this._noMoviesComponent, RenderPosition.BEFOREEND);
       return;
     }
-    this._renderMovies(movies, this._movieList, this._mainMovieContainer, this._showingMoviesCount);
+
+    this._renderMovies(movies, this._movieList, this._mainMovieContainer, this._showingMoviesCount, RenderPosition.BEFOREEND, this._showedMoviesControllers);
 
     // top rated list movies
     if (this._topRatedMovies[0].rating > 0 || this._topRatedMovies[1].rating > 0) {
-      this._renderMovies(this._topRatedMovies, this._topRatedList, this._topRatedContainer, this._showingExtraCards);
+      this._renderMovies(this._topRatedMovies, this._topRatedList, this._topRatedContainer, this._showingExtraCards, RenderPosition.BEFOREEND, this._showedMoviesControllersExtra);
     }
     // most commented list movies
     if (this._mostCommentedMovies[0].comments > 0 || this._mostCommentedMovies[1].comments > 0) {
-      this._renderMovies(this._mostCommentedMovies, this._mostCommentedList, this._mostCommentedContainer, this._showingExtraCards);
+      this._renderMovies(this._mostCommentedMovies, this._mostCommentedList, this._mostCommentedContainer, this._showingExtraCards, RenderPosition.BEFOREEND, this._showedMoviesControllersExtra);
     }
     this._renderLoadMoreButton();
   }
 
-  _renderMovies(movies, properMovieList, properMovieListContainer, count) {
-    render(this._movieSectionComponent.getElement(), properMovieList, RenderPosition.BEFOREEND);
+  _renderMovies(movies, properMovieList, properMovieListContainer, count, position, controllersArray) {
+    render(this._movieSectionComponent.getElement(), properMovieList, position);
     const newArray = renderMovies(movies.slice(0, count), this._movieSectionComponent, properMovieListContainer, this._onDataChange, this._onViewChange, this._profile);
-    this._showedMoviesControllers = this._showedMoviesControllers.concat(newArray);
+
+    controllersArray = controllersArray.concat(newArray);
   }
 
   _removeMovies() {
@@ -121,19 +124,10 @@ export default class PageController {
 
   _updateMovies() {
     this._removeMovies();
+    this._mainMovieContainer.innerHTML = ``;
     const movies = this._moviesModel.getMovies();
     this._showingMoviesCount = SHOWING_MOVIES_COUNT_ON_START;
-    this._movieSectionComponent.getElement().innerHTML = ``;
-    this._renderMovies(movies, this._movieList, this._mainMovieContainer, this._showingMoviesCount);
-
-    // top rated list movies
-    if (this._topRatedMovies[0].rating > 0 || this._topRatedMovies[1].rating > 0) {
-      this._renderMovies(this._topRatedMovies, this._topRatedList, this._topRatedContainer, this._showingExtraCards);
-    }
-    // most commented list movies
-    if (this._mostCommentedMovies[0].comments > 0 || this._mostCommentedMovies[1].comments > 0) {
-      this._renderMovies(this._mostCommentedMovies, this._mostCommentedList, this._mostCommentedContainer, this._showingExtraCards);
-    }
+    this._renderMovies(movies, this._movieList, this._mainMovieContainer, this._showingMoviesCount, RenderPosition.AFTERBEGIN, this._showedMoviesControllers);
     this._renderLoadMoreButton();
   }
 
