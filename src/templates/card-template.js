@@ -32,6 +32,7 @@ export const createMovieCardTemplate = (movie) => {
     description,
     comments
   } = movie;
+  const commentsCount = comments.length;
   const controls = createControls(movie);
   const ellipsisDescription = addEllipsisToString(description);
   const releaseYear = moment(date).format(`YYYY`);
@@ -49,7 +50,7 @@ export const createMovieCardTemplate = (movie) => {
     </p>
     <img src="./images/posters/${poster}" alt="" class="film-card__poster">
     <p class="film-card__description">${ellipsisDescription}</p>
-    <a class="film-card__comments">${comments}  comments</a>
+    <a class="film-card__comments">${commentsCount}  comments</a>
     <form class="film-card__controls">${controls}</form>
   </article>`;
 };

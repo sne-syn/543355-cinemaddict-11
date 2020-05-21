@@ -11,6 +11,8 @@ import {
   generateComments
 } from "./../mock/comment.js";
 
+const comments = generateComments(10);
+console.log(comments);
 
 export default class CommentsController {
   constructor(container, profile) {
@@ -27,10 +29,10 @@ export default class CommentsController {
   }
 
   render(movie) {
-    this._comments = generateComments(movie.comments);
+    this._comments =comments;
     this._commentSection = new CommentSectionComponent(movie);
     render(this._container, this._commentSection, RenderPosition.BEFOREEND);
-    if (movie.comments > 0) {
+    if (movie.comments.length > 0) {
       this._renderCommentList(this._comments);
     }
     this._commentSection.setAddEmojiHandler(this._changeEmoji);

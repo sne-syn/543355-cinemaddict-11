@@ -48,6 +48,12 @@ const getSortedMovies = (movies, sortType, from, to) => {
   return sortedMovies.slice(from, to);
 };
 
+function compareNumeric(a, b) {
+  if (a > b) return 1;
+  if (a == b) return 0;
+  if (a < b) return -1;
+}
+
 export default class PageController {
   constructor(container, profile, moviesModel) {
     this._container = container;
@@ -84,7 +90,11 @@ export default class PageController {
     this._moviesModel.setMenuChangeHandler(this._onMenuChange);
     this._updateMovies = this._updateMovies.bind(this);
     this._topRatedMovies = [...this._moviesModel.getMovies()].sort((a, b) => (a.rating < b.rating) ? 1 : -1);
-    this._mostCommentedMovies = [...this._moviesModel.getMovies()].sort((a, b) => (a.comments < b.comments) ? 1 : -1);
+    this._mostCommentedMovies = [...this._moviesModel.getMovies()].sort((a, b) => {
+      if (a.comments.length < b.comments.length) return 1;
+      if (a.comments.length  === b.comments.length) return 0;
+      if (a.comments.length  > b.comments.length) return -1;
+    });
   }
 
   render() {
@@ -104,7 +114,7 @@ export default class PageController {
       this._renderMovies(this._topRatedMovies, this._topRatedList, this._topRatedContainer, this._showingExtraCards, this._showedMoviesControllersExtra);
     }
     // most commented list movies
-    if (this._mostCommentedMovies[0].comments > 0 || this._mostCommentedMovies[1].comments > 0) {
+    if (this._mostCommentedMovies[0].comments.length > 0 || this._mostCommentedMovies[1].comments.length > 0) {
       this._renderMovies(this._mostCommentedMovies, this._mostCommentedList, this._mostCommentedContainer, this._showingExtraCards, this._showedMoviesControllersExtra);
     }
     this._renderLoadMoreButton();

@@ -17,8 +17,7 @@ const State = {
   MODAL: `modal-open`,
 };
 
-// const commentsModel = new CommentsModel();
-// commentsModel.setComments(movies);
+
 
 export default class MovieController {
   constructor(onDataChange, onViewChange, commonContainer, profile) {
@@ -40,7 +39,7 @@ export default class MovieController {
     const detailsBottomContainer = document.querySelector(`.form-details__bottom-container`);
     detailsBottomContainer.innerHTML = ``;
     // const commentsModel = new CommentsModel();
-    // commentsModel.setComments(movie);
+    // commentsModel.setComments(comments);
     const commentsController = new CommentsController(detailsBottomContainer, this._profile);
     commentsController.render(movie);
   }

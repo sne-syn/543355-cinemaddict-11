@@ -1,9 +1,9 @@
 export default class CommentsModel {
-  constructor (container, profile) {
+  constructor(container, profile) {
     this._container = container;
     this._profile = profile;
     this._comments = [];
-   // this._dataChangeHandlers = [];
+    this._dataChangeHandlers = [];
   }
 
   getComments() {
@@ -12,7 +12,6 @@ export default class CommentsModel {
 
   setComments(comments) {
     this._comments = Array.from(comments);
-    this._callHandlers(this._dataChangeHandlers);
   }
 
   addComment(authorComment, emojiComment, textComment, dateComment) {
@@ -24,10 +23,14 @@ export default class CommentsModel {
       date: dateComment,
     };
 
-    this.comments.push(comment);
+    this._comments.push(comment);
+  }
+
+  updateComments() {
+
   }
 
   deleteComment(id) {
-    this.comments = this.comments.filter((comment) => comment.id !== id);
+    this._comments = this._comments.filter((comment) => comment.id !== id);
   }
 }
