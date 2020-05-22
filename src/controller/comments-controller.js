@@ -29,7 +29,16 @@ export default class CommentsController {
   }
 
   render(movie) {
-    this._comments = comments;
+    let currentComments = [];
+    for (let i = 0; i < movie.comments.length; i++) {
+      for (let j = 0; j < comments.length; j++) {
+        if (comments[j].id === movie.comments[i]) {
+          arr.push(comments[j]);
+       }
+      }
+    }
+
+    this._comments = currentComments;
     this._commentSection = new CommentSectionComponent(movie);
     render(this._container, this._commentSection, RenderPosition.BEFOREEND);
     if (movie.comments.length > 0) {

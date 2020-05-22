@@ -5,10 +5,10 @@ const texts = [`Interesting setting and a good cast`, `Booooooooooring`, `There'
 const emojis = [`angry`, `puke`, `sleeping`, `smile`];
 
 const releaseDate = [`2019-06-05T16:12:32.554Z`, `2015-08-12T16:12:32.554Z`, `2018-06-01T16:12:32.554Z`, `2020-04-11T16:12:32.554Z`, `2020-05-05T16:12:32.554Z`, `2020-05-11T16:12:32.554Z`, new Date().toISOString()];
-
+let i = 0;
 const generateComment = () => {
   return {
-    id: getRandomIntegerNumber(0, 10),
+    id: i++,
     emoji: emojis[getRandomIntegerNumber(0, emojis.length)],
     text: texts[getRandomIntegerNumber(0, texts.length)],
     author: authors[getRandomIntegerNumber(0, authors.length)],

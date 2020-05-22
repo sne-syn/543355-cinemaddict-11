@@ -9,7 +9,7 @@ import {
 const generateRandomAmountOfRandomNumbers = () => {
   let array = [];
   for (let i = 0; i < getRandomIntegerNumber(1, 6); i++) {
-    array.push(getRandomIntegerNumber(0, 50));
+    array.push(getRandomIntegerNumber(0, 5));
   }
   return array;
 };
