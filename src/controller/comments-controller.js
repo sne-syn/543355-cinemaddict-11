@@ -33,7 +33,7 @@ export default class CommentsController {
     for (let i = 0; i < movie.comments.length; i++) {
       for (let j = 0; j < comments.length; j++) {
         if (comments[j].id === movie.comments[i]) {
-          arr.push(comments[j]);
+          currentComments.push(comments[j]);
        }
       }
     }
