@@ -23,9 +23,9 @@ const EXTRA_CARD_COUNT = 2;
 const SHOWING_MOVIES_COUNT_ON_START = 5;
 const SHOWING_MOVIES_COUNT_BY_BUTTON = 5;
 
-const renderMovies = (moviesSelection, commonContainer, properMovieListContainer, onDataChange, onViewChange, profile) => {
+const renderMovies = (moviesSelection, commonContainer, properMovieListContainer, onDataChange, onViewChange, profile, commentsModel) => {
   return moviesSelection.map((movie) => {
-    const movieController = new MovieController(onDataChange, onViewChange, commonContainer, profile);
+    const movieController = new MovieController(onDataChange, onViewChange, commonContainer, profile, commentsModel);
     movieController.render(movie, properMovieListContainer);
     return movieController;
   });
@@ -49,10 +49,11 @@ const getSortedMovies = (movies, sortType, from, to) => {
 };
 
 export default class PageController {
-  constructor(container, profile, moviesModel) {
+  constructor(container, profile, moviesModel, commentsModel) {
     this._container = container;
     this._profile = profile;
     this._moviesModel = moviesModel;
+    this._commentsModel = commentsModel;
     this._showedMoviesControllers = [];
     this._showedMoviesControllersExtra = [];
     this._showingMoviesCount = SHOWING_MOVIES_COUNT_ON_START;
@@ -94,10 +95,10 @@ export default class PageController {
   render() {
     const movies = this._moviesModel.getMovies();
     this._menuController.render();
-    render(this._container, this._sortComponent, RenderPosition.BEFOREEND);
-    render(this._container, this._movieSectionComponent, RenderPosition.BEFOREEND);
+    render(this._container, this._sortComponent);
+    render(this._container, this._movieSectionComponent);
     if (movies.length === 0) {
-      render(this._movieSectionComponent.getElement(), this._noMoviesComponent, RenderPosition.BEFOREEND);
+      render(this._movieSectionComponent.getElement(), this._noMoviesComponent);
       return;
     }
 
@@ -117,7 +118,7 @@ export default class PageController {
 
   _renderMovies(movies, properMovieList, properMovieListContainer, count, controllersArray, position = RenderPosition.BEFOREEND) {
     render(this._movieSectionComponent.getElement(), properMovieList, position);
-    const newArray = renderMovies(movies.slice(0, count), this._movieSectionComponent, properMovieListContainer, this._onDataChange, this._onViewChange, this._profile);
+    const newArray = renderMovies(movies.slice(0, count), this._movieSectionComponent, properMovieListContainer, this._onDataChange, this._onViewChange, this._profile, this._commentsModel);
 
     controllersArray = controllersArray.concat(newArray);
   }
@@ -170,7 +171,7 @@ export default class PageController {
     if (this._showingMoviesCount >= movies.length) {
       return;
     }
-    render(this._movieList.getElement(), this._showMoreButtonComponent, RenderPosition.BEFOREEND);
+    render(this._movieList.getElement(), this._showMoreButtonComponent);
     this._showMoreButtonComponent.setClickHandler(this._onShowMoreButtonClick);
   }
 

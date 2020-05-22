@@ -39,9 +39,9 @@ export default class MenuController {
     this._menuComponent.setMenuChangeHandler(this._onMenuChange);
 
     if (oldComponent) {
-      replace(this._menuComponent, oldComponent);
+      replace(this._menuComponent.getElement(), oldComponent.getElement());
     } else {
-      render(container, this._menuComponent, RenderPosition.BEFOREEND);
+      render(container, this._menuComponent);
     }
   }
 

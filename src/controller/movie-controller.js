@@ -1,8 +1,6 @@
 import MovieCardComponent from "./../components/movie-card.js";
 import MovieDetailsComponent from "./../components/movie-details.js";
 import CommentsController from "./comments-controller.js";
-import CommentsModel from "./../models/comments-model.js";
-
 import {
   render,
   replace,
@@ -18,7 +16,8 @@ const State = {
 };
 
 export default class MovieController {
-  constructor(onDataChange, onViewChange, commonContainer, profile) {
+  constructor(onDataChange, onViewChange, commonContainer, profile, commentsModel) {
+    this._commentsModel = commentsModel;
     this._profile = profile;
     this._commonContainer = commonContainer;
     this._cardComponent = null;
@@ -36,10 +35,8 @@ export default class MovieController {
 
     const detailsBottomContainer = document.querySelector(`.form-details__bottom-container`);
     detailsBottomContainer.innerHTML = ``;
-    // const commentsModel = new CommentsModel();
-    // commentsModel.setComments(comments);
     const commentsController = new CommentsController(detailsBottomContainer, this._profile);
-    commentsController.render(movie);
+    commentsController.render(movie, this._commentsModel);
   }
 
   _closeMovieDetails() {
@@ -107,7 +104,7 @@ export default class MovieController {
     if (oldCardComponent) {
       replace(this._cardComponent.getElement(), oldCardComponent.getElement());
     } else {
-      render(properContainer, this._cardComponent, RenderPosition.BEFOREEND);
+      render(properContainer, this._cardComponent);
     }
   }
 }

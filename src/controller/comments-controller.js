@@ -7,12 +7,6 @@ import {
   render,
   RenderPosition
 } from "./../utils/render.js";
-import {
-  generateComments
-} from "./../mock/comment.js";
-
-const comments = generateComments(10);
-console.log(comments);
 
 export default class CommentsController {
   constructor(container, profile) {
@@ -28,19 +22,22 @@ export default class CommentsController {
     this._deleteComment = this._deleteComment.bind(this);
   }
 
-  render(movie) {
+  render(movie, comments) {
+    const commentsArray = comments.getComments();
+    console.log(commentsArray);
     let currentComments = [];
+
     for (let i = 0; i < movie.comments.length; i++) {
-      for (let j = 0; j < comments.length; j++) {
-        if (comments[j].id === movie.comments[i]) {
-          currentComments.push(comments[j]);
+      for (let j = 0; j < commentsArray.length; j++) {
+        if (commentsArray[j].id === movie.comments[i]) {
+          currentComments.push(commentsArray[j]);
        }
       }
     }
 
     this._comments = currentComments;
     this._commentSection = new CommentSectionComponent(movie);
-    render(this._container, this._commentSection, RenderPosition.BEFOREEND);
+    render(this._container, this._commentSection);
     if (movie.comments.length > 0) {
       this._renderCommentList(this._comments);
     }
@@ -54,7 +51,7 @@ export default class CommentsController {
     // render new comments
     comments.forEach((comment) => {
       const commentComponent = new CommentComponent(comment);
-      render(commentListElement, commentComponent, RenderPosition.BEFOREEND);
+      render(commentListElement, commentComponent);
     });
   }
 
