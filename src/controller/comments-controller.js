@@ -29,7 +29,7 @@ export default class CommentsController {
   }
 
   render(movie) {
-    this._comments =comments;
+    this._comments = comments;
     this._commentSection = new CommentSectionComponent(movie);
     render(this._container, this._commentSection, RenderPosition.BEFOREEND);
     if (movie.comments.length > 0) {

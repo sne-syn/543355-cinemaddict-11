@@ -48,12 +48,6 @@ const getSortedMovies = (movies, sortType, from, to) => {
   return sortedMovies.slice(from, to);
 };
 
-function compareNumeric(a, b) {
-  if (a > b) return 1;
-  if (a == b) return 0;
-  if (a < b) return -1;
-}
-
 export default class PageController {
   constructor(container, profile, moviesModel) {
     this._container = container;

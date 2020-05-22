@@ -3,7 +3,6 @@ import PageController from "./controller/page-controller.js";
 import MovieCountComponent from "./components/movie-count";
 import MoviesModel from "./models/movies-model.js";
 //import CommentsModel from "./models/comments-model.js";
-//import {getRandomIntegerNumber} from './utils/common.js';
 
 import {
   generateMovie

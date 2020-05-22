@@ -8,7 +8,7 @@ const releaseDate = [`2019-06-05T16:12:32.554Z`, `2015-08-12T16:12:32.554Z`, `20
 
 const generateComment = () => {
   return {
-    id: getRandomIntegerNumber(0, 5),
+    id: getRandomIntegerNumber(0, 10),
     emoji: emojis[getRandomIntegerNumber(0, emojis.length)],
     text: texts[getRandomIntegerNumber(0, texts.length)],
     author: authors[getRandomIntegerNumber(0, authors.length)],

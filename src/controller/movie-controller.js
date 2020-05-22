@@ -17,8 +17,6 @@ const State = {
   MODAL: `modal-open`,
 };
 
-
-
 export default class MovieController {
   constructor(onDataChange, onViewChange, commonContainer, profile) {
     this._profile = profile;

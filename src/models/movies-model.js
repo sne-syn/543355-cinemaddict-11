@@ -38,7 +38,6 @@ export default class MoviesModel {
     this._movies = [].concat(this._movies.slice(0, index), movie, this._movies.slice(index + 1));
 
     this._callHandlers(this._dataChangeHandlers);
-
     return true;
   }
 
