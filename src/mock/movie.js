@@ -7,11 +7,11 @@ import {
 } from '../utils/common.js';
 
 const generateRandomAmountOfRandomNumbers = () => {
-  let array = [];
+  let uniqueSet = new Set();
   for (let i = 0; i < getRandomIntegerNumber(1, 6); i++) {
-    array.push(getRandomIntegerNumber(0, 10));
+    uniqueSet.add(getRandomIntegerNumber(0, 10));
   }
-  return array;
+  return uniqueSet;
 };
 
 const Posters = [`made-for-each-other.png`, `popeye-meets-sinbad.png`, `sagebrush-trail.jpg`, `santa-claus-conquers-the-martians.jpg`, `the-dance-of-life.jpg`, `the-great-flamarion.jpg`, `the-man-with-the-golden-arm.jpg`, `1.jpg`, `2.jpg`, `3.jpg`, `4.jpg`, `5.jpeg`, `6.jpg`, `7.jpg`, `8.png`, `10.jpg`, `11.jpg`, `12.jpg`, `13.jpg`, `14.jpg`];
@@ -51,7 +51,7 @@ const generateMoviesInfo = () => {
     genre: getSeveralRandomItems(Genres, getRandomIntegerNumber(2, 3)),
     description: getRandomStringLength(Descriptions),
     age: getRandomIntegerNumber(10, 18),
-    comments: generateRandomAmountOfRandomNumbers(),
+    comments: Array.from(generateRandomAmountOfRandomNumbers()),
     isInWatchlist: Math.random() > 0.5,
     isAlreadyWatched: Math.random() > 0.5,
     isInFavorites: Math.random() > 0.5,

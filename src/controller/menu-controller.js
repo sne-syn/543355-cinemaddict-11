@@ -4,8 +4,7 @@ import {
 } from "./../utils/const.js";
 import {
   render,
-  replace,
-  RenderPosition
+  replace
 } from "./../utils/render.js";
 import {
   getMoviesByMenu

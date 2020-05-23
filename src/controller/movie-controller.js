@@ -6,8 +6,7 @@ import {
   replace,
   appendChild,
   removeChild,
-  remove,
-  RenderPosition
+  remove
 } from "./../utils/render.js";
 
 const State = {
@@ -16,20 +15,18 @@ const State = {
 };
 
 export default class MovieController {
-  constructor(onDataChange, onViewChange, commonContainer, profile, commentsModel) {
+  constructor(onDataChange, commonContainer, profile, commentsModel) {
     this._commentsModel = commentsModel;
     this._profile = profile;
     this._commonContainer = commonContainer;
     this._cardComponent = null;
     this._detailsComponent = null;
     this._onDataChange = onDataChange;
-    this._onViewChange = onViewChange;
     this._state = State.DEFAULT;
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
   }
 
   _showMovieDetails(movie) {
-    this._onViewChange();
     appendChild(this._commonContainer.getElement(), this._detailsComponent);
     this._state = State.MODAL;
 
@@ -71,7 +68,7 @@ export default class MovieController {
     const oldCardComponent = this._cardComponent;
 
     this._cardComponent = new MovieCardComponent(movie);
-    this._detailsComponent = new MovieDetailsComponent(movie, this._profile);
+    this._detailsComponent = new MovieDetailsComponent(movie, this._profile, this._commentsModel);
 
     this._cardComponent.setWatchlistButtonClickHandler(() => {
       this._onDataChange(this, movie, Object.assign({}, movie, {

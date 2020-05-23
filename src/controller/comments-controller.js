@@ -4,9 +4,9 @@ import {
   capitalizeEveryFirstChar
 } from "./../utils/common.js";
 import {
-  render,
-  RenderPosition
+  render
 } from "./../utils/render.js";
+let idGen = 80;
 
 export default class CommentsController {
   constructor(container, profile) {
@@ -24,14 +24,13 @@ export default class CommentsController {
 
   render(movie, comments) {
     const commentsArray = comments.getComments();
-    console.log(commentsArray);
     let currentComments = [];
 
     for (let i = 0; i < movie.comments.length; i++) {
       for (let j = 0; j < commentsArray.length; j++) {
         if (commentsArray[j].id === movie.comments[i]) {
           currentComments.push(commentsArray[j]);
-       }
+        }
       }
     }
 
@@ -42,6 +41,7 @@ export default class CommentsController {
       this._renderCommentList(this._comments);
     }
     this._commentSection.setAddEmojiHandler(this._changeEmoji);
+    this._commentSection.setAddCommentHandler(this._addComment);
     this._commentSection.setDeleteCommentHandler(this._deleteComment);
   }
 
@@ -64,7 +64,6 @@ export default class CommentsController {
     addEmojiLabel.innerHTML = ``;
     addEmojiLabel.appendChild(emojiImg);
     evt.target.setAttribute(`checked`, `checked`);
-    this._commentSection.setAddCommentHandler(this._addComment);
   }
 
   _addComment(movie) {
@@ -77,27 +76,20 @@ export default class CommentsController {
     });
 
     const newComment = {
+      id: idGen++,
       emoji: selectedEmoji,
       text: this._container.querySelector(`.film-details__comment-input`).value,
       author: (this._userName.length > 0) ? capitalizeEveryFirstChar(this._userName) : ``,
       date: new Date().toISOString(),
     };
 
-    // updates movie.comments count by +1
-    const newMovieInfo = Object.assign({}, movie, {
-      comments: ++movie.comments
-    });
     this._comments.push(newComment);
+    movie.comments.push(newComment.id);
     this._renderCommentList(this._comments);
-    this._commentSection.recoveryListeners();
   }
 
   _deleteComment(evt, movie) {
     const commentToRemove = evt.target.closest(`.film-details__comment`);
     commentToRemove.parentElement.removeChild(commentToRemove);
-    // updates movie.comments count by -1
-    const newMovieInfo = Object.assign({}, movie, {
-      comments: --movie.comments
-    });
   }
 }
