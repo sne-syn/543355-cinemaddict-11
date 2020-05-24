@@ -17,6 +17,7 @@ const State = {
 export default class MovieController {
   constructor(onDataChange, commonContainer, profile, commentsModel) {
     this._commentsModel = commentsModel;
+    this._commentsController = null;
     this._profile = profile;
     this._commonContainer = commonContainer;
     this._cardComponent = null;
@@ -25,13 +26,19 @@ export default class MovieController {
     this._state = State.DEFAULT;
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
     this._renderComments = this._renderComments.bind(this);
+    this._onCommentsChange = this._onCommentsChange.bind(this);
   }
 
   _renderComments(movie) {
     const detailsBottomContainer = document.querySelector(`.form-details__bottom-container`);
     detailsBottomContainer.innerHTML = ``;
-    const commentsController = new CommentsController(detailsBottomContainer, this._profile);
-    commentsController.render(movie, this._commentsModel);
+    this._commentsController = new CommentsController(detailsBottomContainer, this._profile, this._onCommentsChange);
+    this._commentsController.render(movie, this._commentsModel);
+  }
+
+  _onCommentsChange(movie) {
+    console.log('hello there');
+    console.log(movie, this._commentsModel);
   }
 
   _showMovieDetails(movie) {

@@ -9,13 +9,14 @@ import {
 let idGen = 80;
 
 export default class CommentsController {
-  constructor(container, profile) {
+  constructor(container, profile, onCommentsChange) {
     this._container = container;
     this._comments = [];
     this._userName = profile.rating;
     this._commentComponent = null;
     this._commentSection = null;
     this._newSection = null;
+    this._onCommentsChange = onCommentsChange;
     this._renderCommentList = this._renderCommentList.bind(this);
     this._changeEmoji = this._changeEmoji.bind(this);
     this._addComment = this._addComment.bind(this);
@@ -42,7 +43,7 @@ export default class CommentsController {
     }
     this._commentSection.setAddEmojiHandler(this._changeEmoji);
     this._commentSection.setAddCommentHandler(this._addComment);
-    this._commentSection.setDeleteCommentHandler(this._deleteComment);
+
   }
 
   _renderCommentList(comments) {
@@ -50,8 +51,9 @@ export default class CommentsController {
     commentListElement.innerHTML = ``;
     // render new comments
     comments.forEach((comment) => {
-      const commentComponent = new CommentComponent(comment);
-      render(commentListElement, commentComponent);
+      this._commentComponent = new CommentComponent(comment);
+      render(commentListElement, this._commentComponent);
+      this._commentComponent.setDeleteCommentHandler(this._deleteComment);
     });
   }
 
@@ -85,11 +87,18 @@ export default class CommentsController {
 
     this._comments.push(newComment);
     movie.comments.push(newComment.id);
+    this._onCommentsChange(movie);
+
+    this._commentSection.rerender();
     this._renderCommentList(this._comments);
   }
 
-  _deleteComment(evt, movie) {
+  _deleteComment(evt) {
     const commentToRemove = evt.target.closest(`.film-details__comment`);
     commentToRemove.parentElement.removeChild(commentToRemove);
+    
+    // this._commentSection.rerender();
+    // this._renderCommentList(this._comments);
+    // this._commentSection.recoveryListeners();
   }
 }

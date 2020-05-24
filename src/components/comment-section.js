@@ -44,20 +44,11 @@ export default class CommentSectionComponent extends AbstractSmartComponent {
         if (this._emojiLabelInput.innerHTML !== `` &&
           this._commentTextInput.value !== ``) {
           handler(this._movie);
+          this._resetInput();
         }
       }
     });
     this._addCommentHandler = handler;
-  }
-
-  setDeleteCommentHandler(handler) {
-    const comments = this.getElement().querySelectorAll(`.film-details__comment`);
-    comments.forEach((comment) => {
-      comment.addEventListener(`click`, (evt) => {
-        handler(evt, this._movie);
-      });
-    });
-    this._deleteCommentHandler = handler;
   }
 
   setAddEmojiHandler(handler) {
