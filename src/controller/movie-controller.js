@@ -36,9 +36,8 @@ export default class MovieController {
     this._commentsController.render(movie, this._commentsModel);
   }
 
-  _onCommentsChange(movie) {
-    console.log('hello there');
-    console.log(movie, this._commentsModel);
+  _onCommentsChange(comments) {
+    console.log(comments);
   }
 
   _showMovieDetails(movie) {

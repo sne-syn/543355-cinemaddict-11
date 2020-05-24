@@ -15,7 +15,7 @@ export default class Comment extends AbstractComponent {
 
   setDeleteCommentHandler(handler) {
       this._element.addEventListener(`click`, (evt) => {
-        handler(evt);
+        handler(evt, this._comment);
       });
     this._deleteCommentHandler = handler;
   }

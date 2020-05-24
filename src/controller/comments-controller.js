@@ -26,7 +26,6 @@ export default class CommentsController {
   render(movie, comments) {
     const commentsArray = comments.getComments();
     let currentComments = [];
-
     for (let i = 0; i < movie.comments.length; i++) {
       for (let j = 0; j < commentsArray.length; j++) {
         if (commentsArray[j].id === movie.comments[i]) {
@@ -43,7 +42,6 @@ export default class CommentsController {
     }
     this._commentSection.setAddEmojiHandler(this._changeEmoji);
     this._commentSection.setAddCommentHandler(this._addComment);
-
   }
 
   _renderCommentList(comments) {
@@ -68,7 +66,7 @@ export default class CommentsController {
     evt.target.setAttribute(`checked`, `checked`);
   }
 
-  _addComment(movie) {
+  _addComment() {
     const emojis = this._container.querySelectorAll(`.film-details__emoji-item`);
     let selectedEmoji = ``;
     emojis.forEach((emoji) => {
@@ -86,19 +84,13 @@ export default class CommentsController {
     };
 
     this._comments.push(newComment);
-    movie.comments.push(newComment.id);
-    this._onCommentsChange(movie);
-
+    this._onCommentsChange(this._comments);
     this._commentSection.rerender();
     this._renderCommentList(this._comments);
   }
 
-  _deleteComment(evt) {
+  _deleteComment(evt, comment) {
     const commentToRemove = evt.target.closest(`.film-details__comment`);
     commentToRemove.parentElement.removeChild(commentToRemove);
-    
-    // this._commentSection.rerender();
-    // this._renderCommentList(this._comments);
-    // this._commentSection.recoveryListeners();
   }
 }
