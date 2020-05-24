@@ -3,11 +3,7 @@ import {
 } from '../templates/comment-section-template';
 import AbstractSmartComponent from "./abstract-smart-component.js";
 
-const keyCodes = {
-  CTRL: 17,
-  ENTER: 13,
-};
-
+const keyCodeEnter = 13;
 export default class CommentSectionComponent extends AbstractSmartComponent {
   constructor(movie) {
     super();
@@ -44,7 +40,7 @@ export default class CommentSectionComponent extends AbstractSmartComponent {
 
   setAddCommentHandler(handler) {
     this._commentTextInput.addEventListener(`keydown`, (evt) => {
-      if (evt.ctrlKey && evt.keyCode === keyCodes.ENTER) {
+      if (evt.ctrlKey && evt.keyCode === keyCodeEnter) {
         if (this._emojiLabelInput.innerHTML !== `` &&
           this._commentTextInput.value !== ``) {
           handler(this._movie);
@@ -60,7 +56,6 @@ export default class CommentSectionComponent extends AbstractSmartComponent {
       comment.addEventListener(`click`, (evt) => {
         handler(evt, this._movie);
       });
-
     });
     this._deleteCommentHandler = handler;
   }

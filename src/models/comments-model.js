@@ -23,7 +23,7 @@ export default class CommentsModel {
       comment: textComment,
       date: dateComment,
     };
-    
+
     this._comments.push(comment);
   }
 

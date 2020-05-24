@@ -24,16 +24,20 @@ export default class MovieController {
     this._onDataChange = onDataChange;
     this._state = State.DEFAULT;
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
+    this._renderComments = this._renderComments.bind(this);
+  }
+
+  _renderComments(movie) {
+    const detailsBottomContainer = document.querySelector(`.form-details__bottom-container`);
+    detailsBottomContainer.innerHTML = ``;
+    const commentsController = new CommentsController(detailsBottomContainer, this._profile);
+    commentsController.render(movie, this._commentsModel);
   }
 
   _showMovieDetails(movie) {
     appendChild(this._commonContainer.getElement(), this._detailsComponent);
     this._state = State.MODAL;
-
-    const detailsBottomContainer = document.querySelector(`.form-details__bottom-container`);
-    detailsBottomContainer.innerHTML = ``;
-    const commentsController = new CommentsController(detailsBottomContainer, this._profile);
-    commentsController.render(movie, this._commentsModel);
+    this._renderComments(movie);
   }
 
   _closeMovieDetails() {
@@ -49,12 +53,6 @@ export default class MovieController {
     if (isEscKey) {
       this._closeMovieDetails();
       document.removeEventListener(`keydown`, this._onEscKeyDown);
-    }
-  }
-
-  setDefaultView() {
-    if (this._state === State.MODAL) {
-      this._closeMovieDetails();
     }
   }
 

@@ -11,8 +11,7 @@ import {
   generateProfile
 } from "./mock/profile.js";
 import {
-  render,
-  RenderPosition
+  render
 } from "./utils/render.js";
 import {
   generateComments
