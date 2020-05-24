@@ -9,7 +9,6 @@ export default class CommentSectionComponent extends AbstractSmartComponent {
     super();
     this._movie = movie;
     this._addCommentHandler = null;
-    this._deleteCommentHandler = null;
     this._addEmojiHandler = null;
     this._emojiLabelInput = this.getElement().querySelector(`.film-details__add-emoji-label`);
     this._commentTextInput = this.getElement().querySelector(`.film-details__comment-input`);
@@ -21,7 +20,6 @@ export default class CommentSectionComponent extends AbstractSmartComponent {
 
   recoveryListeners() {
     this.setAddCommentHandler(this._addCommentHandler);
-    this.setDeleteCommentHandler(this._deleteCommentHandler);
     this.setAddEmojiHandler(this._addEmojiHandler);
   }
 
