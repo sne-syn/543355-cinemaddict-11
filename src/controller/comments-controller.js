@@ -7,6 +7,7 @@ import {
   render
 } from "./../utils/render.js";
 let idGen = 80;
+export const EmptyComment = {};
 
 export default class CommentsController {
   constructor(container, profile, onCommentsChange) {
@@ -66,7 +67,7 @@ export default class CommentsController {
     evt.target.setAttribute(`checked`, `checked`);
   }
 
-  _addComment() {
+  _addComment(movie) {
     const emojis = this._container.querySelectorAll(`.film-details__emoji-item`);
     let selectedEmoji = ``;
     emojis.forEach((emoji) => {
@@ -84,7 +85,7 @@ export default class CommentsController {
     };
 
     this._comments.push(newComment);
-    this._onCommentsChange(this._comments);
+    this._onCommentsChange(movie, EmptyComment, newComment);
     this._commentSection.rerender();
     this._renderCommentList(this._comments);
   }
