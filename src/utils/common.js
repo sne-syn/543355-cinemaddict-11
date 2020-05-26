@@ -50,31 +50,13 @@ const createRuntimeRepresentation = (elem, elemLetter) => {
   return elemStyled;
 };
 
-const convertSecondsToHoursMinutes = (sec) => {
-  let timeObj = {};
-  let hour = sec / 3600 ^ 0;
-  let min = (sec - hour * 3600) / 60 ^ 0;
-  timeObj.hours = hour;
-  timeObj.minutes = min;
-
-  return timeObj;
+export {
+  getRandomIntegerNumber,
+  getRandomArrayItem,
+  getRandomNumber,
+  capitalizeChar,
+  capitalizeEveryFirstChar,
+  getSeveralRandomItems,
+  convertArrayToString,
+  createRuntimeRepresentation
 };
-
-const getHoursMinutesRuntimeString = (sec) => {
-  let element = convertSecondsToHoursMinutes(sec);
-  let output = `${createRuntimeRepresentation(element.hours, `h`)} ${createRuntimeRepresentation(element.minutes, `m`)}`;
-
-  return output;
-};
-
-// add leading zero to num < 10
-const addLeadingZero = (value) => {
-  return (value < 10) ? `0${value}` : value;
-};
-
-const formateDate = (date) => {
-  let formatedDate = `${date.getFullYear()}/${addLeadingZero(date.getMonth())}/${addLeadingZero(date.getDate())} ${addLeadingZero(date.getHours())}:${addLeadingZero(date.getMinutes())}`;
-  return formatedDate;
-};
-
-export {getRandomIntegerNumber, getRandomArrayItem, getRandomNumber, capitalizeChar, capitalizeEveryFirstChar, getSeveralRandomItems, convertArrayToString, convertSecondsToHoursMinutes, getHoursMinutesRuntimeString, addLeadingZero, formateDate};

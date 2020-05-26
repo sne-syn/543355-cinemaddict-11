@@ -5,14 +5,16 @@ import AbstractSmartComponent from "./abstract-smart-component.js";
 import CommentsController from "./../controller/comments-controller";
 
 export default class MovieDetails extends AbstractSmartComponent {
-  constructor(movie, profile) {
+  constructor(movie, profile, commentsModel) {
     super();
     this._movie = movie;
     this._profile = profile;
+    this._commentsModel = commentsModel;
     this._closeDetailsHandler = null;
     this._isInWatchlist = movie.isInWatchlist;
     this._isAlreadyWatched = movie.isAlreadyWatched;
     this._isInFavorites = movie.isInFavorites;
+    this._watchingDate = movie.watchingDate;
     this._subscribeOnEvents();
   }
 
@@ -20,7 +22,8 @@ export default class MovieDetails extends AbstractSmartComponent {
     return createDetailsTemplate(Object.assign({}, this._movie, {
       isInWatchlist: this._isInWatchlist,
       isAlreadyWatched: this._isAlreadyWatched,
-      isInFavorites: this._isInFavorites
+      isInFavorites: this._isInFavorites,
+      watchingDate: this._movieWatchingDate
     }));
   }
 
@@ -33,11 +36,12 @@ export default class MovieDetails extends AbstractSmartComponent {
     super.rerender();
     const detailsBottomContainer = document.querySelector(`.form-details__bottom-container`);
     const commentsController = new CommentsController(detailsBottomContainer, this._profile);
-    commentsController.render(this._movie);
+    commentsController.render(this._movie, this._commentsModel);
   }
 
   setCloseButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, handler);
+
     this._closeDetailsHandler = handler;
   }
 
@@ -56,6 +60,7 @@ export default class MovieDetails extends AbstractSmartComponent {
     element.querySelector(`.film-details__control-label--watched`).addEventListener(`click`, () => {
       this._isAlreadyWatched = !this._isAlreadyWatched;
       alreadyWatchedControl.checked = !alreadyWatchedControl.checked;
+      this._watchingDate = alreadyWatchedControl.checked ? new Date().toISOString() : null;
       this.rerender();
     });
 

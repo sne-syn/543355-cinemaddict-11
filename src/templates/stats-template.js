@@ -1,4 +1,5 @@
-import {capitalizeChar, capitalizeEveryFirstChar, convertSecondsToHoursMinutes} from './../utils/common';
+import moment from 'moment';
+import {capitalizeChar, capitalizeEveryFirstChar} from './../utils/common';
 
 export const countWatchedMovies = (data) => {
   let count = 0;
@@ -52,8 +53,8 @@ export const createStatsTemplate = (movies, profile) => {
   const {rating, avatar} = profile;
   const ratingCapitalized = capitalizeEveryFirstChar(rating);
   const totalWatchedMovies = countWatchedMovies(movies);
-  const {hours, minutes} = convertSecondsToHoursMinutes(countTotalDuration(movies));
-  const topGenre = capitalizeChar(getTopGenre(movies));
+  const runtime = moment.duration(countTotalDuration(movies), `minutes`);
+  const topGenre = (totalWatchedMovies > 0) ? capitalizeChar(getTopGenre(movies)) : ``;
 
   return `<section class="statistic">
   <p class="statistic__rank">
@@ -88,7 +89,7 @@ export const createStatsTemplate = (movies, profile) => {
     </li>
     <li class="statistic__text-item">
       <h4 class="statistic__item-title">Total duration</h4>
-        <p class="statistic__item-text">${hours}<span class="statistic__item-description">h</span>${minutes}<span class="statistic__item-description">m</span></p>
+        <p class="statistic__item-text">${runtime.hours()}<span class="statistic__item-description">h</span>${runtime.minutes()}<span class="statistic__item-description">m</span></p>
     </li>
     <li class="statistic__text-item">
       <h4 class="statistic__item-title">Top genre</h4>

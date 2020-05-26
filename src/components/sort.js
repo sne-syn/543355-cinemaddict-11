@@ -1,10 +1,14 @@
-import {SortType, createSortTemplate} from './../templates/sort-template.js';
+import {
+  SortType,
+  createSortTemplate
+} from './../templates/sort-template.js';
 import AbstractComponent from "./abstract-component.js";
 
 export default class Sort extends AbstractComponent {
   constructor() {
     super();
     this._currentSortType = SortType.DEFAULT;
+    this._markSortedType = this._markSortedType.bind(this);
   }
 
   getTemplate() {
@@ -12,6 +16,11 @@ export default class Sort extends AbstractComponent {
   }
 
   getSortType() {
+    return this._currentSortType;
+  }
+
+  setSortType() {
+    this._currentSortType = SortType.DEFAULT;
     return this._currentSortType;
   }
 
@@ -23,23 +32,23 @@ export default class Sort extends AbstractComponent {
       }
 
       const sortType = evt.target.dataset.sortType;
-
       if (this._currentSortType === sortType) {
         return;
       }
-
-      // add active class
-      const sortButtons = this.getElement().querySelectorAll(`.sort__button`);
-      sortButtons.forEach((item) => {
-        if (item.classList.contains(`sort__button--active`)) {
-          item.classList.remove(`sort__button--active`);
-        }
-      });
-
-      evt.target.classList.add(`sort__button--active`);
-
       this._currentSortType = sortType;
       handler(this._currentSortType);
+      this._markSortedType(evt);
     });
+  }
+
+  _markSortedType(evt) {
+    const sortButtons = this.getElement().querySelectorAll(`.sort__button`);
+    sortButtons.forEach((item) => {
+      if (item.classList.contains(`sort__button--active`)) {
+        item.classList.remove(`sort__button--active`);
+      }
+    });
+
+    evt.target.classList.add(`sort__button--active`);
   }
 }

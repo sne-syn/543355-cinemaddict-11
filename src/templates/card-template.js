@@ -1,4 +1,5 @@
-import {getHoursMinutesRuntimeString} from './../utils/common.js';
+import moment from 'moment';
+import {createRuntimeRepresentation} from './../utils/common';
 
 const addEllipsisToString = (str) => {
   let sliced = str.slice(0, 140).trim();
@@ -31,11 +32,13 @@ export const createMovieCardTemplate = (movie) => {
     description,
     comments
   } = movie;
+  const commentsCount = comments.length;
   const controls = createControls(movie);
   const ellipsisDescription = addEllipsisToString(description);
-  const releaseYear = date.getFullYear();
+  const releaseYear = moment(date).format(`YYYY`);
   const firstGenre = genre[0];
-  const convertedRuntime = getHoursMinutesRuntimeString(runtime);
+  const duration = moment.duration(runtime, `minutes`);
+  const convertedRuntime = `${createRuntimeRepresentation(duration.hours(), `h`)} ${createRuntimeRepresentation(duration.minutes(), `m`)}`;
 
   return `<article class="film-card">
     <h3 class="film-card__title">${title}</h3>
@@ -47,7 +50,7 @@ export const createMovieCardTemplate = (movie) => {
     </p>
     <img src="./images/posters/${poster}" alt="" class="film-card__poster">
     <p class="film-card__description">${ellipsisDescription}</p>
-    <a class="film-card__comments">${comments}  comments</a>
+    <a class="film-card__comments">${commentsCount}  comments</a>
     <form class="film-card__controls">${controls}</form>
   </article>`;
 };

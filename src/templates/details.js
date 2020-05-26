@@ -1,5 +1,5 @@
-import {capitalizeChar, getHoursMinutesRuntimeString} from './../utils/common.js';
-import {MONTH_NAMES} from './../utils/const.js';
+import moment from 'moment';
+import {capitalizeChar, createRuntimeRepresentation} from './../utils/common.js';
 
 // create genres template
 const createMovieGenres = (movie) => {
@@ -11,18 +11,12 @@ const createMovieGenres = (movie) => {
   return genreString;
 };
 
-// format date dd month yyyy
-const formatReleaseDate = (date) => {
-  const formatedDate = `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
-  return formatedDate;
-};
-
 const createMovieDetailsTable = (movie) => {
   const {director, writers, actors, date, runtime, country} = movie;
-  const releaseDate = formatReleaseDate(date);
+  const releaseDate = moment(date).format(`DD MMMM YYYY`);
   const genre = createMovieGenres(movie);
-  const convertedRuntime = getHoursMinutesRuntimeString(runtime);
-  // change lable for multiple genres
+  const duration = moment.duration(runtime, `minutes`);
+  const convertedRuntime = `${createRuntimeRepresentation(duration.hours(), `h`)} ${createRuntimeRepresentation(duration.minutes(), `m`)}`;
   let isMultiple = ([...movie.genre].length > 1) ? `Genres` : `Genre`;
 
   return `

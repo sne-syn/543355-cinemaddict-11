@@ -1,11 +1,11 @@
 import {capitalizeChar} from "../utils/common.js";
 
-const menuNames = [`all`, `watchlist`, `history`, `favorites`];
+const menuNames = [`All`, `Watchlist`, `History`, `Favorites`];
 
 const generateMenu = () => {
   return menuNames.map((name) => {
     return {
-      name: capitalizeChar(name),
+      name: (name),
       count: Math.floor(Math.random() * 10),
     };
   });
