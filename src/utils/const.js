@@ -5,3 +5,11 @@ export const MenuType = {
   FAVORITES: `favorites`,
 };
 
+export const SortType = {
+  DATE: `date`,
+  RATING: `rating`,
+  DEFAULT: `default`,
+  COMMENTED: `commented`,
+};
+
+
