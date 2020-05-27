@@ -24,6 +24,17 @@ export default class Sort extends AbstractComponent {
     return this._currentSortType;
   }
 
+  setDefaultSortTypeView() {
+    const sortButtons = this.getElement().querySelectorAll(`.sort__button`);
+    const defaultButton = this.getElement().querySelector(`[data-sort-type="default"]`);
+    sortButtons.forEach((item) => {
+      if (item.classList.contains(`sort__button--active`)) {
+        item.classList.remove(`sort__button--active`);
+      }
+    });
+    defaultButton.classList.add(`sort__button--active`);
+  }
+
   setSortTypeChangeHandler(handler) {
     this.getElement().addEventListener(`click`, (evt) => {
       evt.preventDefault();
@@ -48,7 +59,6 @@ export default class Sort extends AbstractComponent {
         item.classList.remove(`sort__button--active`);
       }
     });
-
     evt.target.classList.add(`sort__button--active`);
   }
 }

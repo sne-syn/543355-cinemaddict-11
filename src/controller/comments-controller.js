@@ -39,18 +39,18 @@ export default class CommentsController {
     this._commentSection = new CommentSectionComponent(movie);
     render(this._container, this._commentSection);
     if (movie.comments.length > 0) {
-      this._renderCommentList(this._comments);
+      this._renderCommentList(this._comments, movie);
     }
     this._commentSection.setAddEmojiHandler(this._changeEmoji);
     this._commentSection.setAddCommentHandler(this._addComment);
   }
 
-  _renderCommentList(comments) {
+  _renderCommentList(comments, movie) {
     const commentListElement = this._container.querySelector(`.film-details__comments-list`);
     commentListElement.innerHTML = ``;
     // render new comments
     comments.forEach((comment) => {
-      this._commentComponent = new CommentComponent(comment);
+      this._commentComponent = new CommentComponent(comment, movie);
       render(commentListElement, this._commentComponent);
       this._commentComponent.setDeleteCommentHandler(this._deleteComment);
     });
@@ -90,8 +90,13 @@ export default class CommentsController {
     this._renderCommentList(this._comments);
   }
 
-  _deleteComment(evt, comment) {
+  _deleteComment(evt, movie, removedComment) {
     const commentToRemove = evt.target.closest(`.film-details__comment`);
     commentToRemove.parentElement.removeChild(commentToRemove);
+    this._comments = this._comments.filter((comment) => comment.id !== removedComment.id);
+    this._onCommentsChange(movie, removedComment, null);
+    this._commentSection.rerender();
+    this._renderCommentList(this._comments);
+    console.log(this._comments);
   }
 }

@@ -1,5 +1,9 @@
-import {getMoviesByMenu} from "./../utils/menu";
-import {MenuType} from "./../utils/const.js";
+import {
+  getMoviesByMenu
+} from "./../utils/menu";
+import {
+  MenuType
+} from "./../utils/const.js";
 
 export default class MoviesModel {
   constructor() {
@@ -29,7 +33,7 @@ export default class MoviesModel {
   }
 
   updateMovie(id, movie) {
-    const index = this._movies.findIndex((movie) => movie.id === id);
+    const index = this._movies.findIndex((it) => it.id === id);
 
     if (index === -1) {
       return false;
@@ -46,7 +50,7 @@ export default class MoviesModel {
   }
 
   setDataChangeHandler(handler) {
-   this._dataChangeHandlers.push(handler);
+    this._dataChangeHandlers.push(handler);
   }
 
   _callHandlers(handlers) {

@@ -1,10 +1,12 @@
-import {createCommentTemplate} from './../templates/comment-template.js';
+import {
+  createCommentTemplate
+} from './../templates/comment-template.js';
 import AbstractComponent from "./abstract-component.js";
 
-
 export default class Comment extends AbstractComponent {
-  constructor(comment) {
+  constructor(comment, movie) {
     super();
+    this._movie = movie;
     this._comment = comment;
     this._deleteCommentHandler = null;
   }
@@ -14,9 +16,9 @@ export default class Comment extends AbstractComponent {
   }
 
   setDeleteCommentHandler(handler) {
-      this._element.addEventListener(`click`, (evt) => {
-        handler(evt, this._comment);
-      });
+    this._element.addEventListener(`click`, (evt) => {
+      handler(evt, this._movie, this._comment);
+    });
     this._deleteCommentHandler = handler;
   }
 }

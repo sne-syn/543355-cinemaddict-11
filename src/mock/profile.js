@@ -1,5 +1,3 @@
-import {getRandomIntegerNumber} from '../utils/common.js';
-//const watchedMovies = getRandomIntegerNumber(0, 30);
 export const countWatchedMovies = (data) => {
   let count = 0;
   for (let movie of data) {

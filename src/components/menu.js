@@ -20,8 +20,8 @@ export default class Menu extends AbstractComponent {
 
   setMenuChangeHandler(handler) {
     this.getElement().querySelector(`.main-navigation__items`).addEventListener(`click`, (evt) => {
-      if (evt.target.getAttribute('href')) {
-        const target = evt.target.getAttribute('href');
+      if (evt.target.getAttribute(`href`)) {
+        const target = evt.target.getAttribute(`href`);
         const menuName = target.substring(1).toLowerCase();
         handler(menuName);
         this. _markActiveMenuLink(evt);

@@ -19,6 +19,8 @@ export default class CommentSectionComponent extends AbstractSmartComponent {
   }
 
   recoveryListeners() {
+    this._emojiLabelInput = this.getElement().querySelector(`.film-details__add-emoji-label`);
+    this._commentTextInput = this.getElement().querySelector(`.film-details__comment-input`);
     this.setAddCommentHandler(this._addCommentHandler);
     this.setAddEmojiHandler(this._addEmojiHandler);
   }

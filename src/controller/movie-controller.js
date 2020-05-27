@@ -1,6 +1,8 @@
 import MovieCardComponent from "./../components/movie-card.js";
 import MovieDetailsComponent from "./../components/movie-details.js";
-import CommentsController, {EmptyComment} from "./comments-controller.js";
+import CommentsController, {
+  EmptyComment
+} from "./comments-controller.js";
 import {
   render,
   replace,
@@ -40,9 +42,11 @@ export default class MovieController {
     if (oldData === EmptyComment) {
       this._commentsModel.addComment(newData);
       movie.comments.push(newData.id);
+      console.log(movie);
+    } else if (newData === null) {
+      this._commentsModel.deleteComment(oldData.id);
+      movie.comments.pop();
     }
-    console.log(movie);
-    console.log(this._commentsModel);
   }
 
   _showMovieDetails(movie) {
