@@ -104,7 +104,6 @@ export default class PageController {
     }
     this._renderAllMoviesLists(movies);
     this._renderLoadMoreButton();
-
   }
 
   _renderAllMoviesLists(movies) {
