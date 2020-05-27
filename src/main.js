@@ -17,7 +17,7 @@ import {
   generateComments
 } from "./mock/comment.js";
 
-const movies = generateMovie(0);
+const movies = generateMovie(20);
 const moviesModel = new MoviesModel();
 moviesModel.setMovies(movies);
 const profile = generateProfile(moviesModel.getMoviesAll());
