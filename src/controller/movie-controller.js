@@ -84,22 +84,22 @@ export default class MovieController {
     this._detailsComponent = new MovieDetailsComponent(movie, this._profile, this._commentsModel);
 
     this._cardComponent.setWatchlistButtonClickHandler(() => {
-      this._onDataChange(this, movie, Object.assign({}, movie, {
+      this._onDataChange(movie, Object.assign({}, movie, {
         isInWatchlist: !movie.isInWatchlist,
-      }), this._commonContainer, properContainer);
+      }));
     });
 
     this._cardComponent.setAlreadyWatchedButtonClickHandler(() => {
-      this._onDataChange(this, movie, Object.assign({}, movie, {
+      this._onDataChange(movie, Object.assign({}, movie, {
         isAlreadyWatched: !movie.isAlreadyWatched,
         watchingDate: !movie.isAlreadyWatched ? new Date().toISOString() : null,
-      }), this._commonContainer, properContainer);
+      }));
     });
 
     this._cardComponent.setFavoriteButtonClickHandler(() => {
-      this._onDataChange(this, movie, Object.assign({}, movie, {
+      this._onDataChange(movie, Object.assign({}, movie, {
         isInFavorites: !movie.isInFavorites,
-      }), this._commonContainer, properContainer);
+      }));
     });
 
     this._cardComponent.setOnCardClickHandler(() => {

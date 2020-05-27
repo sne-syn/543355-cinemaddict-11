@@ -25,12 +25,12 @@ export default class CommentsController {
   }
 
   render(movie, comments) {
-    const commentsArray = comments.getComments();
+    const commentsCollection = comments.getComments();
     let currentComments = [];
     for (let i = 0; i < movie.comments.length; i++) {
-      for (let j = 0; j < commentsArray.length; j++) {
-        if (commentsArray[j].id === movie.comments[i]) {
-          currentComments.push(commentsArray[j]);
+      for (let j = 0; j < commentsCollection.length; j++) {
+        if (commentsCollection[j].id === movie.comments[i]) {
+          currentComments.push(commentsCollection[j]);
         }
       }
     }
