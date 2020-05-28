@@ -17,11 +17,11 @@ const State = {
 };
 
 export default class MovieController {
-  constructor(container, onDataChange, profile, commentsModel) {
+  constructor(onDataChange, commonContainer, profile, commentsModel) {
     this._commentsModel = commentsModel;
-    this._profile = profile;
-    this._container = container;
     this._commentsController = null;
+    this._profile = profile;
+    this._commonContainer = commonContainer;
     this._cardComponent = null;
     this._detailsComponent = null;
     this._onDataChange = onDataChange;
@@ -50,7 +50,7 @@ export default class MovieController {
   }
 
   _showMovieDetails(movie) {
-    appendChild(this._container, this._detailsComponent);
+    appendChild(this._commonContainer.getElement(), this._detailsComponent);
     this._state = State.MODAL;
     this._renderComments(movie);
   }
@@ -58,7 +58,7 @@ export default class MovieController {
   _closeMovieDetails() {
     document.removeEventListener(`keydown`, this._onEscKeyDown);
     if (this._state === State.MODAL) {
-      removeChild(this._container, this._detailsComponent);
+      removeChild(this._commonContainer.getElement(), this._detailsComponent);
     }
     this._state = State.DEFAULT;
   }
@@ -78,7 +78,6 @@ export default class MovieController {
   }
 
   render(movie, properContainer) {
-    console.log(this._container);
     const oldCardComponent = this._cardComponent;
 
     this._cardComponent = new MovieCardComponent(movie);
@@ -115,7 +114,7 @@ export default class MovieController {
     if (oldCardComponent) {
       replace(this._cardComponent.getElement(), oldCardComponent.getElement());
     } else {
-      render(this._container, this._cardComponent);
+      render(properContainer, this._cardComponent);
     }
   }
 }
