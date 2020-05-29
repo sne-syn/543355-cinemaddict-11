@@ -23,17 +23,17 @@ export default class CommentsModel {
     this._comments = this._comments.filter((comment) => comment.id !== id);
   }
 
-  // updateComments(id, comment) {
-  //   const index = this._comments.findIndex((it) => it.id === comment.id);
-  //   if (index === -1) {
-  //     return false;
-  //   }
+  updateComments(id, comment) {
+    const index = this._comments.findIndex((it) => it.id === comment.id);
+    if (index === -1) {
+      return false;
+    }
 
-  //   this._comments = [].concat(this._comments.slice(0, index), comment, this._comments.slice(index + 1));
+    this._comments = [].concat(this._comments.slice(0, index), comment, this._comments.slice(index + 1));
 
-  //   this._callHandlers(this._dataChangeHandlers);
-  //   return true;
-  // }
+    this._callHandlers(this._dataChangeHandlers);
+    return true;
+  }
 
   setDataChangeHandler(handler) {
     this._dataChangeHandlers.push(handler);

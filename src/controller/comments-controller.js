@@ -83,9 +83,9 @@ export default class CommentsController {
       author: (this._userName.length > 0) ? capitalizeEveryFirstChar(this._userName) : ``,
       date: new Date().toISOString(),
     };
-
+    movie.comments.push(newComment.id);
+    console.log(movie);
     this._comments.push(newComment);
-    this._onCommentsChange(movie, EmptyComment, newComment);
     this._commentSection.rerender();
     this._renderCommentList(this._comments);
   }
@@ -94,9 +94,8 @@ export default class CommentsController {
     const commentToRemove = evt.target.closest(`.film-details__comment`);
     commentToRemove.parentElement.removeChild(commentToRemove);
     this._comments = this._comments.filter((comment) => comment.id !== removedComment.id);
-    this._onCommentsChange(movie, removedComment, null);
+    movie.comments.pop();
     this._commentSection.rerender();
     this._renderCommentList(this._comments);
-    console.log(this._comments);
   }
 }
