@@ -49,7 +49,16 @@ export default class MenuController {
     this._activeMenuType = menuType;
   }
 
+  markMenuActive(menuType) {
+    this._activeMenuType = menuType;
+    this._menuComponent.setActiveMenu(menuType);
+  }
+
   _onDataChange() {
     this.render();
+  }
+
+  activeMenu() {
+    return this._activeMenuType;
   }
 }

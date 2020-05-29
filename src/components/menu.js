@@ -23,8 +23,9 @@ export default class Menu extends AbstractComponent {
       if (evt.target.getAttribute(`href`)) {
         const target = evt.target.getAttribute(`href`);
         const menuName = target.substring(1).toLowerCase();
+        console.log(handler);
         handler(menuName);
-        this. _markActiveMenuLink(evt);
+        this._markActiveMenuLink(evt);
       }
     });
   }
@@ -38,4 +39,17 @@ export default class Menu extends AbstractComponent {
     });
     evt.target.classList.add(`main-navigation__item--active`);
   }
+
+  setActiveMenu(menuType) {
+    const menuLinks = this.getElement().querySelectorAll(`.main-navigation__item`);
+    menuLinks.forEach((item) => {
+      const itemForCheck = item.getAttribute(`href`).toLowerCase().substr(1);
+      if (itemForCheck !== menuType || item.classList.contains(`main-navigation__item--active`)) {
+        item.classList.remove(`main-navigation__item--active`);
+      } else {
+        item.classList.add(`main-navigation__item--active`);
+      }
+    });
+  }
+
 }
