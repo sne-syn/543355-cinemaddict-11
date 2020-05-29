@@ -33,7 +33,7 @@ const footerElement = document.querySelector(`.footer`);
 const footerStatisticsElement = footerElement.querySelector(`.footer__statistics`);
 
 render(siteHeaderElement, new ProfileComponent(profile));
-render(footerStatisticsElement, new MovieCountComponent());
+render(footerStatisticsElement, new MovieCountComponent(moviesModel.getMoviesAll()));
 
 // call pageController
 const pageController = new PageController(siteMainElement, profile, moviesModel, commentsModel);

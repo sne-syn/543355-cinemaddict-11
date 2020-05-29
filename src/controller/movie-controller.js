@@ -43,7 +43,7 @@ export default class MovieController {
       this._commentsModel.addComment(newData);
     } else if (newData === null) {
       this._commentsModel.deleteComment(oldData.id);
-      //movie.comments.pop();
+      // movie.comments.pop();
     }
   }
 

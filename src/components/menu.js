@@ -23,7 +23,6 @@ export default class Menu extends AbstractComponent {
       if (evt.target.getAttribute(`href`)) {
         const target = evt.target.getAttribute(`href`);
         const menuName = target.substring(1).toLowerCase();
-        console.log(handler);
         handler(menuName);
         this._markActiveMenuLink(evt);
       }

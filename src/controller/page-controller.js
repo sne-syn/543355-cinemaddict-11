@@ -15,7 +15,6 @@ import {
   render,
   remove,
   appendChild,
-  removeChild,
   RenderPosition
 } from "./../utils/render.js";
 
@@ -40,6 +39,7 @@ const sortMostCommentedMovies = (a, b) => {
     case (a.comments.length > b.comments.length):
       return -1;
   }
+  return undefined;
 };
 
 const getSortedMovies = (movies, sortType, from, to) => {
@@ -141,24 +141,25 @@ export default class PageController {
   }
 
   _onDataChange(oldData, newData) {
-
     const isSuccess = this._moviesModel.updateMovie(oldData.id, newData);
     const moviesOnRender = this._moviesModel.getMoviesAll();
     const sortType = this._sortComponent.getSortType();
 
     if (isSuccess) {
+      const activeMenu = this._menuController.activeMenu();
+      const showedMoviesControllers = this._showedMoviesControllers.length;
+
       this._mostCommentedContainer.innerHTML = ``;
       this._topRatedContainer.innerHTML = ``;
       this._mainMovieContainer.innerHTML = ``;
-      const showedMoviesControllers = this._showedMoviesControllers.length;
+      this._menuController.markMenuActive(activeMenu);
       this._renderExtraMoviesLists(moviesOnRender);
       this._removeMovies();
       render(this._movieSectionComponent.getElement(), this._movieList, RenderPosition.AFTERBEGIN);
       const sortedMovies = getSortedMovies(this._moviesModel.getMovies(), sortType, 0, showedMoviesControllers);
       const newMovies = renderMovieController(sortedMovies, this._movieSectionComponent, this._mainMovieContainer, this._onDataChange, this._profile, this._commentsModel);
       this._showedMoviesControllers = newMovies;
-      const active = this._menuController.activeMenu();
-      this._menuController.markMenuActive(active);
+
       this._renderLoadMoreButton();
     }
   }

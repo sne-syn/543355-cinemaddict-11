@@ -84,7 +84,6 @@ export default class CommentsController {
       date: new Date().toISOString(),
     };
     movie.comments.push(newComment.id);
-    console.log(movie);
     this._comments.push(newComment);
     this._commentSection.rerender();
     this._renderCommentList(this._comments);
