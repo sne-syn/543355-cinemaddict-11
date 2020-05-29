@@ -3,7 +3,6 @@ import {
   SortType
 } from "./../utils/const";
 import SortComponent from "./../components/sort.js";
-import StatsComponent from "./../components/stats.js";
 import MovieSectionComponent from "./../components/movies-section.js";
 import MovieListComponent from "./../components/main-movie-list";
 import ShowMoreBtnComponent from "./../components/show-more-btn.js";
@@ -73,7 +72,7 @@ export default class PageController {
     this._showingMoviesCount = SHOWING_MOVIES_COUNT_ON_START;
     this._showingExtraCards = EXTRA_CARD_COUNT;
 
-    this._menuController = new MenuController(container, moviesModel);
+    this._menuController = new MenuController(container, moviesModel, this._profile);
     this._sortComponent = new SortComponent();
     this._movieSectionComponent = new MovieSectionComponent();
     this._showMoreButtonComponent = new ShowMoreBtnComponent();
@@ -81,7 +80,7 @@ export default class PageController {
     this._topRatedList = new TopRatedComponent();
     this._mostCommentedList = new MostCommentedComponent();
     this._noMoviesComponent = new NoMoviesComponent();
-    this._stats = new StatsComponent(moviesModel.getMovies(), this._profile);
+
     this._renderLoadMoreButton = this._renderLoadMoreButton.bind(this);
     this._removeMovies = this._removeMovies.bind(this);
     this._onSortTypeChange = this._onSortTypeChange.bind(this);
@@ -89,6 +88,7 @@ export default class PageController {
     this._onShowMoreButtonClick = this._onShowMoreButtonClick.bind(this);
     this._onDataChange = this._onDataChange.bind(this);
     this._renderExtraMoviesLists = this._renderExtraMoviesLists.bind(this);
+    this._renderSMTH = this._renderSMTH.bind(this);
     this._mainMovieContainer = this._movieList.getListContainer();
     this._topRatedContainer = this._topRatedList.getListContainer();
     this._mostCommentedContainer = this._mostCommentedList.getListContainer();
@@ -101,7 +101,7 @@ export default class PageController {
     this._menuController.render();
     render(this._container, this._sortComponent);
     render(this._container, this._movieSectionComponent);
-    appendChild(this._container, this._stats);
+
     if (movies.length === 0) {
       render(this._movieSectionComponent.getElement(), this._noMoviesComponent);
       return;
@@ -113,6 +113,10 @@ export default class PageController {
 
     this._renderExtraMoviesLists(movies);
     this._renderLoadMoreButton();
+  }
+
+  _renderSMTH(movies) {
+    
   }
 
   _renderExtraMoviesLists(movies) {
@@ -159,7 +163,6 @@ export default class PageController {
       const sortedMovies = getSortedMovies(this._moviesModel.getMovies(), sortType, 0, showedMoviesControllers);
       const newMovies = renderMovieController(sortedMovies, this._movieSectionComponent, this._mainMovieContainer, this._onDataChange, this._profile, this._commentsModel);
       this._showedMoviesControllers = newMovies;
-
       this._renderLoadMoreButton();
     }
   }

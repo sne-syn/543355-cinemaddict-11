@@ -17,7 +17,7 @@ export default class Menu extends AbstractComponent {
   setStatsClickHandler(handler) {
     this.getElement().querySelector(`.main-navigation__additional`).addEventListener(`click`, handler);
   }
-
+  
   setMenuChangeHandler(handler) {
     this.getElement().querySelector(`.main-navigation__items`).addEventListener(`click`, (evt) => {
       if (evt.target.getAttribute(`href`)) {

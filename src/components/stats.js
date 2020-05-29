@@ -12,4 +12,6 @@ export default class Stats extends AbstractComponent {
   getTemplate() {
     return createStatsTemplate(this._movies, this._profile);
   }
+
+
 }

@@ -20,8 +20,8 @@ import {
 const movies = generateMovie(20);
 const moviesModel = new MoviesModel();
 moviesModel.setMovies(movies);
-const profile = generateProfile(moviesModel.getMoviesAll());
 
+const profile = generateProfile(moviesModel.getMoviesAll());
 const comments = generateComments(10);
 const commentsModel = new CommentsModel();
 commentsModel.setComments(comments);

@@ -41,9 +41,10 @@ export default class MovieController {
   _onCommentsChange(movie, oldData, newData) {
     if (oldData === EmptyComment) {
       this._commentsModel.addComment(newData);
+      movie.comments.push(newData.id);
     } else if (newData === null) {
       this._commentsModel.deleteComment(oldData.id);
-      // movie.comments.pop();
+      movie.comments.pop();
     }
   }
 
