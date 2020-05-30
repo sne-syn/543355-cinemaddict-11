@@ -46,6 +46,7 @@ export default class MovieController {
       this._commentsModel.deleteComment(oldData.id);
       movie.comments = movie.comments.filter((id) => oldData.id !== id);
     }
+    console.log(movie.comments);
   }
 
   _showMovieDetails(movie) {

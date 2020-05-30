@@ -8,6 +8,7 @@ export default class CommentSectionComponent extends AbstractSmartComponent {
   constructor(movie) {
     super();
     this._movie = movie;
+    this._comments = movie.comments;
     this._addCommentHandler = null;
     this._addEmojiHandler = null;
     this._emojiLabelInput = this.getElement().querySelector(`.film-details__add-emoji-label`);

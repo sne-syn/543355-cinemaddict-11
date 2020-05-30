@@ -16,7 +16,7 @@ export default class Comment extends AbstractComponent {
   }
 
   setDeleteCommentHandler(handler) {
-    this._element.addEventListener(`click`, (evt) => {
+    this._element.querySelector(`.film-details__comment-delete`).addEventListener(`click`, (evt) => {
       handler(evt, this._movie, this._comment);
     });
     this._deleteCommentHandler = handler;

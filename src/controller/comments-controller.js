@@ -87,16 +87,17 @@ export default class CommentsController {
     this._onCommentsChange(movie, EmptyComment, newComment);
     this._comments.push(newComment);
     this._commentSection.rerender();
-    this._renderCommentList(this._comments);
+    this._renderCommentList(this._comments, movie);
   }
 
   _deleteComment(evt, movie, removedComment) {
     const commentToRemove = evt.target.closest(`.film-details__comment`);
     commentToRemove.parentElement.removeChild(commentToRemove);
-    this._comments = this._comments.filter((comment) => comment.id !== removedComment.id);
 
+    // debugger;
     this._onCommentsChange(movie, removedComment, null);
+    this._comments = this._comments.filter((comment) => comment.id !== removedComment.id);
     this._commentSection.rerender();
-    this._renderCommentList(this._comments);
+    this._renderCommentList(this._comments, movie);
   }
 }
