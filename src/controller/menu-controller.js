@@ -19,12 +19,10 @@ export default class MenuController {
     this._moviesModel = moviesModel;
     this._activeMenuType = MenuType.ALL;
     this._menuComponent = null;
-
+    this._statsComponent = null;
     this._onDataChange = this._onDataChange.bind(this);
     this._onMenuChange = this._onMenuChange.bind(this);
     this._moviesModel.setDataChangeHandler(this._onDataChange);
-
-    this._statsComponent = null;
     this._onStatsClick = this._onStatsClick.bind(this);
   }
 

@@ -44,7 +44,7 @@ export default class MovieController {
       movie.comments.push(newData.id);
     } else if (newData === null) {
       this._commentsModel.deleteComment(oldData.id);
-      movie.comments.pop();
+      movie.comments = movie.comments.filter((id) => oldData.id !== id);
     }
   }
 

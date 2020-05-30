@@ -13,7 +13,6 @@ import MovieController from "./movie-controller.js";
 import {
   render,
   remove,
-  appendChild,
   RenderPosition
 } from "./../utils/render.js";
 
@@ -88,7 +87,7 @@ export default class PageController {
     this._onShowMoreButtonClick = this._onShowMoreButtonClick.bind(this);
     this._onDataChange = this._onDataChange.bind(this);
     this._renderExtraMoviesLists = this._renderExtraMoviesLists.bind(this);
-    this._renderSMTH = this._renderSMTH.bind(this);
+    this._renderCards = this._renderCards.bind(this);
     this._mainMovieContainer = this._movieList.getListContainer();
     this._topRatedContainer = this._topRatedList.getListContainer();
     this._mostCommentedContainer = this._mostCommentedList.getListContainer();
@@ -99,6 +98,10 @@ export default class PageController {
   render() {
     const movies = this._moviesModel.getMovies();
     this._menuController.render();
+    this._renderCards(movies);
+  }
+
+  _renderCards(movies) {
     render(this._container, this._sortComponent);
     render(this._container, this._movieSectionComponent);
 
@@ -113,10 +116,6 @@ export default class PageController {
 
     this._renderExtraMoviesLists(movies);
     this._renderLoadMoreButton();
-  }
-
-  _renderSMTH(movies) {
-    
   }
 
   _renderExtraMoviesLists(movies) {
