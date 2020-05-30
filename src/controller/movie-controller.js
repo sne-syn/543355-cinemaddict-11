@@ -24,6 +24,7 @@ export default class MovieController {
     this._commonContainer = commonContainer;
     this._cardComponent = null;
     this._detailsComponent = null;
+
     this._onDataChange = onDataChange;
     this._state = State.DEFAULT;
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
@@ -40,13 +41,12 @@ export default class MovieController {
 
   _onCommentsChange(movie, oldData, newData) {
     if (oldData === EmptyComment) {
-      this._commentsModel.addComment(newData);
+      //this._commentsModel.addComment(newData);
       movie.comments.push(newData.id);
     } else if (newData === null) {
-      this._commentsModel.deleteComment(oldData.id);
+      //this._commentsModel.deleteComment(oldData.id);
       movie.comments = movie.comments.filter((id) => oldData.id !== id);
     }
-    console.log(movie.comments);
   }
 
   _showMovieDetails(movie) {
@@ -79,7 +79,6 @@ export default class MovieController {
 
   render(movie, properContainer) {
     const oldCardComponent = this._cardComponent;
-
     this._cardComponent = new MovieCardComponent(movie);
     this._detailsComponent = new MovieDetailsComponent(movie, this._profile, this._commentsModel);
 
@@ -108,6 +107,7 @@ export default class MovieController {
     });
 
     this._detailsComponent.setCloseButtonClickHandler(() => {
+      this._detailsComponent.reset();
       this._closeMovieDetails();
     });
 

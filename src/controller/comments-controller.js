@@ -13,6 +13,7 @@ export default class CommentsController {
   constructor(container, profile, onCommentsChange) {
     this._container = container;
     this._comments = [];
+    this._movie = null;
     this._userName = profile.rating;
     this._commentComponent = null;
     this._commentSection = null;
@@ -85,8 +86,8 @@ export default class CommentsController {
     };
 
     this._onCommentsChange(movie, EmptyComment, newComment);
-    this._comments.push(newComment);
     this._commentSection.rerender();
+    this._comments.push(newComment);
     this._renderCommentList(this._comments, movie);
   }
 
@@ -94,10 +95,9 @@ export default class CommentsController {
     const commentToRemove = evt.target.closest(`.film-details__comment`);
     commentToRemove.parentElement.removeChild(commentToRemove);
 
-    // debugger;
     this._onCommentsChange(movie, removedComment, null);
-    this._comments = this._comments.filter((comment) => comment.id !== removedComment.id);
     this._commentSection.rerender();
+    this._comments = this._comments.filter((comment) => comment.id !== removedComment.id);
     this._renderCommentList(this._comments, movie);
   }
 }
