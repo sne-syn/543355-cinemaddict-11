@@ -41,18 +41,17 @@ export default class MovieController {
 
   _onCommentsChange(movie, oldData, newData) {
     if (oldData === EmptyComment) {
-      //this._commentsModel.addComment(newData);
-      movie.comments.push(newData.id);
+      movie.comments.push(newData.id);this._commentsModel.addComment(newData);
     } else if (newData === null) {
-      //this._commentsModel.deleteComment(oldData.id);
       movie.comments = movie.comments.filter((id) => oldData.id !== id);
+      this._commentsModel.deleteComment(oldData.id);
     }
   }
 
   _showMovieDetails(movie) {
     appendChild(this._commonContainer.getElement(), this._detailsComponent);
-    this._state = State.MODAL;
     this._renderComments(movie);
+    this._state = State.MODAL;
   }
 
   _closeMovieDetails() {
@@ -60,6 +59,7 @@ export default class MovieController {
     if (this._state === State.MODAL) {
       removeChild(this._commonContainer.getElement(), this._detailsComponent);
     }
+    this._commentsController.destroy();
     this._state = State.DEFAULT;
   }
 

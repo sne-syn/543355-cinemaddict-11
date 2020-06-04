@@ -4,7 +4,7 @@ import {
   capitalizeEveryFirstChar
 } from "./../utils/common.js";
 import {
-  render
+  render, remove
 } from "./../utils/render.js";
 export const EmptyComment = {};
 let idGen = 80;
@@ -99,5 +99,10 @@ export default class CommentsController {
     this._commentSection.rerender();
     this._comments = this._comments.filter((comment) => comment.id !== removedComment.id);
     this._renderCommentList(this._comments, movie);
+  }
+
+  destroy() {
+    remove(this._commentSection);
+    remove(this._commentComponent);
   }
 }
